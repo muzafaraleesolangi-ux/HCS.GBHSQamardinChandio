@@ -6188,6 +6188,8 @@ $("#btn-hm-export").addEventListener("click", async ()=>{
 
 /* ---------- HM School Enrollment: class-range approval + class-wise gender enrollment ---------- */
 const HM_CLASS_LIST = ["ECE","Class 1","Class 2","Class 3","Class 4","Class 5","Class 6","Class 7","Class 8","Class 9 (Matric-I)","Class 10 (Matric-II)"];
+function hmDisplayClass(c){ const m=/^Class ([1-5])$/.exec(String(c||"")); return m ? ({1:"I",2:"II",3:"III",4:"IV",5:"V"})[m[1]] : c; }
+function hmDisplayClasses(classes){ return (classes||[]).map(hmDisplayClass).join(", "); }
 function hmClassSort(classes){ return HM_CLASS_LIST.filter(c=>(classes||[]).includes(c)); }
 
 /* ===== Admin / Cell side: class-range approval queue ===== */
@@ -6246,8 +6248,8 @@ function renderHmClassRequests(){
     <div class="hmreqrow" data-id="${r.id}">
       <div><b>${esc(r.employee_name)}</b> &mdash; ${esc(r.school||"")} <span class="lead">(SEMIS ${esc(r.semis||"—")}, Cell ${esc(r.cell_code||"—")})</span></div>
       <div class="lead" style="margin-top:4px"><span class="hmrequest-type">${r.request_type === "DASHBOARD_CHANGE" ? "Class + Enrollment Change Request" : (r.request_type === "ENROLLMENT_CHANGE" ? "Enrollment Change Request" : (r.request_type === "CLASS_CHANGE" ? "Class Change Request" : "Initial HM Dashboard Setup"))}</span></div>
-      <div class="lead" style="margin-top:4px">Requested classes: <b>${esc(hmClassSort(r.classes).join(", "))}</b></div>
-      ${Array.isArray(r.enrollment)&&r.enrollment.length?`<div class="hmreq-enrollment"><b>Enrollment submitted:</b> ${r.enrollment.map(x=>esc(x.class_name)+" — Boys "+(x.boys||0)+", Girls "+(x.girls||0)+", Total "+(x.total||0)).join(" &nbsp;|&nbsp; ")}</div>`:""}
+      <div class="lead" style="margin-top:4px">Requested classes: <b>${esc(hmDisplayClasses(hmClassSort(r.classes)))}</b></div>
+      ${Array.isArray(r.enrollment)&&r.enrollment.length?`<div class="hmreq-enrollment"><b>Enrollment submitted:</b> ${r.enrollment.map(x=>esc(hmDisplayClass(x.class_name))+" — Boys "+(x.boys||0)+", Girls "+(x.girls||0)+", Total "+(x.total||0)).join(" &nbsp;|&nbsp; ")}</div>`:""}
       ${r.note?'<div class="lead">Note: '+esc(r.note)+'</div>':''}
       <div class="hmreqrow-actions">
         <button class="btn sm primary hmcls-approve" type="button">APPROVE</button>
@@ -6303,7 +6305,7 @@ function renderHmEnrollmentCompiled(){
   const head=$("#hmenrc-head"), body=$("#hmenrc-body"); if(!head||!body) return;
   const schools = HM_ENROLL_COMPILED||[];
   let h = "<tr><th>School</th><th>SEMIS</th><th>Cell</th>";
-  HM_CLASS_LIST.forEach(c=>{ h += "<th>"+esc(c)+"<br>B</th><th>"+esc(c)+"<br>G</th><th>"+esc(c)+"<br>T</th>"; });
+  HM_CLASS_LIST.forEach(c=>{ h += "<th>"+esc(hmDisplayClass(c))+"<br>B</th><th>"+esc(hmDisplayClass(c))+"<br>G</th><th>"+esc(hmDisplayClass(c))+"<br>T</th>"; });
   h += "<th>Total Boys</th><th>Total Girls</th><th>Grand Total</th></tr>";
   head.innerHTML = h;
   if(!schools.length){
@@ -6327,7 +6329,7 @@ $("#btn-hmenr-export").addEventListener("click", ()=>{
   const schools = HM_ENROLL_COMPILED||[];
   if(!schools.length){ msg("Nothing to export","No approved schools yet.","⚠"); return; }
   const head = ["School","SEMIS","Cell"];
-  HM_CLASS_LIST.forEach(c=>{ head.push(c+" Boys", c+" Girls", c+" Total"); });
+  HM_CLASS_LIST.forEach(c=>{ head.push(hmDisplayClass(c)+" Boys", hmDisplayClass(c)+" Girls", hmDisplayClass(c)+" Total"); });
   head.push("Total Boys","Total Girls","Grand Total");
   const rows=[head];
   schools.forEach(s=>{
@@ -6354,7 +6356,7 @@ let HMCLS_SELECTED = new Set(), HM_APPROVED_CLASSES=null, HM_ENROLL_EDIT_MODE=fa
 function renderHmClassChips(selected){
   HMCLS_SELECTED = new Set(selected||[]);
   $("#hmcls-chips").innerHTML = HM_CLASS_LIST.map(c=>
-    `<button type="button" class="hmclasschip${HMCLS_SELECTED.has(c)?" on":""}" data-c="${esc(c)}">${esc(c)}</button>`
+    `<button type="button" class="hmclasschip${HMCLS_SELECTED.has(c)?" on":""}" data-c="${esc(c)}">${esc(hmDisplayClass(c))}</button>`
   ).join("");
 }
 $("#hmcls-chips").addEventListener("click", e=>{
@@ -6381,13 +6383,13 @@ async function loadHmClassState(){
     const r = await api.hmClassStatus(CUR_KEY);
     if(!r || r.ok!==true){ hmShowClassState("form"); renderHmClassChips([]); return; }
     if(r.pending){
-      $("#hmcls-pending-list").textContent = hmClassSort(r.pending.classes).join(", ");
+      $("#hmcls-pending-list").textContent = hmDisplayClasses(hmClassSort(r.pending.classes));
       hmShowClassState("pending");
       return;
     }
     if(r.draft){
       HM_APPROVED_CLASSES = hmClassSort(r.draft.classes);
-      $("#hmenr-classlist").textContent = HM_APPROVED_CLASSES.join(", ");
+      $("#hmenr-classlist").textContent = hmDisplayClasses(HM_APPROVED_CLASSES);
       $("#hmenr-class-status-label").textContent = "Selected classes:";
       $("#hmenr-draft-note").textContent = "Classes saved. Now enter Boys / Girls enrollment for these classes. Nothing has been sent to Admin yet.";
       $("#hmenr-draft-note").classList.remove("hidden");
@@ -6398,12 +6400,12 @@ async function loadHmClassState(){
     }
     if(r.approved){
       HM_APPROVED_CLASSES = hmClassSort(r.approved.classes);
-      $("#hmenr-classlist").textContent = HM_APPROVED_CLASSES.join(", ");
+      $("#hmenr-classlist").textContent = hmDisplayClasses(HM_APPROVED_CLASSES);
       $("#hmenr-class-status-label").textContent = "Selected classes:";
       $("#hmenr-draft-note").classList.add("hidden");
       const changeNote = $("#hmenr-changereturned-note");
       if(r.returned){
-        changeNote.textContent = "Your requested change ("+hmClassSort(r.returned.classes).join(", ")+") was returned: "+(r.returned.reason||"Please review and try again.");
+        changeNote.textContent = "Your requested change ("+hmDisplayClasses(hmClassSort(r.returned.classes))+") was returned: "+(r.returned.reason||"Please review and try again.");
         changeNote.classList.remove("hidden");
       }else changeNote.classList.add("hidden");
       HM_ENROLL_EDIT_MODE=false; HM_ENROLL_DRAFT_MODE=false;
@@ -6520,7 +6522,7 @@ async function loadHmEnrollmentForm(prefillRows){
       const g = hasG ? String(en.girls) : "";
       const total = (hasB||hasG) ? ((parseInt(b,10)||0)+(parseInt(g,10)||0)) : "";
       return `<tr data-class="${esc(c)}">
-        <td>${esc(c)}</td>
+        <td>${esc(hmDisplayClass(c))}</td>
         <td><input type="number" min="0" step="1" inputmode="numeric" pattern="[0-9]*" class="hmenr-boys" value="${b}" placeholder=""></td>
         <td><input type="number" min="0" step="1" inputmode="numeric" pattern="[0-9]*" class="hmenr-girls" value="${g}" placeholder=""></td>
         <td class="hmenr-total">${total}</td>
@@ -6531,8 +6533,8 @@ async function loadHmEnrollmentForm(prefillRows){
     hmEnrRecalcGrand();
     const lockValues = classes.map(c=>{
       const en=existing[c];
-      if(!en) return esc(c)+": —";
-      return esc(c)+": B "+(en.boys??0)+" / G "+(en.girls??0)+" / T "+(en.total??((en.boys||0)+(en.girls||0)));
+      if(!en) return esc(hmDisplayClass(c))+": —";
+      return esc(hmDisplayClass(c))+": B "+(en.boys??0)+" / G "+(en.girls??0)+" / T "+(en.total??((en.boys||0)+(en.girls||0)));
     }).join(" &nbsp;•&nbsp; ");
     const grandEnrollment = classes.reduce((sum,c)=>{
       const en=existing[c];
