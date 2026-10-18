@@ -68,3 +68,45 @@ body footer.pearl-emerald-footer{margin-top:30px!important}
 @media(hover:hover){.assignment:hover{box-shadow:0 10px 24px #24453514;transform:translateY(-2px)}.assignment label:hover{transform:translateY(-2px);border-color:#9fbdac;box-shadow:0 5px 12px #31574212}}
 @media(max-width:700px){.assignment{padding:10px!important}.assignment label{padding:7px;font-size:10px!important}.assignment input,.assignment select,.assignment textarea{font-size:16px!important;min-height:44px!important;font-weight:500}.assignment .numbers{gap:6px!important}.assignment h3{font-size:13px!important}.sound-toggle{min-height:44px}}
 @media(prefers-reduced-motion:reduce){.assignment,.assignment label{transition:none!important;transform:none!important}}
+
+/* Qamardin institutional Pearl Emerald theme */
+:root{--green:#146448;--ink:#194b36;--muted:#708371;--border:#d4dfcf}
+body{background:linear-gradient(135deg,#f4f7f1,#fbfaf3);color:#244b36;font-family:Manrope,'DM Sans',system-ui,Arial}
+body>header{background:linear-gradient(115deg,#e7f2e8 0%,#faf8eb 68%,#edf5e9 100%);border-bottom:2px solid #c7b574;box-shadow:0 4px 18px #385c3110}
+.brand h1{color:#17563b;font-weight:850;letter-spacing:-.6px}.brand small{color:#7a713e;letter-spacing:1.1px}.brand p{color:#698363}
+#auth-form,.panel{background:linear-gradient(135deg,#fffef8,#f8fbf5) padding-box,linear-gradient(115deg,#83ad8e,#d8c286,#d6e3cd,#729c7d) border-box!important;border:2px solid transparent!important;border-radius:17px!important;box-shadow:0 7px 22px #3657390d}
+.panel>h2,.section-head h2{font-size:17px;color:#245b3a;font-weight:850}
+.workspace-head{background:linear-gradient(110deg,#e9f3e7,#fff9e8);padding:16px 18px;margin:0 0 17px;border:1px solid #d3dcbf;border-left:4px solid #a98b3a;border-radius:14px}
+.workspace-head h2{color:#205d3a;font-size:22px}.tag{background:#edf2dd;color:#767035;border-color:#d5d7ac}
+button{background:linear-gradient(115deg,#24774f,#145b3c);box-shadow:0 3px 8px #185a3211;border:1px solid #236f4a}
+button.secondary{background:#fffdf4;color:#526b37;border-color:#d8d2a6}
+.switch{background:#ecf1e5;padding:5px;border:1px solid #d2ddc4;border-radius:12px}
+.switch button{background:transparent;color:#6d7955;border-color:transparent;box-shadow:none}.switch button.selected{background:linear-gradient(115deg,#276d47,#155334);color:#fff;border-color:#7d9f72}
+label{font-size:11px;color:#446547;font-weight:750}
+input,select,textarea{background:#fffef9;border-color:#cfdbc4;color:#294e35;border-radius:10px}
+input:focus,select:focus,textarea:focus{outline-color:#79a881}
+.teacher{background:linear-gradient(125deg,#f3f8ee,#fffdf2);border:1px solid #d1dec4;border-left:4px solid #a1b581;border-radius:14px}
+.teacher>h3{font-size:15px;color:#456838}
+.assignment{background:linear-gradient(130deg,#fffffc,#f6faf0) padding-box,linear-gradient(115deg,#97b78c,#dfca86,#bbd0ab,#8eae7f) border-box!important;border-radius:15px!important;box-shadow:0 4px 14px #4867360d!important}
+.assignment h3{color:#386435!important;font-weight:850}
+.assignment label{background:#fffef8!important;border:1px solid #d8dfc6!important;border-top:2px solid #b6c79b!important;box-shadow:0 2px 6px #4e662c05}
+.assignment .numbers label{background:linear-gradient(145deg,#f7faef,#fffef8)!important}
+.assignment .numbers label:nth-child(2){border-top-color:#afbe82!important}
+.assignment .numbers label:nth-child(3){border-top-color:#bca564!important}
+.assignment .numbers label:nth-child(4){background:#edf6e6!important;border-color:#bfd1a6!important;border-top-color:#729d63!important}
+.assignment .fields>label:nth-child(1){border-top-color:#7ca16c!important}
+.assignment .fields>label:nth-child(2){border-top-color:#a5b478!important}
+.assignment .fields>label:nth-child(3){border-top-color:#b4a86d!important}
+.assignment .fields>label:nth-child(4){border-top-color:#c3a35e!important}
+.assignment input,.assignment select,.assignment textarea{background:#fffef9!important;border-color:#d0dcc3!important;color:#315535!important;font-size:13px!important}
+.assignment .readonly{background:#eaf2df!important;color:#4a6c32!important}
+.assignment label:focus-within{border-color:#86a76c!important;box-shadow:0 0 0 3px #93b16c15}
+.assignment .remove,.remove{background:#fbf5e7;color:#93713c;border-color:#dfcda2}
+.assignment details{color:#6e8051}
+.history-item{background:#f4f7e9;border-color:#d4debc;color:#57723c}
+#auth-live-guide{background:linear-gradient(115deg,#ecf4e4,#fff9e6);border-color:#d8dfb9;border-left-color:#9f9144}
+#auth-form label.focused-guide{background:#f0f6e7;outline-color:#bacb9d}
+.sound-toggle{background:#f4f6e5;color:#6f7845;border-color:#d2d9ae}
+.export{border-color:#c8b76d!important}
+@media(hover:hover){.assignment:hover{box-shadow:0 10px 22px #53673418!important}.assignment label:hover{border-color:#abbc86!important;box-shadow:0 5px 12px #53682e12}}
+@media(max-width:700px){.assignment input,.assignment select,.assignment textarea{font-size:16px!important}.workspace-head{padding:13px}.panel>h2,.section-head h2{font-size:16px}}
