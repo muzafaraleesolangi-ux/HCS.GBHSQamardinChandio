@@ -2,6 +2,8 @@
 function buildExcel(d,m,semis){
  const zip=fflate.unzipSync(Uint8Array.from(atob(window.MPR_TEMPLATE),c=>c.charCodeAt(0))), enc=new TextEncoder(),dec=new TextDecoder(),ns='http://schemas.openxmlformats.org/spreadsheetml/2006/main';
  const parse=s=>new DOMParser().parseFromString(s,'application/xml'),serialize=x=>new XMLSerializer().serializeToString(x),original=dec.decode(zip['xl/worksheets/sheet1.xml']);
+ // Remove stray connector overlays inherited from the master; retain cell borders and other drawing objects.
+ for(const path of Object.keys(zip).filter(p=>/^xl\/drawings\/drawing\d+\.xml$/.test(p))){const drawing=parse(dec.decode(zip[path]));Array.from(drawing.documentElement.children).forEach(anchor=>{const connectors=Array.from(anchor.getElementsByTagNameNS('http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing','cxnSp'));connectors.forEach(shape=>{const lines=Array.from(shape.getElementsByTagNameNS('http://schemas.openxmlformats.org/drawingml/2006/main','prstGeom'));if(lines.some(g=>g.getAttribute('prst')==='line'))shape.remove();});if(!Array.from(anchor.children).some(n=>['sp','pic','graphicFrame','grpSp','cxnSp','contentPart'].includes(n.localName)))anchor.remove();});zip[path]=enc.encode(serialize(drawing));}
  // Preserve existing formatting and add wrapped variants for readable data.
  let styleXML=dec.decode(zip['xl/styles.xml']);
  const xfBlock=styleXML.match(/<cellXfs\b[^>]*>([\s\S]*?)<\/cellXfs>/),baseXfs=xfBlock[1].match(/<xf\b[^>]*\/>|<xf\b[^>]*>[\s\S]*?<\/xf>/g),extraXfs=[],styleMap=new Map();
