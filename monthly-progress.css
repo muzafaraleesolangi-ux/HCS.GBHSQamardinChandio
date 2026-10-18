@@ -40,3 +40,31 @@ input[type=date]::-webkit-calendar-picker-indicator,input[type=month]::-webkit-c
 body footer.pearl-emerald-footer{margin-top:30px!important}
 @media(max-width:700px){.pearl-footer-inner{grid-template-columns:1fr!important}.pearl-credit{grid-row:auto!important}.pearl-school{justify-content:center}body footer.pearl-emerald-footer{padding:18px 14px!important}}
 @media(prefers-reduced-motion:reduce){.switch button:hover,#auth-live-guide.guide-pop{animation:none}.panel,.switch button{transition:none}}
+
+/* Compact interactive assessment cells */
+.assignment{border:2px solid transparent!important;border-radius:16px!important;background:linear-gradient(140deg,#fcfffd,#f8fafc) padding-box,linear-gradient(115deg,#a2cab7,#d8e5e1,#b8c8dc,#c4dccc) border-box!important;padding:14px!important;box-shadow:0 5px 15px #2445350a;transition:box-shadow .3s,transform .3s}
+.assignment h3{font-size:14px!important;font-weight:800;letter-spacing:.1px}
+.assignment label{position:relative;padding:9px;background:#fff;border:1px solid #dce7e1;border-radius:11px;font-size:11px!important;line-height:1.4;gap:7px;transition:transform .25s,border-color .25s,box-shadow .25s}
+.assignment .numbers label{background:linear-gradient(130deg,#f4faf6,#fff)}
+.assignment .numbers label:nth-child(2){border-color:#cfdae9;background:#f6f9fd}
+.assignment .numbers label:nth-child(3){border-color:#ddd3e9;background:#faf8fd}
+.assignment .numbers label:nth-child(4){border-color:#a9cfb9;background:#edf8f0}
+.assignment .fields>label:nth-child(1){border-top:3px solid #7bb698}
+.assignment .fields>label:nth-child(2){border-top:3px solid #8ba7c7}
+.assignment .fields>label:nth-child(3){border-top:3px solid #b09ac4}
+.assignment .fields>label:nth-child(4){border-top:3px solid #c6ad73}
+.assignment input,.assignment select,.assignment textarea{padding:8px 10px!important;min-height:40px!important;border:1px solid #d0ded5!important;border-radius:8px!important;background:#fbfdfc;font-size:13px!important;font-weight:650;box-shadow:none}
+.assignment textarea{font-weight:400;min-height:65px!important;margin-top:4px}
+.assignment select{cursor:pointer}
+.assignment .readonly{background:#e8f3ec!important;color:#246143}
+.assignment input:focus,.assignment select:focus,.assignment textarea:focus{outline:2px solid #89bea0;outline-offset:2px}
+.assignment label:focus-within{border-color:#8bbda2;box-shadow:0 4px 12px #1c694315}
+.assignment .section-head{margin-bottom:12px}
+.assignment .numbers{gap:8px!important}
+.assignment .fields{gap:0 10px}
+.assignment details{font-size:11px;color:#758b7b}
+.assignment .remove{font-size:10px!important;min-height:34px;padding:7px 10px}
+.sound-toggle{display:inline-flex;align-items:center;margin:0 0 12px;background:#edf5ef;color:#466953;border:1px solid #c3dacb;border-radius:20px;font-size:11px;padding:7px 11px;min-height:36px}
+@media(hover:hover){.assignment:hover{box-shadow:0 10px 24px #24453514;transform:translateY(-2px)}.assignment label:hover{transform:translateY(-2px);border-color:#9fbdac;box-shadow:0 5px 12px #31574212}}
+@media(max-width:700px){.assignment{padding:10px!important}.assignment label{padding:7px;font-size:10px!important}.assignment input,.assignment select,.assignment textarea{font-size:16px!important;min-height:44px!important;font-weight:500}.assignment .numbers{gap:6px!important}.assignment h3{font-size:13px!important}.sound-toggle{min-height:44px}}
+@media(prefers-reduced-motion:reduce){.assignment,.assignment label{transition:none!important;transform:none!important}}
