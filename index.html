@@ -2194,7 +2194,7 @@ h1,h2,h3,h4{font-family:'Manrope','DM Sans',system-ui,sans-serif;letter-spacing:
     <span class="cicon2" data-ic="user"></span>
     <span class="ctext">You're still signed in as <b id="continue-name"></b>.</span>
     <button class="btn sm primary" id="btn-continue-session" type="button">CONTINUE&nbsp;&rarr;</button>
-  </div><section class="qdc-cells" id="cells"><div class="cellshead"><div><small>Cluster directory</small><h2>Five Cluster Cells</h2></div><p>Select a cell to explore its employees</p></div><div class="cellgrid" id="cell-cards"></div></section><div class="footer"><span><b>CLUSTER HUB SCHOOL · GBHS QAMARDIN CHANDIO</b></span><span>School Education &amp; Literacy Department · Government of Sindh</span></div></div></main></div></section>
+  </div><section id="seniority-data-entry" aria-labelledby="seniority-data-title"><div class="seniority-entry-copy"><span class="seniority-entry-tag">TEACHER DATA &amp; OFFICIAL RECORDS</span><h2 id="seniority-data-title">Seniority List Data Verification &amp; Generation</h2><p>Add one teacher or your entire school, save records on this device, and download the Excel statement and PDF application.</p><div class="seniority-entry-features"><span>School-wise records</span><span>Excel export</span><span>PDF application</span></div></div><a href="./seniority-data.html" class="seniority-entry-open">Open Data Form <span aria-hidden="true">→</span></a></section><section class="qdc-cells" id="cells"><div class="cellshead"><div><small>Cluster directory</small><h2>Five Cluster Cells</h2></div><p>Select a cell to explore its employees</p></div><div class="cellgrid" id="cell-cards"></div></section><div class="footer"><span><b>CLUSTER HUB SCHOOL · GBHS QAMARDIN CHANDIO</b></span><span>School Education &amp; Literacy Department · Government of Sindh</span></div></div></main></div></section>
 
 <!-- ==================== EMPLOYEE RECORD ==================== -->
 
@@ -7967,3 +7967,15 @@ body .support-wa-link{min-height:40px;border-radius:12px!important;background:li
 <!-- Mobile Help layout + premium animated public leadership cards -->
 <link rel="stylesheet" href="./portal-polish-v10.css?v=20261014-premium1">
 <script src="./portal-polish-v10.js?v=20261014-premium1" defer></script>
+<style>
+#screen-login #seniority-data-entry{display:flex;align-items:center;justify-content:space-between;gap:24px;margin:22px 0;padding:24px;border:1px solid #bcdacb;border-radius:18px;background:linear-gradient(120deg,#e7f5ed,#f8fcf9);box-shadow:0 7px 24px #145c3e08;font-family:inherit;color:#204d3b}
+#screen-login #seniority-data-entry .seniority-entry-tag{font-size:10px;letter-spacing:1.3px;font-weight:800;color:#377c5e}
+#screen-login #seniority-data-title{font-size:21px;line-height:1.35;margin:9px 0;color:#194e38;font-weight:800}
+#screen-login #seniority-data-entry p{font-size:13px;line-height:1.7;color:#507362;max-width:650px;margin:0}
+#screen-login .seniority-entry-features{display:flex;flex-wrap:wrap;gap:8px;margin-top:13px}
+#screen-login .seniority-entry-features span{font-size:11px;font-weight:650;border:1px solid #c6e1d2;background:#fff;padding:5px 9px;border-radius:20px;color:#357256}
+#screen-login .seniority-entry-open{display:inline-flex;justify-content:center;align-items:center;gap:15px;flex-shrink:0;padding:14px 20px;border-radius:11px;background:#247e5c;color:#fff;font-size:13px;font-weight:750;text-decoration:none;min-height:46px;transition:transform .2s,background .2s}
+#screen-login .seniority-entry-open:hover{background:#196747;transform:translateY(-2px)}
+@media(max-width:700px){#screen-login #seniority-data-entry{flex-direction:column;align-items:stretch;padding:20px;gap:18px}#screen-login #seniority-data-title{font-size:19px}}
+@media(prefers-reduced-motion:reduce){#screen-login .seniority-entry-open{transition:none}}
+</style>
