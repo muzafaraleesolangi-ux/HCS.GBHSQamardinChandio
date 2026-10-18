@@ -34,37 +34,45 @@ function preview(){validate(true);$('#preview-body').innerHTML=reportHTML();$('#
 $('#preview').onclick=()=>task(async()=>preview());$('#close-preview').onclick=()=>$('#report-preview').hidden=true;$('#pdf').onclick=()=>task(async()=>{preview();await save();window.print()});
 $('#excel').onclick=()=>task(async()=>{validate(true);if(!window.fflate||!window.MPR_TEMPLATE)throw Error('Excel resources are loading. Try again.');await save();const bytes=buildExcel(data,month,workspace.semis);const blob=new Blob([bytes],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='Monthly_Progress_'+workspace.semis+'_'+month+'.xlsx';a.click();setTimeout(()=>URL.revokeObjectURL(url),30000);await api('exported',{month,revision});workspace=await api('workspace');history();notice('Excel generated in the original master format')});
 function buildExcel(d,m,semis){
-const z=fflate.unzipSync(Uint8Array.from(atob(window.MPR_TEMPLATE),c=>c.charCodeAt(0))),enc=new TextEncoder();
-const x=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&apos;'}[c]));
-const office=d.profile.gender==='Female'?'Head Mistress':d.profile.gender==='Male'?'Head Master':d.profile.office||'Head Master';
-const date=v=>/^\d{4}-\d{2}-\d{2}$/.test(v||'')?v.split('-').reverse().join('-'):v||'';
-const cell=(ref,v,sty=6,num=false,formula='')=>'<c r="'+ref+'" s="'+sty+'"'+(num?'':' t="inlineStr"')+'>'+(formula?'<f>'+x(formula)+'</f>':'')+(num?'<v>'+Number(v)+'</v>':'<is><t xml:space="preserve">'+x(v)+'</t></is>')+'</c>';
-const row=(n,h,c)=>'<row r="'+n+'" ht="'+h+'" customHeight="1">'+c+'</row>';
-const merge=['A1:N1','A2:N2','A3:N3','A4:F4','G4:N4','C6:E6','A6:A7','B6:B7','F6:F7','G6:G7','H6:H7','I6:I7','J6:J7','K6:K7','L6:L7','M6:M7','N6:N7'];
-let rows=row(1,31,cell('A1','OFFICE OF THE '+office.toUpperCase(),1))+row(2,27,cell('A2',d.profile.school.toUpperCase()+'  ·  SEMIS '+semis,2))+row(3,26,cell('A3','MONTHLY ACADEMIC PROGRESS REPORT',3));
-const monthText=new Date(m+'-01T12:00:00').toLocaleDateString('en-GB',{month:'long',year:'numeric'});
-rows+=row(4,24,cell('A4','REPORTING MONTH: '+monthText,4)+cell('G4','REPORT DATE: '+date(d.date),4))+row(5,9,'');
-const headers={A:'SR. NO.',B:'SCHOOL NAME & SEMIS CODE',C:'TEACHER PARTICULARS',F:'SUBJECT & CLASS',G:'TOTAL CHAPTERS',H:'COVERED UP TO PREVIOUS MONTH',I:'COVERED DURING CURRENT MONTH',J:'CHAPTERS REMAINING',K:'NOTEBOOK / TEXTBOOK MAINTENANCE',L:'CLEANLINESS & CLASSROOM MANAGEMENT',M:'STUDENT FEEDBACK DURING FORMATIVE TESTS',N:'SUGGESTIONS FOR IMPROVEMENT'};
-rows+=row(6,47,Object.entries(headers).map(([c,v])=>cell(c+'6',v,5)).join(''))+row(7,25,cell('C7','TEACHER NAME',5)+cell('D7','PID',5)+cell('E7','DESIGNATION',5));
-let rr=8,sno=0;
-d.teachers.forEach(t=>{const list=d.assignments.filter(a=>a.teacher===t.id);if(!list.length)return;const start=rr;const alt=sno%2===1;sno++;list.forEach((a,i)=>{const body=alt?7:6,numeric=alt?9:8,pct=alt?11:10,group=alt?15:14;let cells='';if(i===0)cells+=cell('A'+rr,sno,group,true)+cell('B'+rr,d.profile.school+'\nSEMIS '+semis,group)+cell('C'+rr,t.name,group)+cell('D'+rr,t.pid,group)+cell('E'+rr,t.designation,group);cells+=cell('F'+rr,a.name+'\nClass '+a.grade,body)+cell('G'+rr,a.total,numeric,true)+cell('H'+rr,a.previous,numeric,true)+cell('I'+rr,a.current,numeric,true)+cell('J'+rr,a.total-Number(a.previous)-Number(a.current),numeric,true,'G'+rr+'-H'+rr+'-I'+rr)+cell('K'+rr,Number(a.notebooks)/100,pct,true)+cell('L'+rr,a.cleanliness,body)+cell('M'+rr,a.feedback,body)+cell('N'+rr,a.suggestions,body);const height=Math.max(48,Math.min(180,Math.ceil(String(a.suggestions||'').length/29)*14+14));rows+=row(rr,height,cells);rr++});if(rr-start>1)['A','B','C','D','E'].forEach(c=>merge.push(c+start+':'+c+(rr-1)))});
-rows+=row(rr,24,cell('A'+rr,'TOTAL TEACHERS: '+sno+'     |     CLASS–SUBJECT ASSIGNMENTS: '+d.assignments.length,4));merge.push('A'+rr+':N'+rr);rr+=2;
-rows+=row(rr,23,cell('J'+rr,'Signature & Official Stamp',12));merge.push('J'+rr+':N'+rr);rr++;
-rows+=row(rr,25,cell('J'+rr,d.profile.hm,12));merge.push('J'+rr+':N'+rr);rr++;
-rows+=row(rr,22,cell('J'+rr,office.toUpperCase()+'  ·  BPS-'+d.profile.bps,12));merge.push('J'+rr+':N'+rr);rr++;
-rows+=row(rr,23,cell('J'+rr,d.profile.school,12));merge.push('J'+rr+':N'+rr);const last=rr;
-const widths=[6,22,23,13,12,21,10,13,13,12,17,19,19,29];
-const ns='http://schemas.openxmlformats.org/spreadsheetml/2006/main';
-z['xl/worksheets/sheet1.xml']=enc.encode('<?xml version="1.0" encoding="UTF-8" standalone="yes"?><worksheet xmlns="'+ns+'"><sheetPr><pageSetUpPr fitToPage="1"/></sheetPr><dimension ref="A1:N'+last+'"/><sheetViews><sheetView workbookViewId="0" showGridLines="0"/></sheetViews><sheetFormatPr defaultRowHeight="20"/><cols>'+widths.map((w,i)=>'<col min="'+(i+1)+'" max="'+(i+1)+'" width="'+w+'" customWidth="1"/>').join('')+'</cols><sheetData>'+rows+'</sheetData><mergeCells count="'+merge.length+'">'+merge.map(ref=>'<mergeCell ref="'+ref+'"/>').join('')+'</mergeCells><printOptions horizontalCentered="1"/><pageMargins left="0.22" right="0.22" top="0.35" bottom="0.35" header="0.15" footer="0.18"/><pageSetup paperSize="9" orientation="landscape" fitToWidth="1" fitToHeight="0"/><headerFooter><oddFooter>&amp;LMonthly Academic Progress Report&amp;RPage &amp;P of &amp;N</oddFooter></headerFooter></worksheet>');
-const font=(name,size,color,bold=false)=>'<font>'+(bold?'<b/>':'')+'<sz val="'+size+'"/><color rgb="FF'+color+'"/><name val="'+name+'"/><family val="2"/></font>';
-const fill=color=>'<fill><patternFill patternType="solid"><fgColor rgb="FF'+color+'"/><bgColor indexed="64"/></patternFill></fill>';
-const border='<border><left style="thin"><color rgb="FFCEDDD3"/></left><right style="thin"><color rgb="FFCEDDD3"/></right><top style="thin"><color rgb="FFCEDDD3"/></top><bottom style="thin"><color rgb="FFCEDDD3"/></bottom></border>';
-const xf=(fontId,fillId,borderId=1,numFmt=0,align='center')=>'<xf numFmtId="'+numFmt+'" fontId="'+fontId+'" fillId="'+fillId+'" borderId="'+borderId+'" xfId="0" applyFont="1" applyFill="1" applyBorder="1" applyAlignment="1"'+(numFmt?' applyNumberFormat="1"':'')+'><alignment horizontal="'+align+'" vertical="center" wrapText="1"/></xf>';
-const styles=[xf(0,0,0),xf(1,2,0),xf(2,3,0),xf(3,0,0),xf(4,3,1),xf(5,2,1),xf(0,0,1,0,'left'),xf(0,4,1,0,'left'),xf(6,0),xf(6,4),xf(6,0,1,164),xf(6,4,1,164),xf(4,0,0),xf(0,0,0),xf(4,0),xf(4,4)];
-z['xl/styles.xml']=enc.encode('<?xml version="1.0" encoding="UTF-8" standalone="yes"?><styleSheet xmlns="'+ns+'"><numFmts count="1"><numFmt numFmtId="164" formatCode="0%"/></numFmts><fonts count="7">'+font('Aptos',11,'243D32')+font('Cambria',19,'FFFFFF',true)+font('Aptos Display',14,'235D41',true)+font('Aptos Display',16,'194B34',true)+font('Aptos',11,'345741',true)+font('Aptos',10,'FFFFFF',true)+font('Aptos',12,'205F42',true)+'</fonts><fills count="5"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="gray125"/></fill>'+fill('175B3E')+fill('F5EBD0')+fill('F1F7F2')+'</fills><borders count="2"><border><left/><right/><top/><bottom/><diagonal/></border>'+border+'</borders><cellStyleXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/></cellStyleXfs><cellXfs count="'+styles.length+'">'+styles.join('')+'</cellXfs><cellStyles count="1"><cellStyle name="Normal" xfId="0" builtinId="0"/></cellStyles></styleSheet>');
-const wb=new DOMParser().parseFromString(new TextDecoder().decode(z['xl/workbook.xml']),'application/xml');let names=wb.getElementsByTagName('definedNames')[0];if(!names){names=wb.createElementNS(ns,'definedNames');wb.documentElement.insertBefore(names,wb.getElementsByTagName('calcPr')[0]||wb.getElementsByTagName('extLst')[0]||null)}[...names.children].filter(n=>['_xlnm.Print_Area','_xlnm.Print_Titles'].includes(n.getAttribute('name'))).forEach(n=>n.remove());for(const [key,value]of [['_xlnm.Print_Area',"'Sheet1'!$A$1:$N$"+last],['_xlnm.Print_Titles',"'Sheet1'!$6:$7"]]){const e=wb.createElementNS(ns,'definedName');e.setAttribute('name',key);e.setAttribute('localSheetId','0');e.textContent=value;names.append(e)}let calc=wb.getElementsByTagName('calcPr')[0];if(calc){calc.setAttribute('fullCalcOnLoad','1');calc.setAttribute('forceFullCalc','1')}z['xl/workbook.xml']=enc.encode(new XMLSerializer().serializeToString(wb));for(const path of Object.keys(z)){if(path.startsWith('xl/drawings/')||path==='xl/worksheets/_rels/sheet1.xml.rels')delete z[path];}if(z['[Content_Types].xml']){const types=new DOMParser().parseFromString(new TextDecoder().decode(z['[Content_Types].xml']),'application/xml');[...types.getElementsByTagName('Override')].filter(e=>(e.getAttribute('PartName')||'').startsWith('/xl/drawings/')).forEach(e=>e.remove());z['[Content_Types].xml']=enc.encode(new XMLSerializer().serializeToString(types));}return fflate.zipSync(z);
+ const zip=fflate.unzipSync(Uint8Array.from(atob(window.MPR_TEMPLATE),c=>c.charCodeAt(0))), enc=new TextEncoder(),dec=new TextDecoder(),ns='http://schemas.openxmlformats.org/spreadsheetml/2006/main';
+ const parse=s=>new DOMParser().parseFromString(s,'application/xml'),serialize=x=>new XMLSerializer().serializeToString(x),original=dec.decode(zip['xl/worksheets/sheet1.xml']);
+ const slots=[[8,10],[11,12],[13,15],[16,18],[19,21],[22,25],[26,28],[29,32],[33,35],[36,38],[39,42],[43,46],[47,50]];
+ const office=d.profile.gender==='Female'?'Head Mistress':d.profile.gender==='Male'?'Head Master':d.profile.office||'Head Master';
+ const tasks=(d.teachers||[]).map((teacher,index)=>({teacher,index,items:(d.assignments||[]).filter(a=>a.teacher===teacher.id)}));
+ let taskIndex=0,offset=0,page=0;const retainedStrings=new Set();
+ do{
+  page++;const doc=parse(original),rows=doc.getElementsByTagName('row');
+  const cell=ref=>{let c=doc.querySelector('c[r="'+ref+'"]');if(c)return c;const row=Array.from(rows).find(r=>r.getAttribute('r')===ref.match(/\d+/)[0]);c=doc.createElementNS(ns,'c');c.setAttribute('r',ref);const col=s=>Array.from(s.match(/^[A-Z]+/)[0]).reduce((n,v)=>n*26+v.charCodeAt(0)-64,0);const next=Array.from(row.children).find(n=>n.getAttribute('r')&&col(n.getAttribute('r'))>col(ref));row.insertBefore(c,next||null);return c;};
+  const put=(ref,value)=>{const c=cell(ref);c.textContent='';if(typeof value==='number'){c.setAttribute('t','n');const v=doc.createElementNS(ns,'v');v.textContent=String(value);c.append(v);return;}c.setAttribute('t','inlineStr');const is=doc.createElementNS(ns,'is'),t=doc.createElementNS(ns,'t');t.setAttribute('xml:space','preserve');t.textContent=String(value??'');is.append(t);c.append(is);};
+  Array.from(doc.getElementsByTagName('c')).forEach(c=>{const ref=c.getAttribute('r'),r=Number(ref.match(/\d+/)[0]);if(r>=8&&r<=50||ref==='K56'||ref==='K64')put(ref,'');});
+  put('A2','OFFICE OF THE '+office.toUpperCase()+' '+(d.profile.school||''));
+  const date=String(d.date||'').split('-');put('A5',date.length===3?'Dated: '+date.reverse().join('-'):'Dated: '+(d.date||''));
+  ['B8','B43','B47'].forEach(ref=>put(ref,(d.profile.school||'')+'\nSEMIS CODE: '+semis));
+  for(const [start,end] of slots){
+   if(taskIndex>=tasks.length)break;const task=tasks[taskIndex],visible=[];for(let r=start;r<=end;r++)if(r!==28)visible.push(r);
+   put('A'+start,task.index+1);put('C'+start,task.teacher.name);put('D'+start,task.teacher.pid);put('E'+start,task.teacher.designation);
+   let used=0;while(used<visible.length&&offset<task.items.length){const a=task.items[offset++],r=visible[used++],total=Number(a.total)||0,previous=Number(a.previous)||0,current=Number(a.current)||0;
+    const values={F:(a.name||'')+' — Class '+a.grade,G:total,H:previous,I:current,J:Math.max(0,total-previous-current),K:a.notebooks===''?'':String(a.notebooks??'')+'%',L:a.cleanliness,M:a.feedback,N:a.suggestions};
+    Object.entries(values).forEach(([col,value])=>put(col+r,value));
+   }
+   if(offset>=task.items.length){taskIndex++;offset=0;}
+  }
+  put('K56',(d.profile.hm||'')+'\n'+office.toUpperCase()+(d.profile.bps?' BS-'+d.profile.bps:'')+'\n'+(d.profile.school||''));
+  Array.from(doc.getElementsByTagName('c')).filter(c=>c.getAttribute('t')==='s').forEach(c=>{const v=c.getElementsByTagName('v')[0];if(v)retainedStrings.add(Number(v.textContent));});
+  zip['xl/worksheets/sheet'+page+'.xml']=enc.encode(serialize(doc));
+  if(page>1){
+   if(zip['xl/worksheets/_rels/sheet1.xml.rels'])zip['xl/worksheets/_rels/sheet'+page+'.xml.rels']=zip['xl/worksheets/_rels/sheet1.xml.rels'];
+   const id='mprSheet'+page;
+   zip['xl/workbook.xml']=enc.encode(dec.decode(zip['xl/workbook.xml']).replace('</sheets>','<sheet name="Report '+page+'" sheetId="'+page+'" r:id="'+id+'"/></sheets>'));
+   zip['xl/_rels/workbook.xml.rels']=enc.encode(dec.decode(zip['xl/_rels/workbook.xml.rels']).replace('</Relationships>','<Relationship Id="'+id+'" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet'+page+'.xml"/></Relationships>'));
+   zip['[Content_Types].xml']=enc.encode(dec.decode(zip['[Content_Types].xml']).replace('</Types>','<Override PartName="/xl/worksheets/sheet'+page+'.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/></Types>'));
+  }
+ }while(taskIndex<tasks.length);
+ // Keep the template's string indexes while removing its old sample records.
+ const shared=parse(dec.decode(zip['xl/sharedStrings.xml']));Array.from(shared.getElementsByTagName('si')).forEach((si,i)=>{if(!retainedStrings.has(i))si.textContent='';});zip['xl/sharedStrings.xml']=enc.encode(serialize(shared));
+ return fflate.zipSync(zip,{level:6});
 }
-
 window.MPRBuildExcel=buildExcel;
 if(token)task(async()=>{try{await enter()}catch(e){notice(e.message,true);$('#auth').hidden=false;$('#workspace').hidden=true}});
 })();
+
