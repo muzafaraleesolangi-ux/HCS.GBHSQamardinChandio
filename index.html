@@ -8119,4 +8119,16 @@ html body>footer.pearl-emerald-footer,html body:has(#screen-login:not(.hidden))>
 @media(max-width:1000px){.pearl-footer-inner{grid-template-columns:1fr 1fr;gap:20px}.pearl-credit{grid-column:1/-1;grid-row:2;border-inline:0;border-top:1px solid #c9ddd1;padding-top:16px}}
 @media(max-width:600px){.pearl-footer-inner{grid-template-columns:1fr;gap:18px}.pearl-school{justify-content:center}.pearl-credit{grid-column:auto;grid-row:auto;padding:14px 0;border-bottom:1px solid #c9ddd1}.pearl-contacts{width:100%;max-width:380px;justify-self:center}.pearl-school h3{font-size:17px}.pearl-contacts a{min-height:48px}.pearl-credit #f-title{font-size:14px}}
 @media(prefers-reduced-motion:reduce){.pearl-contacts a{transition:none}}
-</style>
+</style><style id="cluster-soft-bounce-v16">
+#screen-login #cell-cards .cellcard{transition:box-shadow .35s ease,border-color .35s ease!important;will-change:auto}
+#screen-login #cell-cards .cellcard .headprofile{transition:transform .5s ease,box-shadow .5s ease!important}
+@media(hover:hover) and (pointer:fine){
+#screen-login #cell-cards .cellcard:nth-child(n):hover{transform:translateY(-3px)!important;animation:clusterSoftBounce .7s ease both!important;box-shadow:0 12px 25px #284c3924!important}
+#screen-login #cell-cards .cellcard:nth-child(n):hover .headprofile{transform:translateY(-5px);box-shadow:0 8px 14px #475e6b18!important}
+#screen-login #cell-cards .cellcard:nth-child(n):after{display:none!important}
+}
+#screen-login #cell-cards .cellcard.touch-soft-bounce{animation:clusterTouchBounce .5s ease both!important}
+@keyframes clusterSoftBounce{0%{translate:0 0}40%{translate:0 -7px}70%{translate:0 2px}100%{translate:0 0}}
+@keyframes clusterTouchBounce{0%,100%{translate:0 0}40%{translate:0 -6px}70%{translate:0 1px}}
+@media(prefers-reduced-motion:reduce){#screen-login #cell-cards .cellcard:nth-child(n):hover,#screen-login #cell-cards .cellcard.touch-soft-bounce{animation:none!important;transform:none!important}#screen-login #cell-cards .cellcard .headprofile{transition:none!important;transform:none!important}}
+</style><script>(function(){const grid=document.getElementById('cell-cards');if(!grid)return;grid.addEventListener('pointerdown',function(e){if(e.pointerType!=='touch'&&e.pointerType!=='pen')return;const card=e.target.closest('.cellcard');if(!card||e.target.closest('a'))return;card.classList.remove('touch-soft-bounce');void card.offsetWidth;card.classList.add('touch-soft-bounce');setTimeout(function(){card.classList.remove('touch-soft-bounce')},550);});})();</script>
