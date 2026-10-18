@@ -110,3 +110,10 @@ input:focus,select:focus,textarea:focus{outline-color:#79a881}
 .export{border-color:#c8b76d!important}
 @media(hover:hover){.assignment:hover{box-shadow:0 10px 22px #53673418!important}.assignment label:hover{border-color:#abbc86!important;box-shadow:0 5px 12px #53682e12}}
 @media(max-width:700px){.assignment input,.assignment select,.assignment textarea{font-size:16px!important}.workspace-head{padding:13px}.panel>h2,.section-head h2{font-size:16px}}
+
+
+/* In-cell guidance with a gentle live fade. */
+#auth-form .inline-field-guide{display:none;font-size:11px;line-height:1.65;font-weight:600;color:#335f4e;margin-top:9px;padding:9px 11px;background:#f0f8ed;border:1px solid #c7d8bd;border-radius:9px;overflow-wrap:anywhere}
+#auth-form .focused-guide>.inline-field-guide{display:block;animation:fieldGuideFade 3.5s ease-in-out infinite}
+@keyframes fieldGuideFade{0%,100%{opacity:.2;transform:translateY(3px)}20%,75%{opacity:1;transform:translateY(0)}}
+@media(prefers-reduced-motion:reduce){#auth-form .focused-guide>.inline-field-guide{animation:none}}
