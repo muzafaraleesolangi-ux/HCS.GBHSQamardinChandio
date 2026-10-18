@@ -137,3 +137,6 @@ main{max-width:1320px;padding:16px 12px 100px}h1{font-size:clamp(23px,4vw,32px)}
 @media print{.portal-navigation,.floating-save,#message,.sound-toggle{display:none!important}}
 
 .hm-setup{border:1px solid #b9cbb3;border-radius:15px;padding:12px;background:#f3f8ec;margin-bottom:16px}.hm-setup>summary{font-weight:850;font-size:13px;cursor:pointer;color:#335a3c;min-height:32px}.hm-setup[open]>summary{margin-bottom:12px}.hm-setup>.panel:last-child{margin-bottom:0}.switch button:hover{animation:none;transform:none}.teacher-tabs button:focus-visible{outline:3px solid #d2b267;outline-offset:2px}
+
+
+.teacher-tabs .final-report-tab{border:2px solid #b99b56;background:linear-gradient(130deg,#fff9e5,#e6f2df);color:#355d3b}.teacher-tabs .final-report-tab[aria-selected="true"]{background:linear-gradient(130deg,#28593d,#507448);color:#fff;border-color:#d2b561}#final-report-panel{margin:14px 0 0;border:1px solid #c4b176;border-top:3px solid #b49a52}#teacher-draft-actions{justify-content:flex-end;margin-top:14px}#manage-teachers{font-size:11px}#save-state{font-size:11px;font-weight:750;color:#617c64;margin:9px 0}#teacher-setup-panel{scroll-margin-top:20px}
