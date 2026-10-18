@@ -1,0 +1,3 @@
+-- Uploaded STBB Riazi V (Sindhi 2024–25), contents page 3.
+-- Nine teaching units; glossary and answers are not teaching units.
+update monthly_v2.catalog set chapters = '["عدد ۽ حسابي عمل","وڏو عام پورو ونڊيندڙ ۽ ننڍي عام ڀيچ اُپت","اڻپور","ڏهائي اڻپور ۽ سيڪڙو","مفاصلو، وقت ۽ گرمي پد","اڪائي وارو طريقو","جاميٽري","احاطو ۽ ايراضي","معلومات سهيڙڻ"]'::jsonb where id='eafade87-e327-4d73-8b1a-4d8883414fd2' and grade=5 and total=9 returning id,name,total,chapters;
