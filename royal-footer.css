@@ -139,3 +139,23 @@ html body footer.royal-footer {
   .royal-footer .rf-card::after { animation: none !important; }
 }
 @media print { html body footer.royal-footer { display: none !important; } }
+
+/* Keep the shared footer full width on the cluster home screen. */
+html body > footer.royal-footer,
+html body:has(#screen-login:not(.hidden)) > footer.royal-footer {
+  display:block !important;
+  position:relative !important;
+  left:auto !important;
+  right:auto !important;
+  width:100% !important;
+  max-width:100% !important;
+  min-width:0 !important;
+  height:auto !important;
+  max-height:none !important;
+  margin:0 !important;
+  padding:0 !important;
+  overflow:visible !important;
+  transform:none !important;
+}
+html body > footer.royal-footer .rf-shell {width:100%;min-width:0;overflow:hidden;}
+@media(max-width:1050px){html body > footer.royal-footer .rf-grid{min-width:0;}}
