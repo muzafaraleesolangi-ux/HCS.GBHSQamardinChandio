@@ -2386,7 +2386,7 @@ h1,h2,h3,h4{font-family:'Manrope','DM Sans',system-ui,sans-serif;letter-spacing:
     <button class="tab" data-tab="staff">Employee Records</button>
     <button class="tab" data-tab="requests">Unified Review Queue <span id="d-reqcount"></span></button>
     <button class="tab" data-tab="log">Activity Log</button>
-    <button class="tab hidden" id="tab-btn-hmdata" data-tab="hmdata" inert aria-hidden="true">HM Data Collection</button>
+    <button class="tab" data-tab="building" type="button">Building Safety Survey</button><button class="tab hidden" id="tab-btn-hmdata" data-tab="hmdata" inert aria-hidden="true">HM Data Collection</button>
   </div><div class="qdc-admin-side-foot">Employee Data Verification Portal<br>UC Khairwah · Taluka Moro</div></aside><div class="qdc-admin-main">
   <div class="dashribbon" id="dash-ribbon">
     <span>Government of Sindh &middot; School Education &amp; Literacy Department</span>
@@ -2497,7 +2497,7 @@ h1,h2,h3,h4{font-family:'Manrope','DM Sans',system-ui,sans-serif;letter-spacing:
     </tr></thead><tbody id="t-log"></tbody></table></div>
   </div>
 
-  <div id="tab-hmdata" class="tabpane hidden">
+  <div id="tab-building" class="tabpane hidden"><section id="building-admin-root" style="padding:16px 4px"><h2>Building Safety Survey — Qamardin Cluster</h2><p id="building-admin-status">Open this tab to view cloud submissions.</p><div style="display:flex;flex-wrap:wrap;gap:8px;margin:12px 0"><select id="building-admin-cell" style="padding:9px;border-radius:8px"><option value="">All C1–C5</option><option>C1</option><option>C2</option><option>C3</option><option>C4</option><option>C5</option></select><button id="building-admin-refresh" class="btn sm ghost">Refresh</button><button id="building-admin-export" class="btn sm primary">Combined Excel</button></div><div class="tablewrap"><table><thead><tr><th>#</th><th>School / SEMIS</th><th>Cell</th><th>Rooms</th><th>Dangerous</th><th>Partial</th><th>Export</th></tr></thead><tbody id="building-admin-table"></tbody></table></div></section></div><div id="tab-hmdata" class="tabpane hidden">
     <p class="lead" style="margin:0 0 14px">Head Masters first declare which classes (ECE to Matric) exist at their school — that goes to you for approval. Once approved, their dashboard shows Boys / Girls / Total enrollment cells for exactly those classes, which auto-total and compile below for every school.</p>
 
     <div class="hmcard">
@@ -8238,4 +8238,4 @@ html body>footer.pearl-emerald-footer,html body:has(#screen-login:not(.hidden))>
 @keyframes mprArrowClickRays{0%,50%{opacity:0}56%,61%{opacity:1}72%,100%{opacity:0}}
 @media(max-width:640px){#screen-login .mpr-animated-click{width:33px;height:39px;right:12px;top:10px}}
 @media(prefers-reduced-motion:reduce){#screen-login .mpr-animated-click{animation:none;opacity:1}#screen-login .mpr-animated-click i,#screen-login .mpr-animated-click:before,#screen-login .mpr-animated-click:after{animation:none;display:none}}
-</style>
+</style><script src="./building-survey-template.js?v=2" defer></script><script src="https://cdn.jsdelivr.net/npm/fflate@0.8.2/umd/index.js" defer></script><script src="./building-survey-admin.js?v=1" defer></script>
