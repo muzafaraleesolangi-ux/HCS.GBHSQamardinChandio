@@ -50,5 +50,5 @@ fieldGuide.hidden=false;fieldGuide.classList.remove('guide-exit');clearTimeout(g
 }
 document.addEventListener('focusin',e=>{if(e.target.closest('#entry-form,#identity-form'))fieldHelp(e.target)});
 $('#field-live-close').onclick=()=>{fieldGuide.hidden=true;clearTimeout(guideTimer)};
-$('#download').onclick=()=>task(exportExcel);render();
+const banner=document.querySelector('.deo-official-banner');if(banner){banner.className='portrait deo-portrait-card';banner.innerHTML='<div class="portrait-art"><img class="deo-photo" src="./assets/deo-aslam-rajper-current.svg" alt="DEO Muhammad Aslam Rajper portrait"></div><b>Muhammad Aslam Rajper</b><small>District Education Officer (ES&amp;HS) · Naushahro Feroze</small>';}$('#download').onclick=()=>task(exportExcel);render();
 })();
