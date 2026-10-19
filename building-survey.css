@@ -67,3 +67,10 @@ dialog#editor{width:100vw!important;max-width:100vw!important;max-height:100dvh!
 @keyframes heroWords{50%{text-shadow:0 0 22px #ffd06f6e}}
 @keyframes portraitFloat{50%{transform:translateY(-5px)}}
 @media(prefers-reduced-motion:reduce){.top:before,.home,.brand img,.brand strong.live-survey-title,.live-top-label,.banner,.banner h1 em,.portrait{animation:none!important}}
+
+/* Official DEO banner reused identically from the Qamardin homepage */
+.banner{grid-template-columns:1fr;gap:15px}
+.deo-official-banner{width:100%;max-width:100%;justify-self:stretch;padding:8px;background:#f6fcff;border:1px solid #cbe7f0;transform:none!important;animation:none!important;box-shadow:0 12px 24px #052b4c35}
+.deo-official-banner img{display:block;width:100%;height:auto;max-height:none;object-fit:contain;border-radius:10px;background:#e8f6fc}
+.deo-official-banner b,.deo-official-banner small{display:none}
+@media(max-width:700px){.deo-official-banner{width:100%;padding:5px;border-radius:12px}.deo-official-banner img{border-radius:8px}.banner{padding:20px 12px}}
