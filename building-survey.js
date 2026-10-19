@@ -42,5 +42,13 @@ async function exportExcel(selected=null){validIdentity();const records=selected
 records.forEach((record,i)=>{const r=i+6,v=record.entry,cells={B:cluster(),C:v.cell,D:v.feeder,E:v.blocks+' blocks / '+v.rooms+' rooms',F:+v.danger,G:+v.partial,H:v.requirement,I:v.substitute,J:v.remarks||''};for(const [col,value] of Object.entries(cells))sheet=setCell(sheet,col+r,value);sheet=setCached(sheet,'A'+r,i+1)});
 for(const [ref,value] of Object.entries({E46:records.length,F46:records.reduce((s,r)=>s+Number(r.entry.danger||0),0),G46:records.reduce((s,r)=>s+Number(r.entry.partial||0),0)}))sheet=setCached(sheet,ref,value);
 zip[name]=enc.encode(sheet);zip['xl/styles.xml']=enc.encode(monochrome(dec.decode(zip['xl/styles.xml'])));const blob=new Blob([fflate.zipSync(zip,{level:6})],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='Building_Safety_Survey_'+(selected&&selected.length===1?selected[0].entry.feeder_semis:state.semis)+'_'+new Date().toISOString().slice(0,10)+'.xlsx';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),45000);notice('DEO master Excel file downloaded')}
+const fieldGuide=$('#field-live-help'),fieldGuideTitle=$('#field-live-title'),fieldGuideDesc=$('#field-live-desc');let guideTimer=null;
+function fieldHelp(el){const label=el.closest('label');if(!label||!el.matches('input,textarea,select'))return;
+const tip=label.querySelector('.tip'),title=Array.from(label.childNodes).filter(n=>n.nodeType===3).map(n=>n.textContent.trim()).filter(Boolean).join(' ')||el.name||'Field guidance';
+fieldGuideTitle.textContent=title;fieldGuideDesc.textContent=tip?.textContent.trim()||('Complete '+title+' using accurate school information.');
+fieldGuide.hidden=false;fieldGuide.classList.remove('guide-exit');clearTimeout(guideTimer);guideTimer=setTimeout(()=>{fieldGuide.classList.add('guide-exit');setTimeout(()=>fieldGuide.hidden=true,230)},4800);
+}
+document.addEventListener('focusin',e=>{if(e.target.closest('#entry-form,#identity-form'))fieldHelp(e.target)});
+$('#field-live-close').onclick=()=>{fieldGuide.hidden=true;clearTimeout(guideTimer)};
 $('#download').onclick=()=>task(exportExcel);render();
 })();
