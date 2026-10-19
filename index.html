@@ -2001,7 +2001,24 @@ h1,h2,h3,h4{font-family:'Manrope','DM Sans',system-ui,sans-serif;letter-spacing:
 @keyframes qdcSupportIn{from{opacity:0;transform:translateY(8px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
 @media(max-width:600px){.support-launch{right:12px;bottom:12px;padding:8px 12px}.support-panel{right:12px;bottom:64px}}
 </style>
-<style id="deo-request-banner-style">.deo-request-banner{margin:0 0 18px;border:1px solid #9ccdc4;border-radius:15px;overflow:hidden;background:#f0fbf7;box-shadow:0 7px 22px #123d4010}.deo-request-banner img{display:block;width:100%;height:auto;object-fit:contain}.deo-request-banner figcaption{padding:12px 15px;color:#163d45;font:13px/1.65 system-ui,Arial}.deo-request-banner figcaption strong,.deo-request-banner figcaption span{display:block}.deo-request-banner figcaption strong{font-weight:800;margin-bottom:3px}#screen-login #seniority-data-entry{flex-wrap:wrap}#seniority-data-entry>.deo-request-banner{flex:0 0 100%;width:100%;margin:0}header .deo-request-banner{max-width:1100px;margin:0 auto 20px}header:has(>.deo-request-banner){display:block}@media(max-width:600px){.deo-request-banner{border-radius:10px}.deo-request-banner figcaption{font-size:12px;padding:10px 12px}}</style><script src="./qdc-unified-navigation.js?v=1" defer></script><style>
+<style id="deo-request-banner-style">.deo-request-banner{margin:0 0 18px;border:1px solid #9ccdc4;border-radius:15px;overflow:hidden;background:#f0fbf7;box-shadow:0 7px 22px #123d4010}.deo-request-banner img{display:block;width:100%;height:auto;object-fit:contain}.deo-request-banner figcaption{padding:12px 15px;color:#163d45;font:13px/1.65 system-ui,Arial}.deo-request-banner figcaption strong,.deo-request-banner figcaption span{display:block}.deo-request-banner figcaption strong{font-weight:800;margin-bottom:3px}#screen-login #seniority-data-entry{flex-wrap:wrap}#seniority-data-entry>.deo-request-banner{flex:0 0 100%;width:100%;margin:0}header .deo-request-banner{max-width:1100px;margin:0 auto 20px}header:has(>.deo-request-banner){display:block}@media(max-width:600px){.deo-request-banner{border-radius:10px}.deo-request-banner figcaption{font-size:12px;padding:10px 12px}}</style><script src="./qdc-unified-navigation.js?v=1" defer></script><style id="safety-home-live-2026">
+#screen-login .building-home-card{isolation:isolate;margin:16px 0;animation:buildingCardArrival .65s ease both}
+#screen-login .building-home-card>a{isolation:isolate;border:2px solid transparent!important;background:linear-gradient(135deg,#fafdff,#e9f5fe) padding-box,conic-gradient(from var(--safetyAngle,0deg),#22b5d6,#80def1,#ffbf5c,#3679ce,#22b5d6) border-box!important;border-radius:21px!important;padding:17px 19px!important;box-shadow:0 12px 35px #14527c2a!important;outline:1px solid #ffffffe8;outline-offset:-6px;animation:safetyBorderCycle 7s linear infinite;min-height:152px;overflow:hidden}
+#screen-login .building-home-card>a:before{width:0!important}
+#screen-login .building-home-card>a:after{animation:safetyShimmer 5s ease-in-out infinite;pointer-events:none}
+#screen-login .building-home-card>a:hover,#screen-login .building-home-card>a:focus-visible{transform:translateY(-4px)!important;box-shadow:0 16px 38px #176fa04a!important;outline:3px solid #eeb95d;outline-offset:3px}
+#screen-login .building-home-card .building-card-top{position:relative;z-index:2}
+#screen-login .building-home-card .building-pulse{animation:building-pulse 2s ease-in-out infinite}
+#screen-login .building-home-card h2{letter-spacing:-.04em}
+#screen-login .building-home-card .building-icon{filter:drop-shadow(0 4px 8px #308bb14d);animation:safetyIconLift 4s ease-in-out infinite}
+@property --safetyAngle{syntax:'<angle>';initial-value:0deg;inherits:false}
+@keyframes safetyBorderCycle{to{--safetyAngle:360deg}}
+@keyframes safetyShimmer{0%,65%{left:-85%}90%,100%{left:145%}}
+@keyframes safetyIconLift{50%{transform:translateY(-4px)}}
+@keyframes buildingCardArrival{from{opacity:.45;transform:translateY(12px)}to{opacity:1;transform:none}}
+@media(max-width:600px){#screen-login .building-home-card>a{min-height:138px;padding:14px 16px!important;border-radius:17px!important}#screen-login .building-home-card h2{font-size:20px!important}}
+@media(prefers-reduced-motion:reduce){#screen-login .building-home-card>a,#screen-login .building-home-card>a:after,#screen-login .building-home-card .building-icon{animation:none!important}}
+</style><style>
 .building-home-card{position:relative;margin:12px 0;font-family:system-ui,-apple-system,sans-serif;animation:building-enter .65s ease both}
 .building-home-card>a{display:block;position:relative;overflow:hidden;padding:16px 18px 15px 24px;border:2px solid #076343;border-radius:19px;background:linear-gradient(125deg,#fffdf6 0%,#f2faee 60%,#e1f1e5 100%);text-decoration:none;color:#164b36;box-shadow:0 5px 0 #1c765140,0 15px 26px #215d3b20;transition:transform .4s cubic-bezier(.2,.85,.2,1),box-shadow .4s}
 .building-home-card>a:before{content:"";position:absolute;inset:0 auto 0 0;width:6px;background:linear-gradient(#d7aa50,#f2d996,#d7aa50)}
