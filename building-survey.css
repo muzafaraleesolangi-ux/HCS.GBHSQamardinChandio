@@ -90,3 +90,23 @@ dialog#editor{width:100vw!important;max-width:100vw!important;max-height:100dvh!
 @keyframes deoPulse{50%{box-shadow:0 0 0 8px #159b8308}}
 @media(max-width:720px){.banner{grid-template-columns:1fr;gap:16px}.deo-live-card{padding:18px 16px}.deo-live-card h2{font-size:25px}}
 @media(prefers-reduced-motion:reduce){.deo-live-card,.deo-live-card:before,.deo-live-dot{animation:none!important}}
+
+
+/* DEO premium approved typography & animated border — 19 Oct 2026 */
+@property --deo-border-angle{syntax:"<angle>";initial-value:0deg;inherits:false}
+.deo-live-card{position:relative;isolation:isolate;overflow:hidden;padding:24px 22px;border:2px solid transparent;border-radius:22px;background:linear-gradient(135deg,#fff 0%,#f4f9ff 55%,#ebf6fd 100%) padding-box,conic-gradient(from var(--deo-border-angle),#e0b45c,#2b86bd,#64c8df,#e0b45c) border-box;box-shadow:0 16px 38px rgba(10,41,67,.16);animation:deoBorderRotate 9s linear infinite;transition:transform .28s ease,box-shadow .28s ease,filter .28s ease}
+.deo-live-card:hover,.deo-live-card:focus-within{transform:translateY(-4px);box-shadow:0 22px 44px rgba(10,41,67,.22);filter:brightness(1.02)}
+.deo-live-card::before{content:"";position:absolute;z-index:0;top:0;left:-65%;width:42%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.65),transparent);transform:skewX(-18deg);animation:deoShineMove 6s ease-in-out infinite;pointer-events:none}
+.deo-live-card>*{position:relative;z-index:1}
+.deo-live-card h2{margin:6px 0 4px!important;font-family:Inter,"Segoe UI",Arial,sans-serif!important;font-size:clamp(26px,3.2vw,34px)!important;font-weight:900!important;line-height:1.15!important;letter-spacing:-.04em!important;background:linear-gradient(90deg,#0f2f57 0%,#1b6fa8 45%,#0f2f57 100%);background-clip:text;-webkit-background-clip:text;color:#0f2f57;-webkit-text-fill-color:transparent}
+.deo-live-role{margin:8px 0 14px!important;font-family:Inter,"Segoe UI",Arial,sans-serif!important;font-size:14px!important;font-weight:800!important;letter-spacing:.03em!important;color:#11708a!important;text-transform:uppercase}
+.deo-live-intro{margin:0 0 16px!important;font-size:13px!important;line-height:1.75!important;color:#50697b!important;font-weight:500!important}
+.deo-live-kicker{display:inline-flex;align-items:center;gap:8px;padding:7px 12px;border-radius:999px;background:linear-gradient(90deg,#eef8ff,#f8fcff);border:1px solid #cfe5f4;color:#1d6f8d;font-size:10px;font-weight:850;letter-spacing:.08em;text-transform:uppercase}
+.deo-live-dot{width:9px;height:9px;border-radius:50%;background:#17a287;animation:deoPulsePremium 2s infinite}
+.deo-live-rule{width:82px;height:4px;margin:14px 0 12px;border-radius:999px;background:linear-gradient(90deg,#e2b04a,#2d84b7);box-shadow:0 4px 12px rgba(45,132,183,.18)}
+.deo-live-foot{display:inline-block;margin-top:4px;padding:8px 12px;border-radius:999px;border:1px solid #eadab3;background:linear-gradient(90deg,#fff8e8,#fffdf6);color:#7a5723;font-size:10px;font-weight:850;letter-spacing:.08em;text-transform:uppercase}
+@keyframes deoBorderRotate{to{--deo-border-angle:360deg}}
+@keyframes deoShineMove{0%,60%{left:-65%}100%{left:140%}}
+@keyframes deoPulsePremium{0%{box-shadow:0 0 0 0 rgba(23,162,135,.42)}70%,100%{box-shadow:0 0 0 10px rgba(23,162,135,0)}}
+@media(max-width:720px){.deo-live-card{padding:18px 16px;border-radius:18px}.deo-live-card h2{font-size:25px!important}.deo-live-role{font-size:13px!important}.deo-live-intro{font-size:12px!important}}
+@media(prefers-reduced-motion:reduce){.deo-live-card,.deo-live-card::before,.deo-live-dot{animation:none!important;transition:none!important}}
