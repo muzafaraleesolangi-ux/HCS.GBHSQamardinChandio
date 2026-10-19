@@ -1,0 +1,138 @@
+/* Cluster portal footer: Royal Navy Ivory */
+html body footer.royal-footer {
+  box-sizing: border-box;
+  position: relative;
+  display: block;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 22px clamp(12px, 2.4vw, 34px) 30px;
+  overflow: hidden;
+  background: radial-gradient(circle at 94% -10%, #f5e3af 0, transparent 27%), #fffaf0;
+  color: #fff9e8;
+  font-family: Manrope, "DM Sans", system-ui, sans-serif;
+  text-align: left;
+}
+.royal-footer, .royal-footer * { box-sizing: border-box; }
+.royal-footer .rf-shell {
+  position: relative;
+  max-width: 1560px;
+  margin: auto;
+  padding: clamp(22px, 2.7vw, 38px);
+  border: 2px solid #d9ad59;
+  border-radius: 26px;
+  background: radial-gradient(ellipse at 12% 120%, #164b87 0, transparent 36%),
+              radial-gradient(ellipse at 96% -18%, #164b87 0, transparent 34%),
+              linear-gradient(120deg, #06245a, #071e4a 62%, #061945);
+  box-shadow: 0 18px 38px #10264a2b, inset 0 0 0 5px #fff9e806;
+  overflow: hidden;
+  isolation: isolate;
+}
+.royal-footer .rf-shell::before,
+.royal-footer .rf-shell::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  width: 370px;
+  height: 370px;
+  border: 1px solid #dfbd7650;
+  border-radius: 40%;
+  transform: rotate(28deg);
+  pointer-events: none;
+}
+.royal-footer .rf-shell::before { left: -260px; bottom: -270px; box-shadow: 0 0 0 34px #d5a75e0e, 0 0 0 70px #d5a75e08; }
+.royal-footer .rf-shell::after { right: -315px; top: -310px; box-shadow: 0 0 0 45px #d5a75e0e; }
+.royal-footer .rf-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.02fr) minmax(320px, 1.17fr);
+  gap: clamp(18px, 2.5vw, 38px);
+  align-items: stretch;
+}
+.royal-footer .rf-school,
+.royal-footer .rf-center,
+.royal-footer .rf-people { min-width: 0; }
+.royal-footer .rf-center,
+.royal-footer .rf-people { border-left: 1px solid #ddbd715d; padding-left: clamp(18px, 2.3vw, 36px); }
+.royal-footer .rf-school { display: flex; align-items: center; gap: 17px; }
+.royal-footer .rf-logo { flex: 0 0 auto; width: clamp(67px, 6vw, 96px); height: clamp(67px, 6vw, 96px); object-fit: contain; filter: drop-shadow(0 6px 8px #0006); }
+.royal-footer .rf-kicker { display: block; color: #dfbc72; font-size: 10px; font-weight: 850; letter-spacing: .16em; line-height: 1.5; }
+.royal-footer .rf-school h3 { color: #f5d990; font-size: clamp(18px, 1.7vw, 25px); line-height: 1.2; letter-spacing: -.035em; margin: 6px 0 10px; }
+.royal-footer .rf-school p { color: #e3eaf6; font-size: 12px; line-height: 1.65; margin: 0; }
+.royal-footer .rf-center { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+.royal-footer .rf-book { color: #ebc775; width: 30px; height: 30px; margin-bottom: 7px; }
+.royal-footer .rf-title { color: #fff8e8; font-size: clamp(19px, 1.9vw, 28px); line-height: 1.26; font-weight: 850; letter-spacing: -.035em; overflow-wrap: anywhere; }
+.royal-footer .rf-rule { display: block; width: 72px; height: 3px; border-radius: 8px; background: linear-gradient(90deg, transparent, #e8c875, transparent); margin: 13px 0 11px; }
+.royal-footer .rf-credit { color: #e2eafa; font-size: 11px; margin: 0; }
+.royal-footer .rf-credit b { color: #f2d38d; }
+.royal-footer .rf-status { color: #b7c8df; font-size: 10px; line-height: 1.5; margin-top: 10px; }
+.royal-footer .rf-people-title { display: flex; align-items: center; gap: 7px; color: #f6d88f; font-size: 15px; font-weight: 850; line-height: 1.35; margin: 0 0 11px; }
+.royal-footer .rf-people-title svg { width: 20px; height: 20px; flex: none; fill: currentColor; }
+.royal-footer .rf-cards { display: grid; gap: 10px; }
+.royal-footer .rf-card {
+  --rf-x: 0deg; --rf-y: 0deg;
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  gap: 13px;
+  margin: 0;
+  padding: 8px 13px 8px 8px;
+  border: 1px solid #d9b970;
+  border-radius: 16px;
+  background: linear-gradient(118deg, #173c77, #0a285b 58%, #0d2b60);
+  box-shadow: 0 7px 14px #0003, inset 0 1px #fff2;
+  color: #fff8e7;
+  text-decoration: none;
+  overflow: hidden;
+  transform: perspective(800px) rotateX(var(--rf-x)) rotateY(var(--rf-y));
+  transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease;
+  will-change: transform;
+}
+.royal-footer .rf-card::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(108deg, transparent 25%, #fff5 50%, transparent 70%); transform: translateX(-140%); }
+.royal-footer .rf-card:hover,
+.royal-footer .rf-card:focus-visible { transform: perspective(800px) rotateX(var(--rf-x)) rotateY(var(--rf-y)) translateY(-4px); border-color: #ffe5a2; box-shadow: 0 16px 25px #0007, 0 0 0 2px #e4bd6847; }
+.royal-footer .rf-card:hover::after,
+.royal-footer .rf-card:focus-visible::after { animation: rf-sweep .75s ease forwards; }
+.royal-footer .rf-photo { display: block; flex: 0 0 clamp(78px, 7vw, 98px); width: clamp(78px, 7vw, 98px); height: clamp(78px, 7vw, 98px); border: 2px solid #efd498; border-radius: 11px; object-fit: cover; object-position: center 34%; box-shadow: 0 4px 10px #0007; }
+.royal-footer .rf-person { min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+.royal-footer .rf-person strong { display: block; color: #fbe4a0; font-size: clamp(12px, 1.05vw, 16px); line-height: 1.3; overflow-wrap: anywhere; }
+.royal-footer .rf-person span { display: block; color: #eef2fa; font-size: 12px; line-height: 1.35; }
+.royal-footer .rf-person small { color: #8eebbb; font-size: 10px; font-weight: 800; }
+.royal-footer .rf-wa { margin-left: auto; flex: none; display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: #148b60; color: white; }
+.royal-footer .rf-wa svg { width: 17px; height: 17px; fill: currentColor; }
+.royal-footer .rf-card:hover .rf-wa { background: #1ab875; }
+@keyframes rf-sweep { to { transform: translateX(140%); } }
+@media (max-width: 1050px) {
+  .royal-footer .rf-grid { grid-template-columns: minmax(0,1fr) minmax(0,1fr); }
+  .royal-footer .rf-people { grid-column: 1 / -1; border-left: 0; border-top: 1px solid #ddbd715d; padding: 18px 0 0; }
+  .royal-footer .rf-cards { grid-template-columns: repeat(2,minmax(0,1fr)); }
+}
+@media (max-width: 640px) {
+  html body footer.royal-footer { padding: 12px 10px 20px; }
+  .royal-footer .rf-shell { border-radius: 20px; padding: 19px 15px 22px; }
+  .royal-footer .rf-grid { display: flex; flex-direction: column; gap: 17px; }
+  .royal-footer .rf-center,
+  .royal-footer .rf-people { border-left: 0; border-top: 1px solid #ddbd715d; padding: 16px 0 0; }
+  .royal-footer .rf-school { gap: 12px; }
+  .royal-footer .rf-logo { width: 67px; height: 67px; }
+  .royal-footer .rf-school h3 { font-size: 18px; margin: 3px 0 5px; }
+  .royal-footer .rf-school p { font-size: 10px; }
+  .royal-footer .rf-title { font-size: 20px; }
+  .royal-footer .rf-cards { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 8px; }
+  .royal-footer .rf-card { flex-direction: column; align-items: flex-start; padding: 9px; min-height: 181px; gap: 7px; }
+  .royal-footer .rf-photo { width: 80px; height: 80px; flex: 0 0 80px; }
+  .royal-footer .rf-person strong { font-size: 11px; }
+  .royal-footer .rf-person span { font-size: 10px; }
+  .royal-footer .rf-person small { font-size: 9px; }
+  .royal-footer .rf-wa { position: absolute; right: 8px; top: 8px; width: 27px; height: 27px; }
+}
+@media (max-width: 350px) {
+  .royal-footer .rf-cards { grid-template-columns: 1fr; }
+  .royal-footer .rf-card { flex-direction: row; align-items: center; min-height: 0; }
+  .royal-footer .rf-wa { position: static; margin-left: auto; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .royal-footer .rf-card { transition: none; transform: none !important; }
+  .royal-footer .rf-card::after { animation: none !important; }
+}
+@media print { html body footer.royal-footer { display: none !important; } }
