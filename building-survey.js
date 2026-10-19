@@ -14,7 +14,7 @@ function cluster(){return state.school.trim()+' · SEMIS '+state.semis}
 function identityPreview(){const f=$('#identity-form').elements;$('#office-preview').textContent='OFFICE OF THE '+(f.school.value.trim()||'[CLUSTER HUB SCHOOL]').toUpperCase()+' · SEMIS '+(f.semis.value.trim()||'[CODE]')}
 $('#identity-form').elements.school.value=state.school;$('#identity-form').elements.semis.value=state.semis;
 const modeSelect=$('#cluster-mode');modeSelect.value=state.mode;
-function applyMode(){const main=modeSelect.value==='qamardin';state.mode=modeSelect.value;const f=$('#identity-form').elements;if(main){f.school.value=DIRECTORY.hub.name;f.semis.value=DIRECTORY.hub.semis} else if(state.school==='GBHS Qamar Din Chandio'&&state.semis==='416030640'){f.school.value='';f.semis.value=''}
+function applyMode(){const main=modeSelect.value==='qamardin';state.mode=modeSelect.value;const f=$('#identity-form').elements;if(main){f.school.value=DIRECTORY.hub.name;f.semis.value=DIRECTORY.hub.semis;state.school=DIRECTORY.hub.name;state.semis=DIRECTORY.hub.semis} else if(state.school==='GBHS Qamar Din Chandio'&&state.semis==='416030640'){f.school.value='';f.semis.value=''}
 f.school.readOnly=main;f.semis.readOnly=main;identityPreview();store()}
 modeSelect.addEventListener('change',()=>{state.savedByMode[state.mode]=state.records;state.records=state.savedByMode[modeSelect.value]||[];state.savedByMode[modeSelect.value]=state.records;state.school='';state.semis='';applyMode();render()});applyMode();loadDirectory();
 $('#identity-form').addEventListener('input',identityPreview);identityPreview();
