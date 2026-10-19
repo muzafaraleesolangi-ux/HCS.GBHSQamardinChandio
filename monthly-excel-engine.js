@@ -42,7 +42,7 @@ function buildExcel(d,m,semis){
    }
    if(offset>=task.items.length){taskIndex++;offset=0;}
   }
-  put('K56',(d.profile.hm||'')+'\n'+office.toUpperCase()+(d.profile.bps?' BS-'+d.profile.bps:'')+'\n'+(d.profile.school||''));
+  put('K56',(d.profile.hm||'')+'\n'+office.toUpperCase()+'\n'+(d.profile.school||''));
   Array.from(doc.getElementsByTagName('c')).filter(c=>c.getAttribute('t')==='s').forEach(c=>{const v=c.getElementsByTagName('v')[0];if(v)retainedStrings.add(Number(v.textContent));});
   zip['xl/worksheets/sheet'+page+'.xml']=enc.encode(serialize(doc));
   if(page>1){
