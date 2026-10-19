@@ -29,7 +29,7 @@ if(rows.length>40)throw Error('The DEO master workbook supports up to 40 rows.')
 if(!window.fflate||!window.BUILDING_SURVEY_TEMPLATE)throw Error('Excel template not loaded.');
 const bytes=Uint8Array.from(atob(window.BUILDING_SURVEY_TEMPLATE),s=>s.charCodeAt(0)),zip=fflate.unzipSync(bytes),path='xl/worksheets/sheet1.xml',enc=new TextEncoder(),dec=new TextDecoder();
 let sheet=dec.decode(zip[path]);
-sheet=setCell(sheet,'A2','OFFICE OF THE GBHS QAMAR DIN CHANDIO · SEMIS CODE 416030640');
+sheet=setCell(sheet,'A2','OFFICE OF THE CLUSTER HUB SCHOOL — GBHS QAMAR DIN CHANDIO · SEMIS CODE 416030640');
 sheet=setCell(sheet,'A3','SURVEY OF DANGEROUS / PARTIALLY DANGEROUS GOVERNMENT SCHOOL BUILDINGS');
 rows.forEach((v,i)=>{const n=i+6,fields={B:'GBHS Qamar Din Chandio · SEMIS 416030640',C:v.cell_hub,D:v.feeder_school+' · SEMIS '+v.feeder_semis,E:v.blocks+' blocks / '+v.rooms+' rooms',F:Number(v.danger),G:Number(v.partial),H:v.requirement,I:v.substitute,J:v.remarks||''};for(const [col,value] of Object.entries(fields))sheet=setCell(sheet,col+n,value);sheet=setCached(sheet,'A'+n,i+1)});
 for(const [ref,value] of Object.entries({E46:rows.length,F46:rows.reduce((n,r)=>n+Number(r.danger),0),G46:rows.reduce((n,r)=>n+Number(r.partial),0)}))sheet=setCached(sheet,ref,value);
