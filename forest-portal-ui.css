@@ -34,6 +34,14 @@
 @keyframes qf-menu{from{opacity:0;transform:translateY(8px) scale(.96)}to{opacity:1;transform:none}}
 @keyframes qf-help-pulse{50%{box-shadow:0 10px 29px #0e6c4b88}}
 body.qf-index > header{display:none!important}
+/* The Forest Navy masthead replaces the legacy homepage branding blocks.
+   Keep their DOM nodes for the existing profile scripts, but remove the duplicate UI. */
+body.qf-index #screen-login .rail > .brand,
+body.qf-index #screen-login .main > .topbar,
+body.qf-index #screen-login #home-overview > .pagehead,
+body.qf-index #screen-login #home-overview .welcome{display:none!important}
+body.qf-index #screen-login .rail > .navlabel{margin-top:12px}
+body.qf-index #screen-login #home-overview{padding-top:0}
 body.qf-survey > header.top{display:none!important}
 body.qf-index #support-launch,body.qf-index #support-panel,body.qf-seniority .whatsapp-help{display:none!important}
 @media(max-width:750px){.qf-hero{width:calc(100% - 18px);margin:9px auto 14px;padding:16px;border-left-width:7px;border-radius:20px}.qf-top{gap:9px;padding-bottom:13px}.qf-emblem{width:45px;height:45px;border-radius:10px}.qf-emblem img,.qf-emblem--sindh img{max-width:37px;max-height:37px}.qf-kicker{font-size:9px;line-height:1.3}.qf-dept{font-size:8px;line-height:1.35}.qf-content{grid-template-columns:1fr;gap:15px;padding-top:18px}.qf-title{font-size:clamp(25px,6.4vw,39px)}.qf-context{margin-top:13px;font-size:10px;min-height:31px}.qf-lead{margin-top:11px;font-size:13px}.qf-panels{gap:9px}.qf-panel{padding:12px 15px}.qf-panel p,.qf-panel:last-child p{font-size:14px}.qf-powered{margin:9px auto 14px;padding:12px;font-size:12px}.qf-powered strong{font-size:13px}.qf-help-toggle{min-height:48px;padding:7px 11px;font-size:12px}}
