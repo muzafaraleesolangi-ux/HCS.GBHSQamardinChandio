@@ -1,0 +1,40 @@
+/* Shared Forest Navy identity and one WhatsApp support control. */
+.qf-hero,.qf-hero *,.qf-support,.qf-support *{box-sizing:border-box}
+.qf-hero{position:relative;isolation:isolate;overflow:hidden;width:min(1288px,calc(100% - 32px));margin:18px auto 22px;padding:30px;background:linear-gradient(135deg,#142f3e,#0b574b);border:2px solid #b9ab80;border-left:13px solid #b9ab80;border-radius:26px;box-shadow:0 17px 36px #123b3427;color:#fff;font-family:Manrope,system-ui,sans-serif;animation:qf-rise .7s both}
+.qf-hero:before{content:"";position:absolute;inset:-35% -6% -40% auto;width:46%;border:1px solid #79b99b88;border-radius:50%;box-shadow:0 0 0 39px #65b29018,0 0 0 80px #65b29012,0 0 0 121px #65b2900a;pointer-events:none;z-index:-1}
+.qf-top{display:flex;align-items:center;gap:19px;padding-bottom:19px;border-bottom:1px solid #89b29c}
+.qf-emblem{display:grid;place-items:center;flex:none;width:64px;height:64px;border:2px solid #b9aa81;border-radius:14px;background:#fffdf6}
+.qf-emblem img{max-width:54px;max-height:54px;object-fit:contain}
+.qf-emblem--sindh{margin-left:auto}.qf-emblem--sindh img{max-width:52px;max-height:52px}
+.qf-kicker{display:block;color:#c8ead8;font-size:11px;font-weight:850;letter-spacing:.07em;text-transform:uppercase}
+.qf-dept{display:block;margin-top:7px;color:#fff;font-size:11px;font-weight:750;letter-spacing:.03em}
+.qf-content{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.08fr);gap:clamp(24px,5vw,72px);align-items:center;padding-top:26px}
+.qf-title{margin:0;color:#fff;font-size:clamp(28px,3.3vw,46px);line-height:1.15;font-weight:900;letter-spacing:-.035em;text-transform:uppercase}
+.qf-context{display:inline-flex;align-items:center;min-height:38px;margin-top:23px;padding:8px 16px;border-radius:99px;background:#c4b58c;color:#143d3a;font-size:12px;font-weight:900;letter-spacing:.03em}
+.qf-lead{max-width:36ch;margin:18px 0 0;color:#d9efe4;font-size:17px;line-height:1.6}
+.qf-panels{display:grid;gap:13px}
+.qf-panel{min-width:0;padding:16px 20px;border:1.5px solid #adcdb9;border-radius:17px;transition:transform .3s,box-shadow .3s}
+.qf-panel:hover{transform:translateY(-4px);box-shadow:0 12px 22px #091c1b33}
+.qf-panel:first-child{background:#f8f8ed;color:#164c45}.qf-panel:last-child{background:#155e53;color:#fff}
+.qf-label{display:inline-flex;padding:5px 13px;border-radius:99px;background:#d5b88d;color:#214039;font-size:11px;font-weight:900;letter-spacing:.05em}
+.qf-panel p{margin:10px 0 0;font-size:clamp(16px,1.45vw,21px);line-height:1.45;font-weight:760}
+.qf-panel:last-child p{font-size:clamp(15px,1.22vw,18px);font-weight:550}
+.qf-powered{width:min(1200px,calc(100% - 28px));margin:14px auto 20px;padding:16px 20px;border:1px solid #b5cfbd;border-left:5px solid #c6ae80;border-radius:15px;background:linear-gradient(120deg,#fffdf7,#e7f4eb);color:#17473d;font:750 14px/1.6 Manrope,system-ui,sans-serif;box-shadow:0 8px 22px #1d514218}
+.qf-powered strong{display:block;font-size:15px}.qf-powered span{display:block;margin-top:3px;color:#376358}
+.qf-support{position:fixed;right:max(14px,env(safe-area-inset-right));bottom:max(14px,env(safe-area-inset-bottom));z-index:2147482000;font-family:Manrope,system-ui,sans-serif}
+.qf-help-toggle{display:flex;align-items:center;gap:9px;min-height:52px;padding:9px 16px;border:2px solid #dcba86;border-radius:16px;background:linear-gradient(135deg,#0e5d51,#124836);color:#fff;box-shadow:0 9px 25px #143b2e55;font:900 13px Manrope,system-ui,sans-serif;cursor:pointer;transition:transform .3s,box-shadow .3s,background .3s;animation:qf-help-pulse 3s infinite}
+.qf-help-toggle:hover,.qf-help-toggle:focus-visible{transform:translateY(-5px) scale(1.03);box-shadow:0 17px 32px #153e3255;outline:2px solid #edcd96;outline-offset:2px}
+.qf-help-toggle svg,.qf-contact svg{width:23px;height:23px;fill:currentColor;flex:none}
+.qf-help-menu{position:absolute;right:0;bottom:calc(100% + 11px);width:min(320px,calc(100vw - 24px));padding:13px;border:1px solid #a9cabb;border-radius:18px;background:#fffdf8;box-shadow:0 16px 40px #123b3460;transform-origin:bottom right;animation:qf-menu .28s ease-out both}
+.qf-help-menu[hidden]{display:none!important}.qf-help-menu strong{display:block;color:#13483e;font-size:15px;margin:1px 3px 9px}
+.qf-contact{display:flex;align-items:center;gap:10px;min-height:56px;margin-top:8px;padding:8px 10px;border:1px solid #b9d7c8;border-radius:12px;background:#f0faf4;color:#155140;text-decoration:none;transition:transform .25s,background .25s}
+.qf-contact:hover,.qf-contact:focus-visible{transform:translateX(-4px);background:#dff6e9;outline:2px solid #70b894}
+.qf-contact span{display:grid;gap:1px;font-size:12px;font-weight:850}.qf-contact small{font-size:11px;font-weight:650;color:#477264}
+@keyframes qf-rise{from{opacity:.3;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+@keyframes qf-menu{from{opacity:0;transform:translateY(8px) scale(.96)}to{opacity:1;transform:none}}
+@keyframes qf-help-pulse{50%{box-shadow:0 10px 29px #0e6c4b88}}
+body.qf-index > header{display:none!important}
+body.qf-survey > header.top{display:none!important}
+body.qf-index #support-launch,body.qf-index #support-panel,body.qf-seniority .whatsapp-help{display:none!important}
+@media(max-width:750px){.qf-hero{width:calc(100% - 18px);margin:9px auto 14px;padding:16px;border-left-width:7px;border-radius:20px}.qf-top{gap:9px;padding-bottom:13px}.qf-emblem{width:45px;height:45px;border-radius:10px}.qf-emblem img,.qf-emblem--sindh img{max-width:37px;max-height:37px}.qf-kicker{font-size:9px;line-height:1.3}.qf-dept{font-size:8px;line-height:1.35}.qf-content{grid-template-columns:1fr;gap:15px;padding-top:18px}.qf-title{font-size:clamp(25px,6.4vw,39px)}.qf-context{margin-top:13px;font-size:10px;min-height:31px}.qf-lead{margin-top:11px;font-size:13px}.qf-panels{gap:9px}.qf-panel{padding:12px 15px}.qf-panel p,.qf-panel:last-child p{font-size:14px}.qf-powered{margin:9px auto 14px;padding:12px;font-size:12px}.qf-powered strong{font-size:13px}.qf-help-toggle{min-height:48px;padding:7px 11px;font-size:12px}}
+@media(prefers-reduced-motion:reduce){.qf-hero,.qf-help-toggle,.qf-help-menu{animation:none!important}.qf-panel,.qf-help-toggle,.qf-contact{transition:none!important}}
