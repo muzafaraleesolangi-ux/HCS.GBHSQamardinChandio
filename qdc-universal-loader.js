@@ -17,6 +17,58 @@ const SI_STEPS=[
 ["Assign Access","Workspace permissions"],
 ["Open Dashboard","Secure entry"]
 ];
+
+const STORED_IDENTITY_KEY='qdc_loader_identity_v2';
+const LINK_MARKER='qdc_portal_link_navigation';
+function sessionDescriptor(){
+ try{
+   const token=localStorage.getItem('qdc_token');
+   if(token)return {kind:'admin',secret:token};
+   const employee=JSON.parse(localStorage.getItem('qdc_employee_session')||'null');
+   if(employee&&employee.key)return {kind:'employee',secret:String(employee.key)};
+ }catch(_e){}
+ return null;
+}
+function signature(kind,secret){
+ let h=2166136261;const data=kind+':'+secret;
+ for(let i=0;i<data.length;i++){h^=data.charCodeAt(i);h=Math.imul(h,16777619)}
+ return (h>>>0).toString(16);
+}
+function rememberIdentity(identity){
+ const session=sessionDescriptor();if(!session||!identity||!identity.role)return;
+ try{localStorage.setItem(STORED_IDENTITY_KEY,JSON.stringify({
+  kind:session.kind,sig:signature(session.kind,session.secret),
+  role:String(identity.role).slice(0,50),photo_url:safePhoto(identity.photo_url||identity.photo)||''
+ }))}catch(_e){}
+}
+function clearIdentity(){try{localStorage.removeItem(STORED_IDENTITY_KEY)}catch(_e){}}
+function savedIdentity(){
+ const current=sessionDescriptor();if(!current)return null;
+ try{
+  const saved=JSON.parse(localStorage.getItem(STORED_IDENTITY_KEY)||'null');
+  if(saved&&saved.kind===current.kind&&saved.sig===signature(current.kind,current.secret))
+   return {role:saved.role||'AUTHORIZED USER',photo_url:safePhoto(saved.photo_url)||''};
+ }catch(_e){}
+ return {role:current.kind==='employee'?'EMPLOYEE':'AUTHORIZED USER',photo_url:''};
+}
+function markInternalNavigation(url){
+ try{const target=new URL(url,location.href);if(target.origin===location.origin)sessionStorage.setItem(LINK_MARKER,target.pathname)}catch(_e){}
+}
+function skipStartup(){
+ if(window.self!==window.top)return true;
+ const nav=performance.getEntriesByType('navigation')[0];
+ const type=nav&&nav.type||'navigate';
+ if(type==='reload'||type==='back_forward')return false;
+ try{
+  const current=location.pathname;const marked=sessionStorage.getItem(LINK_MARKER);
+  if(marked){sessionStorage.removeItem(LINK_MARKER);if(marked===current)return true}
+  if(document.referrer){
+   const prev=new URL(document.referrer,location.href);
+   if(prev.origin===location.origin&&prev.pathname!==current)return true;
+  }
+ }catch(_e){}
+ return false;
+}
 const NO_PHOTO='<svg viewBox="0 0 140 140" role="img" aria-label="Profile photograph not available"><circle cx="70" cy="70" r="68" fill="#205e4b"/><circle cx="70" cy="48" r="24" fill="#ebd9b1"/><path d="M12 129C19 63 121 63 128 129Z" fill="#bdcdb8"/></svg>';
 function personalSignIn(root,identity){
  root.classList.add('qdc-signin-only');
@@ -130,7 +182,7 @@ function initialize(root){
   requestAnimationFrame(frame);setTimeout(close,WIDTH+80);
 }
 function play(identity){
-  const signin=isFreshSignIn(identity);
+  const signin=isFreshSignIn(identity)||(!signInUntil&&!!identity&&!!identity.role&&!!identity._startup);
   let root=document.getElementById('qdc-cinematic-loader');
   if(root&&!root.classList.contains('qdc-op-hide')){
     if(!signin){customize(root,identity);return}
@@ -144,10 +196,24 @@ function play(identity){
   else customize(root,identity);
   initialize(root);
 }
-window.qdcUniversalLoader={play,show:play,expectSignIn,cancelPendingSignIn};
-if(document.readyState==='loading'){
-  // On index.html the original loader is already embedded; on all secondary
-  // pages this script is placed immediately after <body>, before the app.
-  if(!document.getElementById('qdc-cinematic-loader'))play();
-}else if(!document.getElementById('qdc-cinematic-loader'))play();
+function hasPendingSignIn(){return signInUntil>Date.now()}
+window.qdcUniversalLoader={play,show:play,expectSignIn,cancelPendingSignIn,hasPendingSignIn,rememberIdentity,clearIdentity,markInternalNavigation};
+document.addEventListener('click',event=>{
+ const anchor=event.target&&event.target.closest&&event.target.closest('a[href]');
+ if(!anchor||event.defaultPrevented||anchor.target&&anchor.target!=='_self'||anchor.hasAttribute('download'))return;
+ try{const url=new URL(anchor.href,location.href);
+   if(url.origin===location.origin&&url.pathname!==location.pathname)markInternalNavigation(url.href);
+ }catch(_e){}
+},true);
+const original=document.getElementById('qdc-cinematic-loader');
+if(skipStartup()){
+ if(original)original.remove();
+}else{
+ const identity=savedIdentity();
+ if(original){if(identity)personalSignIn(original,identity)}
+ else{
+   if(document.readyState==='loading')play(identity?{...identity,_startup:true}:null);
+   else if(document.body)play(identity?{...identity,_startup:true}:null);
+ }
+}
 })();
