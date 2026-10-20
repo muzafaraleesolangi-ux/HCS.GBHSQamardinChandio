@@ -76,6 +76,8 @@
   putText(q('.qdc7-overview-copy p',overview),'Review your record, save your progress and submit for admin verification.');
   q('#qdc7-edit span').innerHTML=icon('edit');
   q('#qdc7-print').hidden=true;
+  q('#qdc7-help')?.remove();
+  q('#qdc7-guide-dock')?.remove();
   const first=q('.qdc7-kpi-icon',overview);first.id='qsp-progress-ring';first.setAttribute('role','progressbar');first.setAttribute('aria-label','Profile completion');first.setAttribute('aria-valuemin','0');first.setAttribute('aria-valuemax','100');first.innerHTML=icon('leaf');
   qa('.qdc7-kpi-icon',overview).slice(1).forEach((n,i)=>n.innerHTML=icon(i?'info':'check'));
   topSubmit=button('qsp-submit-top','Submit for Verification','send');topSubmit.classList.add('qsp-primary');topSubmit.hidden=true;q('.qdc7-overview-actions',overview).append(topSubmit);

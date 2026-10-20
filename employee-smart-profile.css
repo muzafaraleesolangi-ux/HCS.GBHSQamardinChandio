@@ -90,3 +90,6 @@
 @media print{#screen-record.qdc-smart-profile .qsp-toolbar,.qsp-history-popup,#screen-record.qdc-smart-profile .qsp-draft-panel{display:none!important}#screen-record.qdc-smart-profile:not(.hm-tab-dashboard) :is(.letterhead,.printline){display:block!important}#screen-record.qdc-smart-profile:not(.hm-tab-dashboard) .qsp-workspace-grid{display:block!important}#screen-record.qdc-smart-profile:not(.hm-tab-dashboard) #r-fields{grid-template-columns:repeat(2,minmax(0,1fr))!important}#screen-record.qdc-smart-profile:not(.hm-tab-dashboard) #r-fields .field{break-inside:avoid;box-shadow:none!important;animation:none!important}#screen-record.qdc-smart-profile:not(.hm-tab-dashboard) .recordhead{background:white!important;color:black!important}#screen-record.qdc-smart-profile:not(.hm-tab-dashboard) .recordhead :is(h2,.sub){color:black!important}}
 .qsp-nature-art{height:80px;margin:12px -15px -18px;overflow:hidden;border-radius:0 0 14px 14px;opacity:.75;pointer-events:none}.qsp-nature-art svg{width:100%;height:100%;object-fit:cover;display:block}
 @property --qsp-progress{syntax:'<percentage>';inherits:false;initial-value:0%}
+
+/* No Live Guidelines launchers in the employee workspace. */
+#screen-record.qdc-smart-profile #qdc7-help,body:has(#screen-record.qdc-smart-profile:not(.hidden)) #qdc7-guide-dock{display:none!important}
