@@ -4,6 +4,7 @@ revoke all on schema admin_security from public,anon,authenticated;
 alter table public.portal_officers add column if not exists recovery_mobile text;
 alter table public.portal_officers add column if not exists password_change_required boolean not null default false;
 alter table public.portal_officers add column if not exists password_changed_at timestamptz;
+alter table public.portal_officers add column if not exists password_prehash boolean not null default false;
 alter table public.portal_sessions add column if not exists reset_only boolean not null default false;
 create unique index if not exists portal_officers_username_ci on public.portal_officers(lower(user_id));
 alter table public.portal_sessions drop constraint portal_sessions_user_id_fkey;
@@ -38,14 +39,14 @@ create or replace function public.sv_login(p_user text,p_pass text)
 returns jsonb language plpgsql security definer set search_path='' as $$
 declare o public.portal_officers;t text;k text;attempt admin_security.attempts;
 begin
- if p_user is null or length(p_user)>100 or p_pass is null or octet_length(p_pass)>72 then return null;end if;
+ if p_user is null or length(p_user)>100 or p_pass is null then return null;end if;
  k='login:'||encode(extensions.digest(lower(trim(p_user)),'sha256'),'hex');
  insert into admin_security.attempts(key) values(k) on conflict do nothing;
  select * into attempt from admin_security.attempts where key=k for update;
  if attempt.since<now()-interval '15 minutes' then update admin_security.attempts set count=0,since=now() where key=k;attempt.count=0;end if;
  if attempt.count>=10 then raise exception 'Too many sign-in attempts. Try again after 15 minutes.';end if;
  select * into o from public.portal_officers where lower(user_id)=lower(trim(p_user)) and is_active;
- if o.user_id is null or o.pass_hash<>extensions.crypt(p_pass,o.pass_hash) then
+ if o.user_id is null or o.pass_hash<>extensions.crypt(case when o.password_prehash then encode(extensions.digest(p_pass,'sha256'),'hex') else p_pass end,o.pass_hash) then
   update admin_security.attempts set count=count+1 where key=k;return null;
  end if;
  delete from admin_security.attempts where key=k;
@@ -82,8 +83,6 @@ begin
  if exists(select 1 from public.portal_officers where lower(user_id)=lower(uname) and user_id<>target.user_id) then raise exception 'That username is already in use';end if;
  changing=p_new_password is not null and p_new_password<>'';
  if changing then
-  if length(p_new_password)<10 or octet_length(p_new_password)>72 or p_new_password !~ '[A-Za-z]' or p_new_password !~ '[0-9]' then raise exception 'Use at least 10 characters including a letter and a number (maximum 72 bytes)';end if;
-  if extensions.crypt(p_new_password,target.pass_hash)=target.pass_hash then raise exception 'Choose a different password';end if;
   if target.role='MASTER' and target.user_id<>actor.user_id then raise exception 'Only the signed-in Master Admin can update this Master account';end if;
  end if;
  if p_request_id is not null then
@@ -92,7 +91,8 @@ begin
   if not changing then raise exception 'Set a temporary password to approve this request';end if;
  end if;
  update public.portal_officers set user_id=uname,recovery_mobile=nullif(phone,''),
- pass_hash=case when changing then extensions.crypt(p_new_password,extensions.gen_salt('bf',10)) else pass_hash end,
+ pass_hash=case when changing then extensions.crypt(encode(extensions.digest(p_new_password,'sha256'),'hex'),extensions.gen_salt('bf',10)) else pass_hash end,
+ password_prehash=case when changing then true else password_prehash end,
  password_change_required=case when changing then role<>'MASTER' else password_change_required end,
  password_changed_at=case when changing then now() else password_changed_at end
  where user_id=target.user_id;
@@ -139,9 +139,8 @@ declare target public.portal_officers;
 begin
  select o.* into target from public.portal_sessions s join public.portal_officers o on o.user_id=s.user_id where s.token=p_token and s.expires_at>now() and s.reset_only and o.is_active and o.password_change_required for update of o;
  if target.user_id is null then raise exception 'Temporary session expired. Sign in again.' using errcode='42501';end if;
- if length(coalesce(p_password,''))<10 or octet_length(p_password)>72 or p_password !~ '[A-Za-z]' or p_password !~ '[0-9]' then raise exception 'Use at least 10 characters including a letter and a number (maximum 72 bytes)';end if;
- if extensions.crypt(p_password,target.pass_hash)=target.pass_hash then raise exception 'Choose your own password, different from the temporary password';end if;
- update public.portal_officers set pass_hash=extensions.crypt(p_password,extensions.gen_salt('bf',10)),password_change_required=false,password_changed_at=now() where user_id=target.user_id;
+ if p_password is null or p_password='' then raise exception 'Enter a password';end if;
+ update public.portal_officers set pass_hash=extensions.crypt(encode(extensions.digest(p_password,'sha256'),'hex'),extensions.gen_salt('bf',10)),password_prehash=true,password_change_required=false,password_changed_at=now() where user_id=target.user_id;
  delete from public.portal_sessions where user_id=target.user_id and token<>p_token;
  update public.portal_sessions set reset_only=false,expires_at=now()+interval '365 days' where token=p_token;
  insert into admin_security.audit(actor,target_user,action) values(target.user_id,target.user_id,'PASSWORD_CHANGED');
