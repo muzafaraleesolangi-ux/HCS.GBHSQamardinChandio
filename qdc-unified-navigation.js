@@ -14,7 +14,10 @@ header>a[href='./index.html'],a.portal-home{display:none!important}
 @media(prefers-reduced-motion:reduce){.portal-navigation .portal-nav-button{transition:none!important}}
 `;document.head.append(style);
 const nav=document.createElement('nav');nav.className='portal-navigation';nav.setAttribute('aria-label','Portal navigation');
-nav.innerHTML='<div class="portal-nav-brand">CLUSTER HUB SCHOOL<br>GBHS QAMARDIN CHANDIO</div><div class="portal-nav-actions"><button type="button" class="portal-nav-button" data-portal-back><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14 6-6 6 6 6"/></svg>BACK</button><a class="portal-nav-button portal-nav-home" href="./index.html"><img src="./assets/gbhs-qamardin-chandio-logo.svg" alt="" aria-hidden="true">HOME</a></div>';
+nav.innerHTML='<div class="portal-nav-brand">CLUSTER HUB SCHOOL<br>GBHS QAMARDIN CHANDIO</div><div class="portal-nav-actions"><button type="button" class="portal-nav-button" data-portal-back><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14 6-6 6 6 6"/></svg>BACK</button><a class="portal-nav-button portal-nav-home" href="./index.html"><img src="./assets/qamardin-selected-logo-3.svg" alt="" aria-hidden="true">HOME</a></div>';
+const isHome=(location.pathname.split('/').pop()||'index.html')==='index.html';
+if(isHome)nav.querySelector('[data-portal-back]')?.remove();
 document.body.prepend(nav);
-nav.querySelector('[data-portal-back]').onclick=()=>{if(typeof window.qdcNavigateBack==='function')window.qdcNavigateBack();else if(history.length>1)history.back();else location.assign('./index.html');};
+const backControl=nav.querySelector('[data-portal-back]');
+if(backControl)backControl.onclick=()=>{if(typeof window.qdcNavigateBack==='function')window.qdcNavigateBack();else if(history.length>1)history.back();else location.assign('./index.html');};
 })();
