@@ -4353,12 +4353,14 @@ function addFlowHint(el,text){
 }
 function markSignupDone(el){ const c=el && el.closest('#login-step2 .grid2>div'); if(c) c.classList.add('flow-done'); }
 function advanceSignup(el,next,ok,text){
+  if(window.qdcForestAuth){if(ok)markSignupDone(el);return;}
   if(!el || !next || !ok) return;
   markSignupDone(el);
   addFlowHint(el,'✓ Good — next field →');
   setTimeout(()=>focusSignupField(next),220);
 }
 function signupInitFlow(){
+  if(window.qdcForestAuth){window.qdcForestAuth.startSignup();return;}
   const first=$("#su-cnic"); if(first) focusSignupField(first);
 }
 $("#su-cnic").addEventListener("input", e=>{
@@ -4385,10 +4387,11 @@ $("#btn-show-signup").addEventListener("click", showSignup);
 $("#btn-forgot-password").addEventListener("click", showForgot);
 $("#btn-reset-back").addEventListener("click", ()=>{ showLoginStep1(); $("#empid").focus(); });
 $("#btn-signin").addEventListener("click", async ()=>{
+  if(window.qdcForestAuth?.isBusy())return;
   const pid=$("#empid").value.trim(), pass=$("#emp-pass").value;
   if(!pid){ showErr("#loginerr","Please enter your PID or CNIC."); return; }
   if(!validPassword(pass)){ showErr("#loginerr","Password must be 1 to 8 characters."); return; }
-  hideErr("#loginerr"); netOn("Signing in…");
+  hideErr("#loginerr"); window.qdcForestAuth?.pending("#btn-signin","Signing in…"); netOn("Signing in…");
   try{
     const r=await api.employeeLogin(pid,pass); netOff();
     if(!r || !r.employee){
@@ -4396,13 +4399,14 @@ $("#btn-signin").addEventListener("click", async ()=>{
       else showErr("#loginerr", r && r.message ? r.message : "Invalid PID/CNIC or password.");
       return;
     }
+    await window.qdcForestAuth?.success();
     /* Open the Employee Profile directly on this same page, like before — the Profile screen
        already includes the HM Dashboard top tab for a School Head. */
     try{ localStorage.removeItem("qdc_token"); }catch(e){}
     TOKEN=null; OFFICER=null; IS_MASTER=false; CAN_ADMIN=false; CUR=null; CUR_KEY=null;
     try{ localStorage.setItem("qdc_employee_session", JSON.stringify({key:r.session_key})); }catch(e){}
     openRecordFrom(r,r.session_key,false,null);
-  }catch(e){ netFail("Sign in failed. Please try again."); }
+  }catch(e){ netFail("Sign in failed. Please try again."); }finally{window.qdcForestAuth?.finish();}
 });
 $("#btn-account-required-create").addEventListener("click", ()=>{ closeModal("#m-account-required"); showSignup(); });
 $("#btn-account-required-close").addEventListener("click", ()=>closeModal("#m-account-required"));
@@ -4411,6 +4415,7 @@ $("#emp-pass").addEventListener("keydown", e=>{ if(e.key==="Enter") $("#btn-sign
 $("#btn-pw-back").addEventListener("click", ()=>{ showLoginStep1(); $("#empid").focus(); });
 $("#btn-pw-back2").addEventListener("click", ()=>{ showLoginStep1(); $("#empid").focus(); });
 $("#btn-pw-continue").addEventListener("click", async ()=>{
+  if(window.qdcForestAuth?.isBusy())return;
   const cnic=cleanId($("#su-cnic").value), pid=$("#su-pid").value.trim(), dob=$("#su-dob").value.trim(), mobile=$("#su-mobile").value.trim();
   const pass=$("#su-pass").value, confirm=$("#su-confirm").value;
   if(!cnic && !pid){ showErr("#pwerr","Enter either PID or CNIC. One identifier is required."); return; }
@@ -4419,7 +4424,7 @@ $("#btn-pw-continue").addEventListener("click", async ()=>{
   if(!validMobile(mobile)){ showErr("#pwerr","Mobile number must be in 03xx-xxxxxxx format (11 digits)."); return; }
   if(!validPassword(pass)){ showErr("#pwerr","Password must be 1 to 8 characters maximum."); return; }
   if(pass!==confirm){ showErr("#pwerr","Passwords do not match."); return; }
-  hideErr("#pwerr"); netOn("Verifying employee record…");
+  hideErr("#pwerr"); window.qdcForestAuth?.pending("#btn-pw-continue","Creating account…"); netOn("Verifying employee record…");
   try{
     const r=await api.employeeSignup(pid,cnic,dob,pass,mobile); netOff();
     if(!r || r.ok!==true){ showErr("#pwerr", r && r.message ? r.message : "Account could not be created."); return; }
@@ -4432,7 +4437,7 @@ $("#btn-pw-continue").addEventListener("click", async ()=>{
     showLoginStep1();
     renderContinueBanner();
     msg("Registration successful","Your employee account has been created. Please sign in with your PID or CNIC and password to open your profile.","✔");
-  }catch(e){ netFail("Sign up failed. Please check your details and try again."); }
+  }catch(e){ netFail("Sign up failed. Please check your details and try again."); }finally{window.qdcForestAuth?.finish();}
 });
 $("#btn-reset-request").addEventListener("click", async ()=>{
   const cnic=cleanId($("#fr-cnic").value), pid=$("#fr-pid").value.trim(), dob=$("#fr-dob").value.trim(), mobile=$("#fr-mobile").value.trim();
@@ -4772,6 +4777,7 @@ $("#file-photo").addEventListener("change", async ev=>{
    ============================================================================ */
 /* Sign-in tabs: Employee / Admin, flipping the same card via a 3D transform */
 function sizeLoginFlip(){
+  if(document.querySelector("#home-auth.forest-auth"))return;
   const wrap = document.getElementById("loginflipwrap");
   const front = document.getElementById("loginface-front");
   const back = document.getElementById("loginface-back");
@@ -4784,6 +4790,7 @@ window.addEventListener("load", sizeLoginFlip);
 window.addEventListener("resize", sizeLoginFlip);
 
 function setLoginTab(face){
+  if(window.qdcForestAuth?.isBusy())return;
   const tabsEl=$("#logintabs"), card=$("#loginflipcard"), tEmp=$("#tab-emp"), tAdm=$("#tab-adm");
   if(!tabsEl || !card) return;
   tabsEl.dataset.active = face;
@@ -4810,15 +4817,17 @@ $("#tab-adm").addEventListener("click", ()=>setLoginTab("back"));
 $("#btn-a-cancel").addEventListener("click", ()=>setLoginTab("front"));
 $("#f-admin").addEventListener("submit", async (ev)=>{
   ev.preventDefault();
+  if(window.qdcForestAuth?.isBusy())return;
   hideErr("#a-err");
   const u=$("#a-user").value.trim(), p=$("#a-pass").value;
   if(!u||!p){ showErr("#a-err","Enter your user ID and password."); return; }
-  netOn("Signing in…");
+  window.qdcForestAuth?.pending("#btn-a-login","Signing in…"); netOn("Signing in…");
   try{
     const r = await api.login(u,p); netOff();
     if(!r){ showErr("#a-err","That user ID and password do not match."); return; }
+    await window.qdcForestAuth?.success();
     await completeAdminLogin(r);
-  }catch(e){ netFail(friendlyErr(e)); }
+  }catch(e){ netFail(friendlyErr(e)); }finally{window.qdcForestAuth?.finish();}
 });
 async function completeAdminLogin(r){
     /* Open the Admin Dashboard directly on this same page, like before. */
@@ -7509,7 +7518,7 @@ function renderUnifiedWorkspace(){
 $('#qdc-choose-photo')?.remove();$('#qdc-undo-photo')?.remove();
 $('#qdc-note').addEventListener('input',e=>{DRAFT_NOTE=e.target.value;PROFILE_UNSAVED=true;});
 </script>
-</body>
+<link rel="stylesheet" href="./forest-auth.css?v=1"><script src="./forest-auth.js?v=1" defer></script></body>
 </html>
 
 
