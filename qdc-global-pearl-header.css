@@ -91,3 +91,14 @@
 .qgh-installed.qgh-home>.portal-navigation{display:none!important}
 /* Avoid repeating the same official school emblem again inside the HM sign-in card. */
 .qgh-installed #auth-form .qdc-hm-login-brand{display:none!important}
+
+/* One school header only. Old header stays in the DOM for legacy app
+   selectors, but can never occupy space or cover authentication controls. */
+body.qgh-installed > header.qgh-retired-header,
+body.qgh-installed > header[hidden].qgh-retired-header {
+ display:none!important;visibility:hidden!important;position:absolute!important;
+ width:0!important;height:0!important;padding:0!important;margin:0!important;
+ overflow:hidden!important;pointer-events:none!important;
+}
+body.qgh-installed .qgh-retained-notice{width:min(1350px,calc(100% - 26px));margin:8px auto 14px}
+body.qgh-installed .qgh-retained-notice .deo-request-banner{margin:0!important}
