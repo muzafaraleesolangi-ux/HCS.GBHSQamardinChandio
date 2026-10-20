@@ -4,7 +4,7 @@
  */
 (function(){
  "use strict";
- const logo="assets/gbhs-qamardin-chandio-logo.svg";
+ const logo="./assets/qamardin-selected-logo-3.svg";
  const $=(sel,scope=document)=>scope.querySelector(sel);
  const visible=el=>!!el && !el.classList.contains("hidden") && !el.closest(".hidden") && getComputedStyle(el).display!=="none";
  const make=(tag,cls,txt)=>{const x=document.createElement(tag);if(cls)x.className=cls;if(txt)x.textContent=txt;return x;};
