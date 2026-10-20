@@ -2194,9 +2194,7 @@ body #support-panel .it-contact .aquib-profile-dp{display:block;flex:none;width:
  #qdc-cinematic-loader .qdc-up-step{left:auto;top:auto}
 }
 
-</style><link rel="stylesheet" href="./qdc-universal-loader.css?v=3"><link rel="stylesheet" href="./qdc-global-pearl-header.css?v=2">
-<script src="./qdc-global-pearl-header.js?v=2" defer></script>
-</head>
+</style><link rel="stylesheet" href="./qdc-universal-loader.css?v=3"></head>
 <body>
 <div class="qdc-op-intro" id="qdc-cinematic-loader" role="status" aria-live="off" aria-label="Cluster Hub School opening animation"><div class="qdc-op-crossline"></div><div class="qdc-up-campus" aria-hidden="true"></div><div class="qdc-up-reflection" aria-hidden="true"></div><div class="qdc-up-ambient" aria-hidden="true"></div><aside class="qdc-up-left" aria-label="Cluster highlights">
 <section class="qdc-up-card"><span class="qdc-up-ico" aria-hidden="true">▤</span><div class="qdc-up-card-title">Building<br>Brighter Futures</div><div class="qdc-up-card-sub">A unified portal for schools</div></section>
@@ -5172,11 +5170,7 @@ async function loadBoardAndShow(keepTab){
   try{
     BOARD = await api.board(TOKEN); netOff();
     if(!BOARD){ msg("Session ended","Please sign in again.","⚠"); $("#btn-logout").click(); return; }
-    if(!BOARD.officer || !BOARD.officer.role)throw new Error("Authenticated session has no authorized officer profile.");
     OFFICER = BOARD.officer; IS_MASTER = OFFICER.role==="MASTER"; CAN_ADMIN = (OFFICER.role==="MASTER"||OFFICER.role==="HUBHM");
-    /* Login restoration must not fail just because an optional dashboard widget
-       throws during rendering. Show the authorized workspace before enhancements. */
-    show("#screen-dash");
     STAFF = BOARD.employees||[]; REQUESTS = BOARD.requests||[]; HISTORY = BOARD.history||[]; DELETION_REQUESTS=[]; if(IS_MASTER){try{await refreshDeletionRequests();}catch(delErr){DELETION_REQUESTS=[];}}
     VERIFIED_MAP = new Map((BOARD.verified||[]).map(v=>[v.employee_id,v]));
     $("#btn-addemp").classList.toggle("hidden", !CAN_ADMIN);
@@ -5192,17 +5186,7 @@ async function loadBoardAndShow(keepTab){
     
     
     show("#screen-dash");
-  }catch(e){
-    netOff(); window.qdcUniversalLoader?.cancelPendingSignIn?.();
-    console.error("Qamardin dashboard login / render error:",e);
-    if(BOARD?.officer?.role){
-      try{show("#screen-dash");}catch(_e){}
-      msg("Signed in — dashboard needs refresh",friendlyErr(e),"⚠");
-    }else{
-      showErr("#a-err",friendlyErr(e));
-      msg("Sign-in check failed",friendlyErr(e),"⚠");
-    }
-  }
+  }catch(e){ netOff(); window.qdcUniversalLoader?.cancelPendingSignIn?.(); msg("Dashboard unavailable",friendlyErr(e),"⚠"); }
 }
 function byId(id){ return STAFF.find(e=>e.id===id) || null; }
 /* ---------- top-of-dashboard employee search (Master Admin + Cell Heads) ----------
