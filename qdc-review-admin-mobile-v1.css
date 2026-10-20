@@ -92,3 +92,17 @@
  #qef-review-dialog .qef-dialog-foot button{width:100%;min-height:45px!important}
 }
 @media(prefers-reduced-motion:reduce){#qef-review-dialog *{animation:none!important;transition:none!important}}
+
+/* Full office editor never conceals fields behind the employee's four-step wizard. */
+#screen-record.qdc-office-edit .qef-stepper[hidden],
+#screen-record.qdc-office-edit .qef-flow-footer[hidden],
+#screen-record.qdc-office-edit .qef-inline-review[hidden]{display:none!important}
+#screen-record.qdc-office-edit #r-fields .field{display:block!important;visibility:visible!important;opacity:1!important}
+#screen-record.qdc-office-edit #btn-emp-logout{display:none!important}
+#screen-record.qdc-office-edit #admin-edit-box{display:block!important;visibility:visible!important}
+#screen-record.qdc-office-edit .qef-activity{display:none!important}
+#screen-record.qdc-office-edit #r-fields{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:11px!important}
+@media(max-width:700px){
+ #screen-record.qdc-office-edit #r-fields{grid-template-columns:1fr!important}
+ #screen-record.qdc-office-edit #admin-edit-box{padding:12px!important}
+}
