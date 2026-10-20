@@ -2194,7 +2194,7 @@ body #support-panel .it-contact .aquib-profile-dp{display:block;flex:none;width:
  #qdc-cinematic-loader .qdc-up-step{left:auto;top:auto}
 }
 
-</style><link rel="stylesheet" href="./qdc-universal-loader.css?v=3"><style id="qdc-login-face-school-logo-style">#screen-login .qdc-login-face-school-logo{display:block;width:68px;height:68px;max-width:30vw;object-fit:contain;margin:0 auto 10px;filter:drop-shadow(0 5px 13px #0b4e3b48)}#screen-login #loginface-back .qdc-login-face-school-logo{width:62px;height:62px} @media(max-width:560px){#screen-login .qdc-login-face-school-logo{width:51px;height:51px;margin-bottom:6px}}</style></head>
+</style><link rel="stylesheet" href="./qdc-universal-loader.css?v=3"></head>
 <body>
 <div class="qdc-op-intro" id="qdc-cinematic-loader" role="status" aria-live="off" aria-label="Cluster Hub School opening animation"><div class="qdc-op-crossline"></div><div class="qdc-up-campus" aria-hidden="true"></div><div class="qdc-up-reflection" aria-hidden="true"></div><div class="qdc-up-ambient" aria-hidden="true"></div><aside class="qdc-up-left" aria-label="Cluster highlights">
 <section class="qdc-up-card"><span class="qdc-up-ico" aria-hidden="true">▤</span><div class="qdc-up-card-title">Building<br>Brighter Futures</div><div class="qdc-up-card-sub">A unified portal for schools</div></section>
@@ -2306,7 +2306,7 @@ body #support-panel .it-contact .aquib-profile-dp{display:block;flex:none;width:
     <div class="flipwrap" id="loginflipwrap">
       <div class="flipcard" id="loginflipcard">
 
-        <div class="face front card loginside" id="loginface-front" aria-hidden="false"><img class="qdc-login-face-school-logo" src="./assets/qamardin-selected-logo-3.svg" alt="GBHS Qamardin Chandio school logo">
+        <div class="face front card loginside" id="loginface-front" aria-hidden="false">
           <div class="lshead-graphic" aria-hidden="true">
             <span class="lgdot"></span><span class="lgdot"></span><span class="lgdot"></span><span class="lgdot"></span><span class="lgdot"></span><span class="lgdot"></span>
             <div class="lgcard">
@@ -2406,7 +2406,7 @@ body #support-panel .it-contact .aquib-profile-dp{display:block;flex:none;width:
           </div>
         </div>
 
-        <div class="face back card loginside" id="loginface-back" aria-hidden="true" inert><img class="qdc-login-face-school-logo" src="./assets/qamardin-selected-logo-3.svg" alt="GBHS Qamardin Chandio school logo">
+        <div class="face back card loginside" id="loginface-back" aria-hidden="true" inert>
           <span class="pill adm">&#9679;&nbsp; OFFICIALS ONLY</span>
           <div class="titlerow">
             <div class="ticon adm">
@@ -4640,7 +4640,7 @@ $("#btn-signin").addEventListener("click", async ()=>{
   const pid=$("#empid").value.trim(), pass=$("#emp-pass").value;
   if(!pid){ showErr("#loginerr","Please enter your PID or CNIC."); return; }
   if(!validPassword(pass)){ showErr("#loginerr","Password must be 1 to 8 characters."); return; }
-  hideErr("#loginerr"); window.qdcForestAuth?.pending("#btn-signin","Signing in…"); netOn("Signing in…");
+  hideErr("#loginerr"); window.qdcForestAuth?.pending("#btn-signin","Signing in…"); netOff();
   try{
     const r=await api.employeeLogin(pid,pass); netOff();
     if(!r || !r.employee){
@@ -4656,7 +4656,7 @@ $("#btn-signin").addEventListener("click", async ()=>{
     TOKEN=null; OFFICER=null; IS_MASTER=false; CAN_ADMIN=false; CUR=null; CUR_KEY=null;
     try{ localStorage.setItem("qdc_employee_session", JSON.stringify({key:r.session_key})); }catch(e){}
     openRecordFrom(r,r.session_key,false,null);
-  }catch(e){ netFail("Sign in failed. Please try again."); }finally{window.qdcForestAuth?.finish();}
+  }catch(e){ netOff(); showErr("#loginerr","Sign in failed. Please try again."); }finally{window.qdcForestAuth?.finish();}
 });
 $("#btn-account-required-create").addEventListener("click", ()=>{ closeModal("#m-account-required"); showSignup(); });
 $("#btn-account-required-close").addEventListener("click", ()=>closeModal("#m-account-required"));
@@ -5072,14 +5072,14 @@ $("#f-admin").addEventListener("submit", async (ev)=>{
   hideErr("#a-err");
   const u=$("#a-user").value.trim(), p=$("#a-pass").value;
   if(!u||!p){ showErr("#a-err","Enter your user ID and password."); return; }
-  window.qdcForestAuth?.pending("#btn-a-login","Signing in…"); netOn("Signing in…");
+  window.qdcForestAuth?.pending("#btn-a-login","Signing in…"); netOff();
   try{
     const r = await api.login(u,p); netOff();
     if(!r){ showErr("#a-err","That user ID and password do not match."); return; }
     await window.qdcForestAuth?.success();
     window.qdcUniversalLoader?.expectSignIn?.();
     await completeAdminLogin(r);
-  }catch(e){ netFail(friendlyErr(e)); }finally{window.qdcForestAuth?.finish();}
+  }catch(e){ netOff(); showErr("#a-err",friendlyErr(e)); }finally{window.qdcForestAuth?.finish();}
 });
 async function completeAdminLogin(r){
     /* Open the Admin Dashboard directly on this same page, like before. */
