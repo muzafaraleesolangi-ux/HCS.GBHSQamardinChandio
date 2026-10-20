@@ -58,7 +58,8 @@ function skipStartup(){
  if(window.self!==window.top)return true;
  const nav=performance.getEntriesByType('navigation')[0];
  const type=nav&&nav.type||'navigate';
- if(type==='reload'||type==='back_forward'){try{sessionStorage.removeItem(LINK_MARKER)}catch(_e){}return false}
+ if(type==='reload'){try{sessionStorage.removeItem(LINK_MARKER)}catch(_e){}return false}
+ if(type==='back_forward'){try{sessionStorage.removeItem(LINK_MARKER)}catch(_e){}return true}
  try{
   const current=location.pathname;const marked=sessionStorage.getItem(LINK_MARKER);
   if(marked){sessionStorage.removeItem(LINK_MARKER);if(marked===current)return true}
