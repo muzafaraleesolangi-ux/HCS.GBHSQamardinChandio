@@ -86,3 +86,8 @@
 }
 @media(max-width:380px){.qgh-main{grid-template-columns:46px minmax(0,1fr) 46px;gap:3px}.qgh-logo{width:43px;height:43px}.qgh-name{font-size:14px}.qgh-heading-box{padding:12px 3px}.qgh-kicker{letter-spacing:0;font-size:7px}.qgh-loc{font-size:7px}.qgh-department{font-size:7px}.qgh-card{padding:8px 3px;min-height:86px}.qgh-card p{font-size:8px}}
 @media(prefers-reduced-motion:reduce){.qgh-portal *,.qgh-portal :before,.qgh-portal :after{animation:none!important;transition:none!important}}
+
+/* The shared four-link glass bar replaces the redundant two-link homepage mini-nav. */
+.qgh-installed.qgh-home>.portal-navigation{display:none!important}
+/* Avoid repeating the same official school emblem again inside the HM sign-in card. */
+.qgh-installed #auth-form .qdc-hm-login-brand{display:none!important}
