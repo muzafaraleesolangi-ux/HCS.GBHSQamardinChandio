@@ -3714,7 +3714,7 @@ function show(id){
   if(id!=="#screen-record" && typeof resetTransientProfileEditState==='function') resetTransientProfileEditState();
   SCREENS.forEach(s=>$(s).classList.toggle("hidden", s!==id));
   window.scrollTo({top:0,behavior:"instant"});
-  if(fromHome && window.qdcUniversalLoader?.hasPendingSignIn?.()){
+  if(fromHome && window.qdcUniversalLoader){
     try{
       let role="",name="",photo="";
       if(id==="#screen-record" && CUR && !CUR_FROMDASH){
@@ -3731,7 +3731,8 @@ function show(id){
       if(role){
         const identity={role,name,photo_url:photo};
         window.qdcUniversalLoader.rememberIdentity(identity);
-        window.qdcUniversalLoader.play(identity);
+        if(window.qdcUniversalLoader.hasPendingSignIn())window.qdcUniversalLoader.play(identity);
+        else window.qdcUniversalLoader.updateVisibleIdentity(identity);
       }
     }catch(_e){}
   }
@@ -7247,7 +7248,7 @@ $$(".modal").forEach(m=>m.addEventListener("click",e=>{ if(e.target===m) closeMo
         return;
       }
     }catch(e){ netOff(); }
-    TOKEN=null; try{ localStorage.removeItem("qdc_token"); }catch(e){}
+    TOKEN=null; try{ localStorage.removeItem("qdc_token"); }catch(e){} window.qdcUniversalLoader?.clearIdentity?.();
   }
   await loadPublic();
   renderHomePublic(); paintFoot();
@@ -7261,7 +7262,7 @@ $$(".modal").forEach(m=>m.addEventListener("click",e=>{ if(e.target===m) closeMo
       const r=await api.lookup(employeeSession.key, employeeSession.dob||null); netOff();
       if(r && r.employee){ CUR=null; openRecordFrom(r,employeeSession.key,false,employeeSession.dob||null); return; }
       /* The account/record is no longer available; only then clear the session. */
-      try{ localStorage.removeItem("qdc_employee_session"); }catch(e){}
+      try{ localStorage.removeItem("qdc_employee_session"); }catch(e){} window.qdcUniversalLoader?.clearIdentity?.();
     }catch(e){
       netFail("Your session is saved. Please check your internet connection and try again.");
       /* Keep the saved employee session intact until the user explicitly logs out. */
