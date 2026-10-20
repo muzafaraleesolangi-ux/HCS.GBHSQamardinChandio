@@ -11,9 +11,9 @@
     'building-survey.html': 'Opening building safety survey'
   };
   const css = `
-    .qdc-page-loader{position:fixed;inset:0;z-index:2147483000;display:grid;place-items:center;padding:24px;background:linear-gradient(135deg,#05183ded,#0b2d63ef);backdrop-filter:blur(8px);color:#fff;text-align:center;font:700 14px/1.5 Manrope,system-ui,sans-serif;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .25s ease,visibility .25s ease}
+    .qdc-page-loader{position:fixed;inset:0;z-index:2147483000;display:grid;place-items:center;padding:24px;background:radial-gradient(ellipse at 48% 37%,#126647f5,#07392dec 65%,#031910f5);backdrop-filter:blur(8px);color:#fff;text-align:center;font:700 14px/1.5 Manrope,system-ui,sans-serif;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .25s ease,visibility .25s ease}
     .qdc-page-loader.is-active{opacity:1;visibility:visible;pointer-events:auto}
-    .qdc-page-loader__mark{display:grid;place-items:center;width:70px;height:70px;margin:0 auto 16px;border:2px solid #f0d084;border-radius:19px;color:#f4d48e;background:#ffffff13;box-shadow:0 0 0 9px #dfbf6e14;font-size:31px;animation:qdc-loader-breathe .8s ease-in-out infinite alternate}
+    .qdc-page-loader__mark{display:grid;place-items:center;width:70px;height:70px;margin:0 auto 16px;border:2px solid #f0d084;border-radius:50%;color:#f4d48e;background:#073c2ac7;box-shadow:0 0 0 9px #dfbf6e14;font-size:31px;animation:qdc-loader-breathe .8s ease-in-out infinite alternate}
     .qdc-page-loader__title{display:block;font-size:clamp(17px,3vw,23px);letter-spacing:-.03em}
     .qdc-page-loader__hint{display:block;margin:5px 0 18px;color:#cbd9ed;font-size:11px;font-weight:500}
     .qdc-page-loader__bar{display:block;width:190px;height:4px;margin:auto;overflow:hidden;border-radius:9px;background:#ffffff36}
@@ -33,7 +33,7 @@
   overlay.className = 'qdc-page-loader';
   overlay.setAttribute('role', 'status');
   overlay.setAttribute('aria-live', 'polite');
-  overlay.innerHTML = '<div><span class="qdc-page-loader__mark" aria-hidden="true">✦</span><strong class="qdc-page-loader__title"></strong><small class="qdc-page-loader__hint">Preparing your workspace...</small><span class="qdc-page-loader__bar" aria-hidden="true"></span></div>';
+  overlay.innerHTML = '<div><span class="qdc-page-loader__mark" aria-hidden="true"><img src="./assets/qamardin-selected-logo-3.svg" alt="" style="width:55px;height:55px;object-fit:contain"></span><strong class="qdc-page-loader__title"></strong><small class="qdc-page-loader__hint">Preparing your workspace...</small><span class="qdc-page-loader__bar" aria-hidden="true"></span></div>';
   document.body.append(overlay);
   const title = overlay.querySelector('.qdc-page-loader__title');
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
