@@ -2039,8 +2039,70 @@ body #support-panel .it-contact .aquib-profile-dp{display:block;flex:none;width:
 </style>
 <style id="muzafar-profile-dp-style">.pearl-contacts .muzafar-profile-dp{display:block;flex:none;width:36px;height:36px;border-radius:50%;object-fit:cover;object-position:center 34%;border:2px solid #d8ad56;box-shadow:0 2px 8px rgba(16,72,51,.18)}body #support-panel .it-contact .muzafar-profile-dp{display:block;flex:none;width:42px;height:42px;border-radius:50%;object-fit:cover;object-position:center 34%;border:2px solid #d8ad56;box-shadow:0 2px 8px rgba(16,72,51,.18)}</style><link rel="stylesheet" href="./royal-footer.css?v=3"><script src="./royal-footer.js?v=1" defer></script><script src="./qdc-page-transitions.js?v=2" defer></script><link rel="stylesheet" href="./forest-portal-ui.css?v=5"><script src="./forest-portal-ui.js?v=5" defer></script><link rel="stylesheet" href="./admin-accounts.css?v=1"><script src="./admin-accounts.js?v=4" defer></script><style id="qdc-stat-peek-style">
 .qdc-stat-peek,.qdc-stat-peek *{box-sizing:border-box}.qdc-stat-peek{position:fixed;z-index:100050;padding:10px;border:1px solid #b6cbb9;border-top:3px solid #bfa169;border-radius:15px;background:#fffef8;color:#173e33;box-shadow:0 14px 36px #183d3433;font-family:Manrope,system-ui,sans-serif;opacity:0;transform:translateY(-5px) scale(.985);transition:opacity .16s ease,transform .16s ease;pointer-events:none}.qdc-stat-peek[hidden]{display:none!important}.qdc-stat-peek.is-open{opacity:1;transform:none;pointer-events:auto}.qdc-peek-head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:0 3px 8px;border-bottom:1px solid #e4eadf}.qdc-peek-head strong{font-size:13px;font-weight:900}.qdc-peek-head button{width:30px;height:30px;border:1px solid #d6dfd1;border-radius:9px;background:#edf3e9;color:#244e3b;font:22px/1 system-ui;cursor:pointer}.qdc-peek-list{overflow:auto;overscroll-behavior:contain;scrollbar-width:thin;padding-top:4px}.qdc-peek-row{display:flex;align-items:center;gap:10px;margin:0;padding:9px 3px;border-bottom:1px solid #edf0e8}.qdc-peek-row:last-child{border:0}.qdc-peek-avatar{display:grid;place-items:center;flex:none;width:43px;height:43px;border:1px solid #c8d6bd;border-radius:11px;background:#eaf1e2;color:#305541;font-size:13px;font-weight:900;overflow:hidden}.qdc-peek-avatar img{display:block;width:100%;height:100%;object-fit:cover}.qdc-peek-who{min-width:0}.qdc-peek-who b{display:block;font-size:12px;line-height:1.35;font-weight:850;overflow-wrap:anywhere}.qdc-peek-who small{display:block;margin-top:3px;font-size:10px;line-height:1.35;color:#627868}.qdc-peek-who em{display:block;margin-top:2px;font-size:9px;font-style:normal;color:#977747}.qdc-peek-empty{font-size:12px;padding:12px}.qdc-peek-head button:focus-visible{outline:2px solid #a98b47;outline-offset:2px}@media(max-width:540px){.qdc-stat-peek{padding:8px;border-radius:12px}.qdc-peek-avatar{width:37px;height:37px}.qdc-peek-row{gap:8px;padding:8px 3px}.qdc-peek-who b{font-size:11px}.qdc-peek-head strong{font-size:12px}}@media(prefers-reduced-motion:reduce){.qdc-stat-peek{transition:none;transform:none}}
+</style><style id="qdc-cinematic-loader-style">
+#qdc-cinematic-loader{position:fixed;inset:0;z-index:2147483000;background:radial-gradient(ellipse at 49% 37%,#126047 0%,#06392c 46%,#021811 100%);color:#f8e7b7;display:grid;place-items:center;overflow:auto;font-family:Manrope,"Segoe UI",sans-serif;transition:opacity .8s ease,visibility .8s;isolation:isolate}
+#qdc-cinematic-loader.qdc-leaving{opacity:0;visibility:hidden;pointer-events:none}
+#qdc-cinematic-loader:before{content:"";position:absolute;inset:-40%;background:repeating-radial-gradient(circle at center,transparent 0 57px,#bbdfbf08 58px 59px);animation:qdcBackdrop 28s linear infinite;pointer-events:none}
+#qdc-cinematic-loader:after{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 35%,#e2bb4510 48%,transparent 61%);animation:qdcSweep 7s ease-in-out infinite;pointer-events:none}
+.qdc-cl-shell{width:min(1150px,100%);padding:32px 24px;position:relative;z-index:2}
+.qdc-cl-head,.qdc-cl-footer{display:flex;align-items:center;justify-content:space-between;gap:15px;font-size:11px;letter-spacing:2px;color:#e6c982}
+.qdc-cl-head b{font-size:14px;letter-spacing:2px;color:#f8e9bf}
+.qdc-cl-main{display:grid;grid-template-columns:minmax(0,1fr) minmax(270px,390px);align-items:center;gap:35px;margin:42px auto 30px}
+.qdc-cl-orb{width:min(390px,76vw);aspect-ratio:1;margin:0 auto;display:grid;place-items:center;position:relative}
+.qdc-cl-orb:before,.qdc-cl-orb:after{content:"";position:absolute;inset:3%;border-radius:50%;border:1px solid #b9e8b75c;animation:qdcRotate 17s linear infinite;box-shadow:0 0 35px #49cca121}
+.qdc-cl-orb:after{inset:0;border:2px dashed #deb96c76;animation-direction:reverse;animation-duration:25s;opacity:.7}
+.qdc-cl-track{position:absolute;inset:8%;border-radius:50%;background:conic-gradient(#f6d586 0deg,#f6d586 var(--qdc-angle,20deg),#276c55 var(--qdc-angle,20deg),#276c55 360deg);box-shadow:0 0 32px #d4ae5250;animation:qdcGlow 3s ease-in-out infinite}
+.qdc-cl-track:after{content:"";position:absolute;inset:9px;border-radius:50%;background:radial-gradient(circle at 42% 28%,#155c49,#042b21 76%);border:1px solid #e3c16e75}
+.qdc-cl-logo{position:relative;z-index:3;width:62%;height:62%;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:13px;text-align:center}
+.qdc-cl-logo img{height:54%;max-width:78%;object-fit:contain;filter:drop-shadow(0 7px 12px #0008);animation:qdcHover 4s ease-in-out infinite}
+.qdc-cl-logo strong{font:700 clamp(15px,2vw,22px) Georgia,serif;letter-spacing:2px;color:#f5df9f}
+.qdc-cl-logo small{font-size:9px;letter-spacing:2px;color:#c0e1cf}
+.qdc-cl-orb-progress{text-align:center;font:700 44px Georgia,serif;color:#f1d48a}
+.qdc-cl-meter{height:8px;background:#285441;border:1px solid #d6b66c77;border-radius:30px;overflow:hidden;box-shadow:0 0 12px #cda95b22}
+.qdc-cl-meter>i{height:100%;width:0;display:block;background:linear-gradient(90deg,#caa04c,#ffe5a1);border-radius:30px;transition:width .3s ease;box-shadow:0 0 15px #f5d789}
+.qdc-cl-caption{text-align:center;margin:12px 0 0;font-size:13px;letter-spacing:2.5px;color:#f5e9cd}
+.qdc-cl-sub{text-align:center;font-size:11px;color:#a9cbb9;margin-top:7px}
+.qdc-cl-steps{display:grid;gap:12px}
+.qdc-cl-step{display:flex;align-items:center;gap:13px;padding:15px 17px;border:1px solid #588a726b;border-radius:15px;background:linear-gradient(100deg,#ffffff0c,#ffffff03);backdrop-filter:blur(12px);transition:background .4s,border-color .4s,transform .4s,box-shadow .4s;color:#b5d1c1}
+.qdc-cl-step.qdc-active{background:linear-gradient(90deg,#9f7d3047,#ffffff0a);border-color:#f6d68c;box-shadow:0 0 22px #c89b353c;transform:translateX(5px);color:#ffebbb}
+.qdc-cl-step.qdc-complete{border-color:#3aaa817f}
+.qdc-cl-dot{width:36px;height:36px;border:1px solid #6e9c84;border-radius:50%;display:grid;place-items:center;font-weight:800;flex:none}
+.qdc-cl-step.qdc-active .qdc-cl-dot{background:#deb660;color:#152a1d;box-shadow:0 0 18px #f4d077ab}
+.qdc-cl-step.qdc-complete .qdc-cl-dot{background:#0d8b61;color:#fff}
+.qdc-cl-step strong{display:block;font-size:13px;color:inherit}.qdc-cl-step small{display:block;font-size:10px;color:#91bba8;margin-top:4px}
+.qdc-cl-footer{justify-content:center;letter-spacing:1px;color:#b5d0bc;text-align:center}
+@keyframes qdcRotate{to{transform:rotate(360deg)}}@keyframes qdcHover{50%{transform:translateY(-7px)}}@keyframes qdcGlow{50%{filter:brightness(1.24)}}@keyframes qdcBackdrop{to{transform:rotate(360deg)}}@keyframes qdcSweep{50%{transform:translateX(50%)}} 
+@media(max-width:760px){.qdc-cl-shell{padding:20px 16px}.qdc-cl-main{display:flex;flex-direction:column;gap:22px;margin:24px auto}.qdc-cl-orb{width:min(275px,65vw)}.qdc-cl-steps{width:min(450px,100%);gap:7px}.qdc-cl-step{padding:9px 11px}.qdc-cl-head{font-size:8px;letter-spacing:1px}.qdc-cl-head b{font-size:10px}.qdc-cl-orb-progress{font-size:32px}}
+@media(prefers-reduced-motion:reduce){#qdc-cinematic-loader *,#qdc-cinematic-loader:before,#qdc-cinematic-loader:after{animation:none!important;transition:none!important}}
 </style></head>
 <body>
+<div id="qdc-cinematic-loader" role="status" aria-label="Loading Qamardin Cluster portal">
+<div class="qdc-cl-shell">
+<div class="qdc-cl-head"><span>✦ &nbsp; <b>QAMARDIN CLUSTER</b><span style="display:block;margin:6px 0 0 28px">GBHS QAMARDIN CHANDIO</span></span><span>EDUCATION · PEOPLE · PROGRESS</span></div>
+<div class="qdc-cl-main"><div><div class="qdc-cl-orb"><div class="qdc-cl-track"></div><div class="qdc-cl-logo"><img id="qdc-cl-official-logo" alt="Official homepage emblem"><strong>QAMARDIN<br>CLUSTER</strong><small>GBHS QAMARDIN CHANDIO</small></div></div><div class="qdc-cl-orb-progress"><span id="qdc-cl-pct">0</span>%</div><div class="qdc-cl-meter"><i id="qdc-cl-meter"></i></div><p class="qdc-cl-caption">Portal startup sequence</p><p class="qdc-cl-sub" id="qdc-cl-message">Loading your workspace…</p></div>
+<div class="qdc-cl-steps">
+<div class="qdc-cl-step qdc-active"><span class="qdc-cl-dot">1</span><span><strong>Connecting services</strong><small>Establishing portal connections</small></span></div>
+<div class="qdc-cl-step"><span class="qdc-cl-dot">2</span><span><strong>Syncing school cells</strong><small>Preparing school information</small></span></div>
+<div class="qdc-cl-step"><span class="qdc-cl-dot">3</span><span><strong>Loading staff profiles</strong><small>Preparing employee workspace</small></span></div>
+<div class="qdc-cl-step"><span class="qdc-cl-dot">4</span><span><strong>Checking secure access</strong><small>Restoring portal session</small></span></div>
+<div class="qdc-cl-step"><span class="qdc-cl-dot">5</span><span><strong>Finalizing homepage</strong><small>Almost ready</small></span></div>
+</div></div><div class="qdc-cl-footer">✧ &nbsp; SECURE EDUCATION PORTAL &nbsp; · &nbsp; GBHS QAMARDIN CHANDIO</div>
+</div></div>
+<script id="qdc-cinematic-loader-script">
+(function(){
+const root=document.getElementById('qdc-cinematic-loader');if(!root)return;
+let p=0,ready=false,finished=false;const started=performance.now();
+const items=Array.from(root.querySelectorAll('.qdc-cl-step')),pct=document.getElementById('qdc-cl-pct'),meter=document.getElementById('qdc-cl-meter'),msg=document.getElementById('qdc-cl-message');
+function setLogo(){const source=document.getElementById('crest-img');const dest=document.getElementById('qdc-cl-official-logo');if(source&&source.src&&source.src!==location.href){dest.src=source.src;return true}return false}
+function update(){if(finished)return;setLogo();const limit=ready?100:88;p=Math.min(limit,p+(p<60?2.6:p<86?1.3:0.65));if(ready&&performance.now()-started>1250)p=Math.min(100,p+4);const n=Math.floor(p);pct.textContent=n;meter.style.width=n+'%';root.style.setProperty('--qdc-angle',(n*3.6)+'deg');const current=Math.min(4,Math.floor(n/20));items.forEach((e,i)=>{e.classList.toggle('qdc-active',i===current&&n<100);e.classList.toggle('qdc-complete',i<current||n===100);e.querySelector('.qdc-cl-dot').textContent=i<current||n===100?'✓':i+1});if(n===100){finished=true;msg.textContent='Workspace ready';setTimeout(()=>{root.classList.add('qdc-leaving');setTimeout(()=>root.remove(),900)},280);return}requestAnimationFrame(throttle)}
+let last=0;function throttle(t){if(t-last<40){requestAnimationFrame(throttle);return}last=t;update()}
+requestAnimationFrame(throttle);
+function done(){ready=true;setLogo()}
+if(document.readyState==='complete')done();else window.addEventListener('load',done,{once:true});
+window.addEventListener('pageshow',done,{once:true});
+setTimeout(done,11000);
+})();
+</script>
 <div class="netbar" id="netbar"></div>
 <header>
   <div class="head">
