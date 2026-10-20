@@ -2061,9 +2061,123 @@ body #support-panel .it-contact .aquib-profile-dp{display:block;flex:none;width:
 #qdc-cinematic-loader{z-index:2147483000;font-family:Inter,Manrope,system-ui,"Segoe UI",sans-serif;}
 #qdc-cinematic-loader .qdc-op-qline{color:#ffebbb}
 @media (prefers-reduced-motion:reduce){#qdc-cinematic-loader .qdc-op-brand-logo{animation:none;opacity:1;transform:none;clip-path:none;filter:none}#qdc-cinematic-loader .qdc-op-qline{animation:none;opacity:1;transform:none}#qdc-cinematic-loader .qdc-op-progress>i{animation:none;width:100%}}
+
+/* Qamardin 2026 opening enhancement: all new controls belong exclusively to the intro */
+#qdc-cinematic-loader{background:radial-gradient(circle at 53% 28%,#13795a 0%,#07533e 29%,#02271f 65%,#01120f 100%);color:#fbe7af}
+#qdc-cinematic-loader .qdc-up-campus{position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,#00120bb8 0%,#00231714 37%,#00241c1c 68%,#00120db0 100%),url("./assets/qamardin-loading-campus.svg") center center/cover no-repeat;opacity:.86;pointer-events:none}
+#qdc-cinematic-loader .qdc-up-reflection{position:absolute;inset:auto 0 0;height:21%;background:linear-gradient(0deg,#08261bf0,transparent);pointer-events:none;z-index:0}
+#qdc-cinematic-loader .qdc-up-ambient{position:absolute;left:23%;top:13%;width:57%;height:55%;border:1px solid #75ebc326;border-radius:50%;box-shadow:0 0 90px #31c89b24,inset 0 0 62px #2bd4a10f;pointer-events:none;animation:qdc-up-aura 4.3s ease-in-out infinite alternate}
+@keyframes qdc-up-aura{to{opacity:.4;transform:scale(1.045)}}
+#qdc-cinematic-loader .qdc-op-stage{width:min(465px,35vw);padding-inline:8px;z-index:4}
+#qdc-cinematic-loader .qdc-op-halo{width:min(330px,56vh,30vw);height:min(330px,56vh,30vw)}
+#qdc-cinematic-loader .qdc-op-label-small{letter-spacing:3px}
+#qdc-cinematic-loader .qdc-op-label-large{font-size:clamp(17px,2vw,28px);margin-bottom:10px}
+#qdc-cinematic-loader .qdc-op-quotes{width:100%;background:linear-gradient(90deg,transparent,#083e32e6 15%,#083e32e6 85%,transparent);border-radius:12px;padding:12px 7px;min-height:121px}
+#qdc-cinematic-loader .qdc-op-qline{height:27px}
+#qdc-cinematic-loader .qdc-op-qline.three{height:34px}
+#qdc-cinematic-loader .qdc-op-corner{z-index:8;text-shadow:0 2px 12px #001d14}
+#qdc-cinematic-loader .qdc-op-progress{box-shadow:0 0 28px #e3b35b44}
+#qdc-cinematic-loader .qdc-up-left,#qdc-cinematic-loader .qdc-up-right,#qdc-cinematic-loader .qdc-up-timeline{position:absolute;z-index:5;pointer-events:none;box-sizing:border-box}
+#qdc-cinematic-loader .qdc-up-left{left:2.5%;top:16%;width:min(19%,290px);display:flex;flex-direction:column;gap:13px}
+#qdc-cinematic-loader .qdc-up-right{right:1.9%;top:16%;width:min(13%,204px);display:flex;flex-direction:column;gap:14px}
+#qdc-cinematic-loader .qdc-up-timeline{right:15.9%;top:19%;width:min(17.5%,274px);display:flex;flex-direction:column;gap:13px}
+#qdc-cinematic-loader .qdc-up-card{position:relative;min-width:0;box-sizing:border-box;overflow:hidden;border:1px solid #b8d3aa6f;border-radius:15px;background:linear-gradient(135deg,#123f32b6,#0a332a77 78%,#06372980);box-shadow:0 12px 30px #0008,inset 0 1px #ffedb244;backdrop-filter:blur(13px);-webkit-backdrop-filter:blur(13px);padding:15px;color:#f9eec9}
+#qdc-cinematic-loader .qdc-up-card:after{content:'';position:absolute;inset:0;border-radius:inherit;background:linear-gradient(115deg,transparent 0%,#d5e8b11c 47%,transparent 56%);transform:translateX(-130%);animation:qdc-up-sheen 3s ease-in-out .15s 1}
+@keyframes qdc-up-sheen{to{transform:translateX(130%)}}
+#qdc-cinematic-loader .qdc-up-card-title{font:700 clamp(13px,1.1vw,18px)/1.25 Georgia,serif;letter-spacing:.1px;color:#fff4d4}
+#qdc-cinematic-loader .qdc-up-card-sub{font:400 11px/1.4 Inter,Manrope,system-ui,sans-serif;color:#a9c7b3;margin-top:7px}
+#qdc-cinematic-loader .qdc-up-ico{font-size:24px;color:#e5c275;line-height:1;display:inline-block;margin-bottom:7px}
+#qdc-cinematic-loader .qdc-up-quote{font:600 clamp(16px,1.25vw,19px)/1.3 Georgia,serif}
+#qdc-cinematic-loader .qdc-up-quote:before{content:'❝';font-size:25px;color:#e7c275;vertical-align:middle;margin-right:8px}
+#qdc-cinematic-loader .qdc-up-counter{display:flex;align-items:center;justify-content:space-between;gap:8px}
+#qdc-cinematic-loader .qdc-up-count{font:bold clamp(20px,1.9vw,30px)/1.1 Georgia,serif;color:#f8dc96;letter-spacing:.4px}
+#qdc-cinematic-loader .qdc-up-counter .qdc-up-card-sub{margin-top:1px}
+#qdc-cinematic-loader .qdc-up-wave{height:22px;display:flex;align-items:end;gap:3px;opacity:.78}
+#qdc-cinematic-loader .qdc-up-wave i{width:3px;background:#e5c474;display:block;border-radius:2px;animation:qdc-up-bars 1s ease-in-out infinite alternate;animation-delay:calc(var(--n)*.09s);height:calc(3px + var(--n)*2px)}
+@keyframes qdc-up-bars{to{height:7px;opacity:.5}}
+#qdc-cinematic-loader .qdc-up-step{display:flex;align-items:center;gap:11px;min-height:58px;box-sizing:border-box;padding:9px 11px 9px 9px;border-radius:999px;border:1px solid #69cba751;background:linear-gradient(90deg,#104534c2,#06362992);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);box-shadow:inset 0 1px #bcebd22c,0 4px 22px #0003;opacity:.65;transition:opacity .24s ease,transform .24s ease,border-color .24s ease,box-shadow .24s ease}
+#qdc-cinematic-loader .qdc-up-step.qdc-up-active{opacity:1;transform:translateX(4px);border-color:#f9d47b;box-shadow:0 0 24px #f4b84a4d,inset 0 1px #ffe4a25d}
+#qdc-cinematic-loader .qdc-up-step.qdc-up-done{opacity:.92;border-color:#77ddb293}
+#qdc-cinematic-loader .qdc-up-step-mark{flex:0 0 34px;width:34px;height:34px;border:2px solid #51cda2;border-radius:50%;display:grid;place-items:center;color:#9ef5cf;font:bold 16px/1 system-ui;background:#063729a6;box-shadow:0 0 0 4px #308e6040}
+#qdc-cinematic-loader .qdc-up-active .qdc-up-step-mark{color:#ffe3a4;background:#e3ac42;border-color:#ffe3a4;box-shadow:0 0 0 5px #f1ca4c2e,0 0 20px #f1bf5b8f}
+#qdc-cinematic-loader .qdc-up-done .qdc-up-step-mark{background:#18a47e;color:#fff;border-color:#73edc1}
+#qdc-cinematic-loader .qdc-up-step b{display:block;font:600 clamp(11px,.92vw,14px)/1.25 Inter,system-ui,sans-serif;color:#ffeed1}
+#qdc-cinematic-loader .qdc-up-step small{display:block;color:#9cbdad;margin-top:4px;font:400 9px/1.2 Inter,system-ui,sans-serif}
+#qdc-cinematic-loader .qdc-up-badge{display:flex;gap:8px;align-items:center;justify-content:space-between}
+#qdc-cinematic-loader .qdc-up-badge .qdc-up-ico{margin:0}
+#qdc-cinematic-loader .qdc-up-calendar{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:3px;margin-top:9px;text-align:center;color:#c2daca;font-size:10px}
+#qdc-cinematic-loader .qdc-up-calendar b,#qdc-cinematic-loader .qdc-up-calendar span{font:500 9px/1.35 Inter,system-ui,sans-serif;padding:3px 0}
+#qdc-cinematic-loader .qdc-up-calendar b{color:#daba72}
+#qdc-cinematic-loader .qdc-up-calendar .qdc-up-today{background:#d4a74a;color:#092c1d;border-radius:50%;font-weight:800}
+#qdc-cinematic-loader .qdc-up-current{font-size:12px;color:#f1d99d;margin-top:7px}
+#qdc-cinematic-loader .qdc-up-graph{width:100%;height:34px;margin-top:3px;opacity:.9}
+#qdc-cinematic-loader .qdc-up-trust{display:flex;gap:9px;align-items:center}
+#qdc-cinematic-loader .qdc-up-trust .qdc-up-ico{margin:0;font-size:23px}
+@media(max-width:1420px) and (min-width:841px){
+#qdc-cinematic-loader .qdc-up-left{left:1.7%;width:18%}
+#qdc-cinematic-loader .qdc-up-timeline{right:2%;width:19%;top:24%}
+#qdc-cinematic-loader .qdc-up-right{right:2%;top:auto;bottom:4%;width:min(38%,480px);display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px}
+#qdc-cinematic-loader .qdc-up-right .qdc-up-card{padding:9px}
+#qdc-cinematic-loader .qdc-up-right .qdc-up-calendar{display:none}
+#qdc-cinematic-loader .qdc-op-stage{width:42vw}
+#qdc-cinematic-loader .qdc-op-halo{width:min(310px,34vw,50vh);height:min(310px,34vw,50vh)}
+}
+@media(max-width:840px){
+#qdc-cinematic-loader{overflow:hidden}
+#qdc-cinematic-loader .qdc-up-campus{opacity:.68;background-position:30% center}
+#qdc-cinematic-loader .qdc-op-corner{left:12px;top:8px;font-size:8px;letter-spacing:1.3px}
+#qdc-cinematic-loader .qdc-up-left{left:2%;right:2%;top:52px;width:auto;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:5px}
+#qdc-cinematic-loader .qdc-up-left .qdc-up-card{padding:6px 5px;border-radius:8px;min-height:56px}
+#qdc-cinematic-loader .qdc-up-left .qdc-up-card-title,#qdc-cinematic-loader .qdc-up-left .qdc-up-quote{font:600 10px/1.2 Inter,system-ui,sans-serif}
+#qdc-cinematic-loader .qdc-up-left .qdc-up-card-sub{font-size:8px;margin-top:3px}
+#qdc-cinematic-loader .qdc-up-left .qdc-up-ico{font-size:15px;margin-bottom:3px}
+#qdc-cinematic-loader .qdc-up-left .qdc-up-count{font-size:17px}
+#qdc-cinematic-loader .qdc-up-left .qdc-up-wave{display:none}
+#qdc-cinematic-loader .qdc-up-quote:before{font-size:11px;margin-right:3px}
+#qdc-cinematic-loader .qdc-op-stage{width:min(98%,540px);height:100svh;min-height:0;padding:120px 12px 132px;box-sizing:border-box}
+#qdc-cinematic-loader .qdc-op-halo{width:min(225px,38vh,54vw);height:min(225px,38vh,54vw)}
+#qdc-cinematic-loader .qdc-op-label-small{font-size:8px;letter-spacing:2px}
+#qdc-cinematic-loader .qdc-op-label-large{font-size:clamp(16px,3.6vw,23px);margin:4px 0 8px}
+#qdc-cinematic-loader .qdc-op-quotes{min-height:94px;padding:6px 3px;gap:0}
+#qdc-cinematic-loader .qdc-op-qline{height:24px}
+#qdc-cinematic-loader .qdc-op-qline.three{height:27px;margin-top:0}
+#qdc-cinematic-loader .qdc-op-progress{margin-top:8px}
+#qdc-cinematic-loader .qdc-op-bottomline{font-size:8px;letter-spacing:.5px;margin-top:6px}
+#qdc-cinematic-loader .qdc-up-timeline{left:2%;right:2%;width:auto;top:auto;bottom:86px;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:4px}
+#qdc-cinematic-loader .qdc-up-step{display:block;min-width:0;min-height:52px;border-radius:9px;padding:5px 3px;text-align:center;transform:none!important}
+#qdc-cinematic-loader .qdc-up-step-mark{width:17px;height:17px;font-size:10px;margin:0 auto 3px;border-width:1px;box-shadow:none}
+#qdc-cinematic-loader .qdc-up-step b{font-size:7px;line-height:1.2}
+#qdc-cinematic-loader .qdc-up-step small{display:none}
+#qdc-cinematic-loader .qdc-up-right{left:2%;right:2%;bottom:4px;top:auto;width:auto;display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px}
+#qdc-cinematic-loader .qdc-up-right .qdc-up-card{padding:5px 7px;border-radius:8px;min-height:58px}
+#qdc-cinematic-loader .qdc-up-right .qdc-up-ico{font-size:15px}
+#qdc-cinematic-loader .qdc-up-right .qdc-up-card-title{font-size:10px}
+#qdc-cinematic-loader .qdc-up-right .qdc-up-card-sub{font-size:8px;margin-top:2px}
+#qdc-cinematic-loader .qdc-up-current{font-size:9px;margin-top:3px}
+#qdc-cinematic-loader .qdc-up-right .qdc-up-calendar{display:none}
+#qdc-cinematic-loader .qdc-up-right .qdc-up-graph{height:12px}
+}
+@media(max-height:690px) and (max-width:840px){
+#qdc-cinematic-loader .qdc-op-stage{padding-top:109px;padding-bottom:130px}
+#qdc-cinematic-loader .qdc-op-halo{width:min(165px,28vh,43vw);height:min(165px,28vh,43vw)}
+#qdc-cinematic-loader .qdc-op-quotes{min-height:79px;padding:4px 2px}
+#qdc-cinematic-loader .qdc-op-qline{height:20px}
+#qdc-cinematic-loader .qdc-op-qline.three{height:22px}
+#qdc-cinematic-loader .qdc-op-label-large{font-size:15px}
+}
+@media(prefers-reduced-motion:reduce){#qdc-cinematic-loader .qdc-up-ambient,#qdc-cinematic-loader .qdc-up-wave i,#qdc-cinematic-loader .qdc-up-card:after{animation:none!important}}
 </style></head>
 <body>
-<div class="qdc-op-intro" id="qdc-cinematic-loader" role="status" aria-live="off" aria-label="Cluster Hub School opening animation"><div class="qdc-op-crossline"></div><div class="qdc-op-corner">✧ QAMARDIN CLUSTER <small>OFFICIAL PORTAL · OPENING</small></div><div class="qdc-op-corner right">EDUCATION ✦ KNOWLEDGE ✦ TECHNOLOGY</div>
+<div class="qdc-op-intro" id="qdc-cinematic-loader" role="status" aria-live="off" aria-label="Cluster Hub School opening animation"><div class="qdc-op-crossline"></div><div class="qdc-up-campus" aria-hidden="true"></div><div class="qdc-up-reflection" aria-hidden="true"></div><div class="qdc-up-ambient" aria-hidden="true"></div><aside class="qdc-up-left" aria-label="Cluster highlights">
+<section class="qdc-up-card"><span class="qdc-up-ico" aria-hidden="true">▤</span><div class="qdc-up-card-title">Building<br>Brighter Futures</div><div class="qdc-up-card-sub">A unified portal for schools</div></section>
+<section class="qdc-up-card"><div class="qdc-up-quote">Education Connects Communities</div></section>
+<section class="qdc-up-card qdc-up-counter"><div><div class="qdc-up-card-sub">Schools Connected</div><div class="qdc-up-count" id="qdc-up-schools-count">—</div></div><div class="qdc-up-wave" aria-hidden="true"><i style="--n:1"></i><i style="--n:2"></i><i style="--n:3"></i><i style="--n:4"></i><i style="--n:5"></i><i style="--n:6"></i><i style="--n:7"></i></div></section>
+<section class="qdc-up-card qdc-up-counter"><div><div class="qdc-up-card-sub">Total Staff</div><div class="qdc-up-count" id="qdc-up-staff-count">—</div></div><span class="qdc-up-ico" aria-hidden="true">♙</span></section>
+</aside><aside class="qdc-up-timeline" aria-label="Opening sequence"><div class="qdc-up-step qdc-up-active" data-qdc-op-step="0"><span class="qdc-up-step-mark" aria-hidden="true">1</span><div><b>Connecting services</b><small>Preparing connection…</small></div></div><div class="qdc-up-step" data-qdc-op-step="1"><span class="qdc-up-step-mark" aria-hidden="true">2</span><div><b>Syncing school cells</b><small>Retrieving cluster records…</small></div></div><div class="qdc-up-step" data-qdc-op-step="2"><span class="qdc-up-step-mark" aria-hidden="true">3</span><div><b>Loading staff profiles</b><small>Preparing employee workspace…</small></div></div><div class="qdc-up-step" data-qdc-op-step="3"><span class="qdc-up-step-mark" aria-hidden="true">4</span><div><b>Accessing secure connections</b><small>Preparing protected access…</small></div></div><div class="qdc-up-step" data-qdc-op-step="4"><span class="qdc-up-step-mark" aria-hidden="true">5</span><div><b>Finalizing homepage</b><small>Almost ready…</small></div></div></aside><aside class="qdc-up-right" aria-label="Academic calendar and portal details">
+<section class="qdc-up-card"><div class="qdc-up-badge"><span class="qdc-up-ico" aria-hidden="true">▦</span><div class="qdc-up-card-title">Academic Year</div></div><div class="qdc-up-current" id="qdc-up-academic-year">2026–27</div><div class="qdc-up-card-sub">Together for a stronger tomorrow</div><div class="qdc-up-current" id="qdc-up-month">October 2026</div><div class="qdc-up-calendar" id="qdc-up-calendar" aria-label="Current month calendar"></div></section>
+<section class="qdc-up-card"><div class="qdc-up-card-title">Progress<br>in Unity</div><svg class="qdc-up-graph" viewBox="0 0 160 40" aria-hidden="true"><path d="M2 32 30 24 51 27 77 13 102 21 127 8 158 3" fill="none" stroke="#f0c574" stroke-width="2.3" stroke-linecap="round"/><g fill="#ffe3a4"><circle cx="77" cy="13" r="3"/><circle cx="127" cy="8" r="3"/><circle cx="158" cy="3" r="3"/></g></svg></section>
+<section class="qdc-up-card qdc-up-trust"><span class="qdc-up-ico" aria-hidden="true">♢</span><div><div class="qdc-up-card-title">Secure Portal</div><div class="qdc-up-card-sub">HTTPS connection</div></div></section>
+</aside><div class="qdc-op-corner">✧ QAMARDIN CLUSTER <small>OFFICIAL PORTAL · OPENING</small></div><div class="qdc-op-corner right">EDUCATION ✦ KNOWLEDGE ✦ TECHNOLOGY</div>
 <div class="qdc-op-stage"><div class="qdc-op-halo"><svg viewBox="0 0 350 350" aria-hidden="true"><circle class="circle1" cx="175" cy="175" r="151"/><circle class="circle2" cx="175" cy="175" r="162"/><circle class="circle3" cx="175" cy="175" r="154"/></svg><span class="qdc-op-glyph a">✒</span><span class="qdc-op-glyph b">⌘</span><span class="qdc-op-glyph c">✦</span><img class="qdc-op-brand-logo" src="./assets/qamardin-selected-logo-3.svg" alt="Final selected GBHS Qamardin Chandio logo number three"><span class="qdc-op-spark" style="left:13%;top:25%;--delay:.02s"></span><span class="qdc-op-spark" style="right:8%;top:32%;--delay:.22s"></span><span class="qdc-op-spark" style="left:20%;bottom:15%;--delay:.37s"></span><span class="qdc-op-spark" style="right:25%;bottom:14%;--delay:.42s"></span></div>
 <div class="qdc-op-label-small">CLUSTER HUB SCHOOL</div><div class="qdc-op-label-large">GBHS QAMAR DIN CHANDIO</div>
 <div class="qdc-op-quotes" lang="sd" dir="rtl" aria-label="Sindhi verses and cluster motto"><img class="qdc-op-qline one" src="./assets/qamardin-opening-line-1.svg" alt="علم جي شمع سان، هر اوندهه کي هٽائينداسين"><img class="qdc-op-qline two" src="./assets/qamardin-opening-line-2.svg" alt="هٿن ۾ هٿ ڏئي، اسين نئين تاريخ جوڙينداسين"><img class="qdc-op-qline three" src="./assets/qamardin-opening-line-3.svg" alt="اتحاد، علم ۽ شعور — اسان جي ڪلسٽر جو نئون عزم!"></div>
@@ -2072,10 +2186,31 @@ body #support-panel .it-contact .aquib-profile-dp{display:block;flex:none;width:
 (function(){
   const root=document.getElementById('qdc-cinematic-loader');if(!root)return;
   const pct=document.getElementById('qdc-op-percent'),msg=document.getElementById('qdc-op-progress-msg');
-  const started=performance.now();let finished=false;
-  function close(){if(finished)return;finished=true;if(pct)pct.textContent='100%';if(msg)msg.textContent='OPENING THE HOMEPAGE';root.classList.add('qdc-op-hide');setTimeout(()=>root.remove(),300)}
-  function frame(now){if(finished)return;const elapsed=now-started;const n=Math.min(100,Math.round(elapsed/3000*100));if(pct)pct.textContent=n+'%';if(msg)msg.textContent=n<38?'FORMING THE SCHOOL EMBLEM':n<72?'REVEALING OUR SINDHI MESSAGE':'OPENING THE HOMEPAGE';if(elapsed>=3000){close();return}requestAnimationFrame(frame)}
-  requestAnimationFrame(frame);setTimeout(close,3025);
+  const marks=[...root.querySelectorAll('[data-qdc-op-step]')],schoolCount=document.getElementById('qdc-up-schools-count'),staffCount=document.getElementById('qdc-up-staff-count');
+  const now=new Date(),academicStart=now.getMonth()>=6?now.getFullYear():now.getFullYear()-1;
+  const yr=document.getElementById('qdc-up-academic-year');if(yr)yr.textContent=academicStart+'–'+String(academicStart+1).slice(-2);
+  const month=document.getElementById('qdc-up-month');if(month)month.textContent=now.toLocaleDateString('en-PK',{month:'long',year:'numeric'});
+  const calendar=document.getElementById('qdc-up-calendar');
+  if(calendar){const weekdays=['M','T','W','T','F','S','S'];weekdays.forEach(d=>{let b=document.createElement('b');b.textContent=d;calendar.appendChild(b)});
+    let first=new Date(now.getFullYear(),now.getMonth(),1),offset=(first.getDay()+6)%7,end=new Date(now.getFullYear(),now.getMonth()+1,0).getDate();
+    for(let x=0;x<offset;x++){let blank=document.createElement('span');calendar.appendChild(blank)}
+    for(let x=1;x<=end;x++){let cell=document.createElement('span');cell.textContent=x;if(x===now.getDate())cell.className='qdc-up-today';calendar.appendChild(cell)}
+  }
+  let finished=false,started=performance.now(),statsTimer;
+  function syncStats(){try{
+    if(typeof PUB==='undefined'||!PUB||!Array.isArray(PUB.cells)||!PUB.cells.length)return;
+    const schools=PUB.cells.reduce((sum,c)=>sum+(Number(c.schools)||0),0),staff=Number(PUB.total);
+    if(schoolCount&&Number.isFinite(schools)&&schools>0)schoolCount.textContent=String(schools);
+    if(staffCount&&Number.isFinite(staff)&&staff>=0)staffCount.textContent=String(staff);
+  }catch(_error){}}
+  syncStats();statsTimer=setInterval(syncStats,170);
+  function close(){if(finished)return;finished=true;clearInterval(statsTimer);if(pct)pct.textContent='100%';if(msg)msg.textContent='OPENING THE HOMEPAGE';root.classList.add('qdc-op-hide');setTimeout(()=>root.remove(),300)}
+  function frame(t){if(finished)return;const elapsed=t-started,n=Math.min(100,Math.floor(elapsed/30)),active=Math.min(4,Math.floor(elapsed/600));
+    if(pct)pct.textContent=n+'%';
+    if(msg)msg.textContent=n<35?'FORMING THE SCHOOL EMBLEM':n<75?'LOADING OUR SCHOOL COMMUNITY':'OPENING THE HOMEPAGE';
+    for(let i=0;i<marks.length;i++){const el=marks[i],done=i<active;el.classList.toggle('qdc-up-active',i===active);el.classList.toggle('qdc-up-done',done);const mark=el.querySelector('.qdc-up-step-mark');if(mark)mark.textContent=done?'✓':String(i+1)}
+    if(elapsed>=3000){close();return}requestAnimationFrame(frame)}
+  requestAnimationFrame(frame);setTimeout(close,3040);
 })();
 </script>
 <div class="netbar" id="netbar"></div>
