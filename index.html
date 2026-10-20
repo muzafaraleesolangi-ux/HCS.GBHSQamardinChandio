@@ -2194,7 +2194,7 @@ body #support-panel .it-contact .aquib-profile-dp{display:block;flex:none;width:
  #qdc-cinematic-loader .qdc-up-step{left:auto;top:auto}
 }
 
-</style></head>
+</style><link rel="stylesheet" href="./qdc-universal-loader.css?v=1"><style id="qdc-login-face-school-logo-style">#screen-login .qdc-login-face-school-logo{display:block;width:68px;height:68px;max-width:30vw;object-fit:contain;margin:0 auto 10px;filter:drop-shadow(0 5px 13px #0b4e3b48)}#screen-login #loginface-back .qdc-login-face-school-logo{width:62px;height:62px} @media(max-width:560px){#screen-login .qdc-login-face-school-logo{width:51px;height:51px;margin-bottom:6px}}</style></head>
 <body>
 <div class="qdc-op-intro" id="qdc-cinematic-loader" role="status" aria-live="off" aria-label="Cluster Hub School opening animation"><div class="qdc-op-crossline"></div><div class="qdc-up-campus" aria-hidden="true"></div><div class="qdc-up-reflection" aria-hidden="true"></div><div class="qdc-up-ambient" aria-hidden="true"></div><aside class="qdc-up-left" aria-label="Cluster highlights">
 <section class="qdc-up-card"><span class="qdc-up-ico" aria-hidden="true">▤</span><div class="qdc-up-card-title">Building<br>Brighter Futures</div><div class="qdc-up-card-sub">A unified portal for schools</div></section>
@@ -2254,15 +2254,16 @@ body #support-panel .it-contact .aquib-profile-dp{display:block;flex:none;width:
   }catch(_error){}}
   syncStats();statsTimer=setInterval(syncStats,170);
   function close(){if(finished)return;finished=true;clearInterval(statsTimer);if(pct)pct.textContent='100%';if(msg)msg.textContent='OPENING THE HOMEPAGE';root.classList.add('qdc-op-hide');setTimeout(()=>root.remove(),300)}
-  function frame(t){if(finished)return;const elapsed=t-started,n=Math.min(100,Math.floor(elapsed/30)),active=Math.min(4,Math.floor(elapsed/600));
-    if(orbitLength&&orbitTrace){const visible=Math.min(orbitLength,Math.max(0,elapsed/3000)*orbitLength);orbitTrace.style.strokeDashoffset=String(orbitLength-visible);if(orbitSpark){try{const pos=orbitTrace.getPointAtLength(visible);orbitSpark.setAttribute('cx',pos.x.toFixed(1));orbitSpark.setAttribute('cy',pos.y.toFixed(1));orbitSpark.setAttribute('opacity','1')}catch(_e){}}}
+  function frame(t){if(finished)return;const elapsed=t-started,n=Math.min(100,Math.floor(elapsed/40)),active=Math.min(4,Math.floor(elapsed/800));
+    if(orbitLength&&orbitTrace){const visible=Math.min(orbitLength,Math.max(0,elapsed/4000)*orbitLength);orbitTrace.style.strokeDashoffset=String(orbitLength-visible);if(orbitSpark){try{const pos=orbitTrace.getPointAtLength(visible);orbitSpark.setAttribute('cx',pos.x.toFixed(1));orbitSpark.setAttribute('cy',pos.y.toFixed(1));orbitSpark.setAttribute('opacity','1')}catch(_e){}}}
     if(pct)pct.textContent=n+'%';
     if(msg)msg.textContent=n<35?'FORMING THE SCHOOL EMBLEM':n<75?'LOADING OUR SCHOOL COMMUNITY':'OPENING THE HOMEPAGE';
     for(let i=0;i<marks.length;i++){const el=marks[i],done=i<active;el.classList.toggle('qdc-up-active',i===active);el.classList.toggle('qdc-up-done',done);const mark=el.querySelector('.qdc-up-step-mark');if(mark)mark.textContent=done?'✓':String(i+1)}
-    if(elapsed>=3000){close();return}requestAnimationFrame(frame)}
-  requestAnimationFrame(frame);setTimeout(close,3040);
+    if(elapsed>=4000){close();return}requestAnimationFrame(frame)}
+  requestAnimationFrame(frame);setTimeout(close,4080);
 })();
 </script>
+<script src="./qdc-universal-loader.js?v=1"></script>
 <div class="netbar" id="netbar"></div>
 <header>
   <div class="head">
@@ -2305,7 +2306,7 @@ body #support-panel .it-contact .aquib-profile-dp{display:block;flex:none;width:
     <div class="flipwrap" id="loginflipwrap">
       <div class="flipcard" id="loginflipcard">
 
-        <div class="face front card loginside" id="loginface-front" aria-hidden="false">
+        <div class="face front card loginside" id="loginface-front" aria-hidden="false"><img class="qdc-login-face-school-logo" src="./assets/qamardin-selected-logo-3.svg" alt="GBHS Qamardin Chandio school logo">
           <div class="lshead-graphic" aria-hidden="true">
             <span class="lgdot"></span><span class="lgdot"></span><span class="lgdot"></span><span class="lgdot"></span><span class="lgdot"></span><span class="lgdot"></span>
             <div class="lgcard">
@@ -2405,7 +2406,7 @@ body #support-panel .it-contact .aquib-profile-dp{display:block;flex:none;width:
           </div>
         </div>
 
-        <div class="face back card loginside" id="loginface-back" aria-hidden="true" inert>
+        <div class="face back card loginside" id="loginface-back" aria-hidden="true" inert><img class="qdc-login-face-school-logo" src="./assets/qamardin-selected-logo-3.svg" alt="GBHS Qamardin Chandio school logo">
           <span class="pill adm">&#9679;&nbsp; OFFICIALS ONLY</span>
           <div class="titlerow">
             <div class="ticon adm">
@@ -3707,10 +3708,29 @@ const dFull = s => s ? new Date(s).toLocaleString() : "";
 
 const SCREENS = ["#screen-login","#screen-record","#screen-dash"];
 function show(id){
-  /* Leaving the record/profile workspace must always exit edit mode. This also protects
-     against Back/Forward navigation or switching to another app screen without saving. */
+  const fromHome = id!=="#screen-login" && !$("#screen-login").classList.contains("hidden");
+  /* Existing auth and profile data remain authoritative; never show a user's portrait
+     from a login field before the API has authorized the session. */
   if(id!=="#screen-record" && typeof resetTransientProfileEditState==='function') resetTransientProfileEditState();
-  SCREENS.forEach(s=>$(s).classList.toggle("hidden", s!==id)); window.scrollTo({top:0,behavior:"instant"});
+  SCREENS.forEach(s=>$(s).classList.toggle("hidden", s!==id));
+  window.scrollTo({top:0,behavior:"instant"});
+  if(fromHome && window.qdcUniversalLoader){
+    try{
+      let role="",name="",photo="";
+      if(id==="#screen-record" && CUR && !CUR_FROMDASH){
+        role="EMPLOYEE";name=CUR.employee_name||CUR.name||"";photo=CUR.photo_url||"";
+      }else if(id==="#screen-dash" && OFFICER){
+        role=OFFICER.role==="MASTER"?"MASTER ADMIN":OFFICER.role==="HUBHM"?"HUB HEAD MASTER":OFFICER.cell?"CELL "+OFFICER.cell+" HEAD":"ADMIN / OFFICER";
+        name=OFFICER.name||"";photo=OFFICER.photo_url||"";
+        if(!photo && Array.isArray(STAFF) && name){
+          const n=name.trim().toLowerCase();
+          const matching=STAFF.filter(e=>(e.employee_name||e.name||"").trim().toLowerCase()===n && (!OFFICER.cell || !e.cell || String(e.cell)===String(OFFICER.cell)));
+          if(matching.length===1)photo=matching[0].photo_url||"";
+        }
+      }
+      if(role)window.qdcUniversalLoader.play({role,name,photo_url:photo});
+    }catch(_e){}
+  }
 }
 
 /* ---------- modals: float in / out (the "floating window" feel) ---------- */
@@ -4034,6 +4054,8 @@ async function loadPublic(){
 function renderHomePublic(){
   if(!PUB) return;
   const totalSchools=(PUB.cells||[]).reduce((a,c)=>a+(c.schools||0),0);
+  window.qdcPublicStats={schools:totalSchools,staff:Number(PUB.total)||0};
+  try{sessionStorage.setItem("qdc-public-stats",JSON.stringify(window.qdcPublicStats));}catch(_e){}
   $("#hero-stats").innerHTML=
     '<button type="button" class="stat-action stat-employees" id="stat-employees"><span class="stat-icon">'+ICON.people+'</span><b>'+(PUB.total||0)+'</b><span>Employees</span><small>VIEW ALL</small></button>'+
     '<button type="button" class="stat-action" id="stat-cells"><span class="stat-icon">'+ICON.school+'</span><b>'+((PUB.cells||[]).length)+'</b><span>School cells</span><small>VIEW ALL</small></button>'+
