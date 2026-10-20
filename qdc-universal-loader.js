@@ -58,7 +58,7 @@ function skipStartup(){
  if(window.self!==window.top)return true;
  const nav=performance.getEntriesByType('navigation')[0];
  const type=nav&&nav.type||'navigate';
- if(type==='reload'||type==='back_forward')return false;
+ if(type==='reload'||type==='back_forward'){try{sessionStorage.removeItem(LINK_MARKER)}catch(_e){}return false}
  try{
   const current=location.pathname;const marked=sessionStorage.getItem(LINK_MARKER);
   if(marked){sessionStorage.removeItem(LINK_MARKER);if(marked===current)return true}
@@ -197,10 +197,23 @@ function play(identity){
   initialize(root);
 }
 function hasPendingSignIn(){return signInUntil>Date.now()}
-window.qdcUniversalLoader={play,show:play,expectSignIn,cancelPendingSignIn,hasPendingSignIn,rememberIdentity,clearIdentity,markInternalNavigation};
+function updateVisibleIdentity(identity){
+ if(!identity||!identity.role)return;
+ const root=document.getElementById('qdc-cinematic-loader');
+ if(!root||root.classList.contains('qdc-op-hide'))return;
+ if(!root.classList.contains('qdc-signin-only')){personalSignIn(root,identity);return}
+ const avatar=root.querySelector('.qdc-si-avatar'),badge=root.querySelector('.qdc-si-dp-badge');
+ if(!avatar)return;
+ const url=safePhoto(identity.photo_url||identity.photo);
+ if(url){const pic=document.createElement('img');pic.src=url;pic.alt='Your saved account profile photograph';
+   pic.onerror=()=>{avatar.innerHTML=NO_PHOTO;if(badge)badge.textContent='PHOTO NOT AVAILABLE'};
+   avatar.replaceChildren(pic);if(badge)badge.textContent='YOUR PROFILE DP';
+ }else{avatar.innerHTML=NO_PHOTO;if(badge)badge.textContent='PHOTO NOT AVAILABLE'}
+}
+window.qdcUniversalLoader={play,show:play,expectSignIn,cancelPendingSignIn,hasPendingSignIn,rememberIdentity,clearIdentity,updateVisibleIdentity,markInternalNavigation};
 document.addEventListener('click',event=>{
  const anchor=event.target&&event.target.closest&&event.target.closest('a[href]');
- if(!anchor||event.defaultPrevented||anchor.target&&anchor.target!=='_self'||anchor.hasAttribute('download'))return;
+ if(!anchor||event.defaultPrevented||event.button!==0||event.ctrlKey||event.metaKey||event.shiftKey||event.altKey||anchor.target&&anchor.target!=='_self'||anchor.hasAttribute('download'))return;
  try{const url=new URL(anchor.href,location.href);
    if(url.origin===location.origin&&url.pathname!==location.pathname)markInternalNavigation(url.href);
  }catch(_e){}
