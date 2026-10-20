@@ -84,7 +84,7 @@ begin
  if changing then
   if length(p_new_password)<10 or octet_length(p_new_password)>72 or p_new_password !~ '[A-Za-z]' or p_new_password !~ '[0-9]' then raise exception 'Use at least 10 characters including a letter and a number (maximum 72 bytes)';end if;
   if extensions.crypt(p_new_password,target.pass_hash)=target.pass_hash then raise exception 'Choose a different password';end if;
-  if target.role='MASTER' and (target.user_id<>actor.user_id or p_current_password is null or extensions.crypt(p_current_password,target.pass_hash)<>target.pass_hash) then raise exception 'Enter your current Master Admin password to change it';end if;
+  if target.role='MASTER' and target.user_id<>actor.user_id then raise exception 'Only the signed-in Master Admin can update this Master account';end if;
  end if;
  if p_request_id is not null then
   select * into req from admin_security.recovery_requests where id=p_request_id and target_user=target.user_id and status='PENDING' for update;
