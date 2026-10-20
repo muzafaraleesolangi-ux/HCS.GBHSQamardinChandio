@@ -5211,11 +5211,13 @@ async function loadBoardAndShow(keepTab){
    }
    BOARD=response;
    DELETION_REQUESTS=[];
-   // A failed optional request never blocks a verified dashboard.
-   if(response.officer.role==="MASTER"){
-     try{await refreshDeletionRequests()}catch(error){console.warn("[Qamardin] Deletion queue skipped:",error);DELETION_REQUESTS=[]}
-   }
+   // Authentication is complete: opening the dashboard must NEVER wait for
+   // optional deletion-queue or report-template network requests.
    showVerifiedAdminWorkspace(keepTab);
+   if(IS_MASTER){
+     Promise.resolve().then(()=>refreshDeletionRequests())
+       .catch(error=>{console.warn("[Qamardin] Deletion queue skipped:",error);DELETION_REQUESTS=[]});
+   }
    return true;
  }catch(e){
    netOff();
