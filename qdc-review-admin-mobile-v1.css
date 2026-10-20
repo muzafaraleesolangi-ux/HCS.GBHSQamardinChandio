@@ -1,0 +1,94 @@
+/* Mobile-first office full editor + high-contrast final review (2026-10-21).
+   Scoped; original main header, page loader and navigation themes unaffected. */
+#screen-record #qdc-admin-photo-editor[hidden]{display:none!important}
+#screen-record #admin-edit-box:not(.hidden){overflow:visible;max-width:100%}
+#screen-record #admin-edit-box .at{font-family:Manrope,Inter,system-ui!important;font-size:16px!important;font-weight:900!important;color:#073e2e!important;letter-spacing:.25px}
+#screen-record #admin-edit-box p{font-family:Manrope,Inter,system-ui!important;font-size:12px!important;line-height:1.65!important;color:#274b3e!important;font-weight:650!important}
+#screen-record #qdc-admin-photo-editor{display:grid;grid-template-columns:88px minmax(0,1fr);gap:15px;align-items:center;
+  background:linear-gradient(135deg,#f2fbf4,#fffdf1);border:1.5px solid #c1d6be;border-radius:16px;padding:14px;margin-top:16px;
+  box-shadow:0 6px 23px #0f503112;min-width:0}
+#screen-record .qdc-admin-photo-thumb{width:86px;height:86px;display:grid;place-items:center;overflow:hidden;
+  border-radius:50%;background:linear-gradient(145deg,#104735,#427d5e);border:3px solid #d6b969;box-shadow:0 0 0 4px #cde8d8,0 8px 18px #114c3430;color:#faf4e8}
+#screen-record .qdc-admin-photo-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+#screen-record .qdc-admin-photo-thumb img[hidden],#screen-record .qdc-admin-photo-thumb span[hidden]{display:none!important}
+#screen-record .qdc-admin-photo-thumb span{font:850 11px/1.2 Manrope,Inter,system-ui;text-align:center}
+#screen-record .qdc-admin-photo-controls{display:grid;gap:8px;min-width:0}
+#screen-record .qdc-admin-photo-controls strong{font:900 15px/1.35 Manrope,Inter,system-ui;color:#0b4635}
+#screen-record .qdc-admin-photo-controls small{font:650 11px/1.55 Manrope,Inter,system-ui;color:#31594d}
+#screen-record .qdc-admin-photo-buttons{display:flex;flex-wrap:wrap;gap:8px}
+#screen-record .qdc-admin-photo-buttons .btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:9px 15px!important;
+ border-radius:10px;font:850 12px/1.2 Manrope,Inter,system-ui}
+#screen-record #qdc-admin-photo-status{font:750 11px/1.5 Manrope,Inter,system-ui;color:#256049;min-height:17px;overflow-wrap:anywhere}
+#screen-record #btn-admin-save:not(.hidden){min-height:46px;border-radius:12px;font:900 13px Manrope,Inter,system-ui;letter-spacing:.25px}
+#screen-record.qdc-emerald-flow:not(.hm-tab-dashboard) .recmain,#screen-record.qdc-emerald-flow:not(.hm-tab-dashboard) .qsp-workspace-grid{min-width:0}
+#screen-record.qdc-emerald-flow #r-fields .field :is(input,select,textarea){color:#173c2e!important;opacity:1!important;font-weight:750!important}
+#screen-record.qdc-emerald-flow #r-fields .field :is(input,select,textarea):focus{outline:2px solid #168464!important;outline-offset:2px}
+
+/* Fully legible FINAL REVIEW in the selected Jade Pearl / Emerald Flow. */
+#screen-record.qdc-emerald-flow .qef-inline-review{gap:16px!important;align-items:start}
+#screen-record.qdc-emerald-flow .qef-inline-review h3,
+#screen-record.qdc-emerald-flow .qef-review-table h3{font:900 clamp(17px,1.5vw,21px)/1.25 Manrope,Inter,system-ui!important;color:#0b4533!important;letter-spacing:-.3px!important}
+#screen-record.qdc-emerald-flow .qef-review-table{min-width:0!important;overflow-x:auto}
+#screen-record.qdc-emerald-flow .qef-review-table table{
+ background:#fff!important;border:1.5px solid #bcd5c7!important;border-radius:12px!important;
+ font:700 13px/1.55 Manrope,Inter,system-ui!important;table-layout:fixed}
+#screen-record.qdc-emerald-flow .qef-review-table th,
+#screen-record.qdc-emerald-flow .qef-review-table td{padding:12px 13px!important;border-bottom:1px solid #dce9e1!important;
+ font-family:Manrope,Inter,system-ui!important;opacity:1!important;overflow-wrap:anywhere!important;word-break:normal!important}
+#screen-record.qdc-emerald-flow .qef-review-table th{color:#2c5646!important;font-weight:800!important;font-size:12px!important;width:44%!important}
+#screen-record.qdc-emerald-flow .qef-review-table td{color:#0c3729!important;font-weight:900!important;font-size:13px!important}
+#screen-record.qdc-emerald-flow .qef-review-table tr:nth-child(even){background:#edf8f0!important}
+#screen-record.qdc-emerald-flow .qef-inline-review>aside{background:#fff!important;border:1.5px solid #c5dfcd!important;border-radius:14px!important}
+#screen-record.qdc-emerald-flow #qef-inline-message{font:750 12px/1.7 Manrope,Inter,system-ui!important;color:#244b3c!important}
+#screen-record.qdc-emerald-flow .qef-inline-review :is(.qef-change>b,.qef-change del,.qef-change ins){opacity:1!important;font-size:12px!important;font-weight:800!important}
+#screen-record.qdc-emerald-flow .qef-inline-review .qef-change del{color:#3c5360!important;background:#eef2f5!important}
+#screen-record.qdc-emerald-flow .qef-inline-review .qef-change ins{color:#075f43!important;background:#e4f7eb!important}
+
+/* Final review dialog: no pale placeholder-looking text, clear active state. */
+#qef-review-dialog{width:min(1120px,calc(100vw - 20px))!important;max-height:94dvh!important;min-width:0!important;
+ color:#183d31!important;background:#f9fffa!important;border:2px solid #a0bfa9!important;border-radius:17px!important;
+ font-family:Manrope,Inter,system-ui!important}
+#qef-review-dialog .qef-dialog-top{background:linear-gradient(120deg,#0b4935,#167253)!important;border-bottom:3px solid #d1b66c!important;color:#fff!important}
+#qef-review-dialog .qef-dialog-top h2{font:900 clamp(21px,2.7vw,30px)/1.25 Manrope,Inter,system-ui!important;color:#fff8e3!important}
+#qef-review-dialog .qef-dialog-top small{font:900 11px/1.3 Manrope,Inter,system-ui!important;letter-spacing:1px!important;color:#f9dc91!important}
+#qef-review-dialog .qef-dialog-top p{color:#e6fff0!important;font:750 13px/1.45 Manrope,Inter,system-ui!important;margin-top:5px!important}
+#qef-review-dialog .qef-dialog-top>button{background:#ffffff20!important;color:#fff!important;border:1px solid #e9c579!important;min-width:42px;min-height:42px}
+#qef-review-dialog .qef-dialog-body{background:#f8fdf9!important}
+#qef-review-dialog .qef-dialog-body h3{font:900 18px/1.35 Manrope,Inter,system-ui!important;color:#124c39!important;margin-bottom:13px!important}
+#qef-review-dialog .qef-dialog-body table{width:100%;table-layout:fixed;background:#fff!important;border:1.5px solid #b9d7c6!important}
+#qef-review-dialog .qef-dialog-body th,#qef-review-dialog .qef-dialog-body td{font-family:Manrope,Inter,system-ui!important;
+ font-size:13px!important;line-height:1.55!important;padding:11px 12px!important;vertical-align:top!important;opacity:1!important;overflow-wrap:anywhere!important}
+#qef-review-dialog .qef-dialog-body th{font-weight:800!important;color:#2b5b48!important;width:44%!important}
+#qef-review-dialog .qef-dialog-body td{font-weight:900!important;color:#103e2e!important}
+#qef-review-dialog .qef-dialog-body tr:nth-child(even){background:#edf8f0!important}
+#qef-review-dialog .qef-change>b{font:900 13px Manrope,Inter,system-ui!important;color:#114a35!important}
+#qef-review-dialog .qef-change del{color:#425760!important;background:#e9eff2!important;font-weight:800!important;font-size:12px!important}
+#qef-review-dialog .qef-change ins{color:#095840!important;background:#e3f6e9!important;font-weight:900!important;font-size:12px!important}
+#qef-review-dialog #qef-review-office-note{font:750 12px/1.6 Manrope,Inter,system-ui!important;color:#285040!important}
+#qef-review-dialog .qef-dialog-foot{background:#fff!important;border-top:2px solid #bdd9c6!important}
+#qef-review-dialog #qef-review-message{font:800 12px/1.65 Manrope,Inter,system-ui!important;color:#284d3c!important}
+#qef-review-dialog #qef-review-message.needs-attention{color:#922e1d!important}
+#qef-review-dialog .qef-dialog-foot button{font:900 12px/1.3 Manrope,Inter,system-ui!important;min-height:46px!important;border-radius:10px!important;color:#144935!important}
+#qef-review-dialog #qef-confirm-submit:not(:disabled){background:#076a4d!important;color:#fff!important;border-color:#d1b76b!important}
+#qef-review-dialog #qef-confirm-submit:disabled{opacity:.65!important;color:#183d2f!important;background:#e6e9e8!important;border-color:#d0d7d1!important}
+@media(max-width:900px){
+ #screen-record.qdc-emerald-flow .qef-inline-review{grid-template-columns:minmax(0,1fr)!important}
+ #qef-review-dialog .qef-dialog-body{grid-template-columns:minmax(0,1fr)!important;gap:18px!important;padding:15px!important}
+}
+@media(max-width:540px){
+ #screen-record #qdc-admin-photo-editor{grid-template-columns:66px minmax(0,1fr);gap:10px;padding:10px}
+ #screen-record .qdc-admin-photo-thumb{width:62px;height:62px}
+ #screen-record .qdc-admin-photo-buttons .btn{flex:1 1 115px;min-height:44px!important;font-size:11px!important}
+ #screen-record .qdc-admin-photo-controls strong{font-size:13px}
+ #screen-record .qef-review-table th,#screen-record .qef-review-table td{padding:9px!important;font-size:12px!important;line-height:1.45!important}
+ #qef-review-dialog{width:calc(100vw - 12px)!important;max-height:96dvh!important;border-radius:12px!important}
+ #qef-review-dialog .qef-dialog-top{padding:14px!important;gap:12px}
+ #qef-review-dialog .qef-dialog-top h2{font-size:21px!important}
+ #qef-review-dialog .qef-dialog-top small{font-size:10px!important}
+ #qef-review-dialog .qef-dialog-body{padding:11px!important}
+ #qef-review-dialog .qef-dialog-body th,#qef-review-dialog .qef-dialog-body td{font-size:12px!important;padding:9px 8px!important}
+ #qef-review-dialog .qef-dialog-foot{padding:12px!important}
+ #qef-review-dialog .qef-dialog-foot>div{display:flex;flex-direction:column;gap:9px}
+ #qef-review-dialog .qef-dialog-foot button{width:100%;min-height:45px!important}
+}
+@media(prefers-reduced-motion:reduce){#qef-review-dialog *{animation:none!important;transition:none!important}}
