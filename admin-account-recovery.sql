@@ -88,20 +88,20 @@ begin
  if p_request_id is not null then
   select * into req from admin_security.recovery_requests where id=p_request_id and target_user=target.user_id and status='PENDING' for update;
   if req.id is null then raise exception 'This request is no longer pending';end if;
-  if not changing then raise exception 'Set a temporary password to approve this request';end if;
+  if not changing then raise exception 'Set a password to approve this request';end if;
  end if;
  update public.portal_officers set user_id=uname,recovery_mobile=nullif(phone,''),
  pass_hash=case when changing then extensions.crypt(encode(extensions.digest(p_new_password,'sha256'),'hex'),extensions.gen_salt('bf',10)) else pass_hash end,
  password_prehash=case when changing then true else password_prehash end,
- password_change_required=case when changing then role<>'MASTER' else password_change_required end,
+ password_change_required=case when changing then false else password_change_required end,
  password_changed_at=case when changing then now() else password_changed_at end
  where user_id=target.user_id;
  if changing then
   delete from public.portal_sessions where user_id=uname and not(target.role='MASTER' and token=p_token);
-  update admin_security.recovery_requests set status='APPROVED',decided_at=now(),decided_by=actor.user_id,note='Temporary password set by Master Admin' where target_user=uname and status='PENDING';
+  update admin_security.recovery_requests set status='APPROVED',decided_at=now(),decided_by=actor.user_id,note='Login password set by Master Admin' where target_user=uname and status='PENDING';
  end if;
- insert into admin_security.audit(actor,target_user,action,details) values(actor.user_id,uname,case when changing then 'PASSWORD_RESET' else 'ACCOUNT_UPDATED' end,jsonb_build_object('previous_username',target.user_id,'username_changed',target.user_id<>uname,'temporary',changing and target.role<>'MASTER'));
- return jsonb_build_object('ok',true,'username',uname,'password_changed',changing,'temporary',changing and target.role<>'MASTER');
+ insert into admin_security.audit(actor,target_user,action,details) values(actor.user_id,uname,case when changing then 'PASSWORD_RESET' else 'ACCOUNT_UPDATED' end,jsonb_build_object('previous_username',target.user_id,'username_changed',target.user_id<>uname,'temporary',false));
+ return jsonb_build_object('ok',true,'username',uname,'password_changed',changing,'temporary',false);
 end $$;
 
 create or replace function public.qdc_admin_request_recovery(p_username text,p_mobile text)
