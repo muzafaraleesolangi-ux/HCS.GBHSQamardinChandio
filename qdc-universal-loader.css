@@ -221,3 +221,10 @@
  #qdc-cinematic-loader .qdc-up-step{min-height:44px}
  #qdc-cinematic-loader .qdc-up-right .qdc-up-card{min-height:43px}
 }
+
+/* Four-second original formation and approved authenticated portrait */
+#qdc-cinematic-loader .qdc-op-progress>i{animation-duration:4s}
+#qdc-cinematic-loader .qdc-up-personal{position:absolute;z-index:9;right:2%;bottom:2%;display:flex;flex-direction:column;align-items:center;gap:2px;max-width:95px;pointer-events:none;filter:drop-shadow(0 2px 9px #031710)}
+#qdc-cinematic-loader .qdc-up-personal img{box-sizing:border-box;display:block;width:clamp(42px,5vw,61px);height:clamp(42px,5vw,61px);object-fit:cover;border-radius:50%;border:3px solid #f7d780;box-shadow:0 0 0 4px #206247d6,0 0 20px #efc56686;background:#094635}
+#qdc-cinematic-loader .qdc-up-personal span{font:700 9px/1.1 Inter,system-ui,sans-serif;max-width:95px;text-align:center;padding:3px 7px;color:#ffe7af;background:#073c30ee;border:1px solid #d8b56a;border-radius:9px;white-space:normal}
+@media(max-width:840px){#qdc-cinematic-loader .qdc-up-personal{right:0;bottom:0}#qdc-cinematic-loader .qdc-up-personal img{width:39px;height:39px}#qdc-cinematic-loader .qdc-up-personal span{font-size:8px}}
