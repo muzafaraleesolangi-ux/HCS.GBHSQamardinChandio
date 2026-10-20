@@ -5644,8 +5644,8 @@ function renderServiceAnalytics(){
 }
 function renderDash(){
   if(!OFFICER) return;
-  if(window.qdcBuildingAdmin) window.qdcBuildingAdmin.sync();
-  if(window.qdcAdminAccounts) window.qdcAdminAccounts.sync();
+  if(window.qdcBuildingAdmin) try{window.qdcBuildingAdmin.sync()}catch(error){console.warn("[Qamardin] Building survey widget unavailable:",error)}
+  if(window.qdcAdminAccounts) try{window.qdcAdminAccounts.sync()}catch(error){console.warn("[Qamardin] Account management widget unavailable:",error)}
   $("#d-who").innerHTML = esc(OFFICER.name)+" <small>"+esc(OFFICER.title||"")+"</small>";
   if($("#ribbon-role")) $("#ribbon-role").textContent = (OFFICER.title||"Officer")+" · "+SETTINGS.clusterName;
   const active = STAFF.filter(e=>e.is_active);
@@ -5689,7 +5689,7 @@ function renderDash(){
   };
   $("#d-reqcount").textContent = queueCount?"("+queueCount+")":"";
   if($("#d-photocount")) $("#d-photocount").textContent="";
-  renderServiceAnalytics();
+  try{renderServiceAnalytics()}catch(error){console.warn("[Qamardin] Analytics unavailable:",error)}
 
   const opts='<option value="">All Cells</option>'+scopedCellsList().map(c=>'<option>'+c.code+'</option>').join("");
   $("#s-cell").innerHTML=opts; $("#e-cell").innerHTML=opts;
@@ -5702,7 +5702,9 @@ function renderDash(){
       '<td><div class="pcell"><div class="progress"><i style="width:'+p+'%"></i></div><span class="pnum">'+p+'%</span></div></td></tr>';
   }).join("");
 
-  renderSchools(); renderStaff(); renderReq(); renderDeletionRequests(); renderPhotos(); renderLog(); paintFoot();
+  [["schools",renderSchools],["employees",renderStaff],["requests",renderReq],["deletion queue",renderDeletionRequests],["photos",renderPhotos],["activity log",renderLog],["footer",paintFoot]].forEach(([label,render])=>{
+    try{render()}catch(error){console.warn("[Qamardin] Dashboard module unavailable: "+label,error)}
+  });
 }
 function pager(el,total,page,go){
   const pages=Math.max(1,Math.ceil(total/PER));
