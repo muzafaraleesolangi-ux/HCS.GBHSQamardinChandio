@@ -2608,7 +2608,7 @@ body #support-panel .it-contact .aquib-profile-dp{display:block;flex:none;width:
             </div>
             <div class="adminbox hidden" id="admin-edit-box">
               <div class="at"><span data-ic="pen"></span>Admin Edit Mode</div>
-              <p>You are editing this record directly as Master Admin. Changes save immediately &mdash; no approval needed.</p>
+              <p>Authorized office editing. Record updates save directly with an audit history.</p>
             </div>
             <button class="btn primary hidden" id="btn-admin-save"><span class="bicon" data-ic="check"></span>&nbsp; SAVE DRAFT</button>
             <button class="btn primary hidden" id="btn-verify" disabled inert aria-hidden="true"><span class="bicon" data-ic="check"></span>&nbsp; VERIFY &amp; SUBMIT</button>
@@ -3947,7 +3947,7 @@ let BOARD=null, STAFF=[], REQUESTS=[], DELETION_REQUESTS=[], RESET_REQUESTS=[], 
 let INLINE_EDIT_MODE=false, INLINE_DRAFT=[], DRAFT_PHOTO=null, DRAFT_NOTE="", PROFILE_BUSY=false, PROFILE_UNSAVED=false;
 let CUR=null, CUR_KEY=null, CUR_STATUS=null, CUR_HISTORY=[], CUR_FROMDASH=false, CUR_DOB=null;
 let PW_KEY=null, PW_PREFETCHED=null;
-let ADMIN_EDIT_MODE=false; // true only when Master Admin opened a profile via the top dashboard search
+let ADMIN_EDIT_MODE=false; // authorized Master Admin or Hub HM full profile edit mode
 let CURTAB="cells";
 const PER=14; let PAGE={schools:1,staff:1};
 
@@ -5103,7 +5103,8 @@ $("#btn-logout").addEventListener("click", async ()=>{
 $("#btn-refresh").addEventListener("click", ()=>loadBoardAndShow(true));
 
 async function loadBoardAndShow(keepTab){
-  netOn("Loading dashboard…");
+  /* Authentication/refresh use the cinematic DP loader, never the yellow status strip. */
+  netOff();
   try{
     BOARD = await api.board(TOKEN); netOff();
     if(!BOARD){ msg("Session ended","Please sign in again.","⚠"); $("#btn-logout").click(); return; }
@@ -5123,7 +5124,7 @@ async function loadBoardAndShow(keepTab){
     
     
     show("#screen-dash");
-  }catch(e){ netFail(friendlyErr(e)); }
+  }catch(e){ netOff(); window.qdcUniversalLoader?.cancelPendingSignIn?.(); msg("Dashboard unavailable",friendlyErr(e),"⚠"); }
 }
 function byId(id){ return STAFF.find(e=>e.id===id) || null; }
 /* ---------- top-of-dashboard employee search (Master Admin + Cell Heads) ----------
@@ -5651,7 +5652,13 @@ function renderStaff(){
     '</td></tr>';
   }).join("") : '<tr><td colspan="9"><div class="empty">No staff match.</div></td></tr>';
   $$("#t-staff button[data-view]").forEach(b=>b.addEventListener("click",()=>{ const e=byId(+b.dataset.view); if(e){ ADMIN_EDIT_MODE=false; lookupAndRender(empKey(e),true); } }));
-  $$("#t-staff button[data-edit]").forEach(b=>b.addEventListener("click",()=>openEditor(+b.dataset.edit)));
+  $("#t-staff button[data-edit]").forEach(b=>b.addEventListener("click",()=>{
+    const e=byId(+b.dataset.edit);if(!e)return;
+    if(IS_MASTER || OFFICER?.role==="HUBHM"){
+      ADMIN_EDIT_MODE=true;
+      lookupAndRender(empKey(e),true); // Reuse the full profile window used by View.
+    }else openEditor(e.id); // Preserve existing scoped Cell Head editing.
+  }));
   $$("#t-staff button[data-delete]").forEach(b=>b.addEventListener("click",async ()=>{
     const e=byId(+b.dataset.delete); if(!e) return;
     if(!confirm('PERMANENTLY DELETE '+e.employee_name+'?\n\nThis will permanently delete the employee record, login account, HM submissions, enrollment/classes, correction requests, history and other linked records. This action cannot be undone.\n\nClick OK only if you are sure.')) return;
