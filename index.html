@@ -3971,7 +3971,7 @@ const KIND = {EDIT:"Record edited by the office", VERIFIED:"Particulars certifie
               RETURNED:"Correction returned", ADDED:"Added to the register",
               REMOVED:"Removed from the register", RESTORED:"Restored to the register",
               PHOTO_REQUESTED:"Photo submitted for approval", PHOTO_APPROVED:"Photo approved",
-              PHOTO_RETURNED:"Photo declined"};
+              PHOTO_RETURNED:"Photo declined", PHOTO_EDIT:"Profile photograph updated by office"};
 
 function statusChip(st){
   const m={VERIFIED:['ok','check','Verified'],PENDING:['pend','hourglass','Pending'],
@@ -7298,7 +7298,7 @@ $$(".modal").forEach(m=>m.addEventListener("click",e=>{ if(e.target===m) closeMo
   try{ savedToken=localStorage.getItem("qdc_token"); }catch(e){}
   if(savedToken){
     TOKEN=savedToken;
-    netOn("Restoring your session…");
+    netOff(); /* Restoration uses a logo/DP loader; no yellow status strip. */
     try{
       BOARD = await api.board(TOKEN); netOff();
       if(BOARD){
@@ -7326,7 +7326,7 @@ $$(".modal").forEach(m=>m.addEventListener("click",e=>{ if(e.target===m) closeMo
   if(employeeSession && employeeSession.key){
     /* Employee stays signed in on this device until LOGOUT is explicitly pressed.
        A temporary network/server failure must never silently end the local session. */
-    netOn("Restoring your employee session…");
+    netOff(); /* Employee restoration uses DP loader; no yellow status strip. */
     try{
       const r=await api.lookup(employeeSession.key, employeeSession.dob||null); netOff();
       if(r && r.employee){ CUR=null; openRecordFrom(r,employeeSession.key,false,employeeSession.dob||null); return; }
@@ -7835,7 +7835,7 @@ function renderUnifiedWorkspace(){
  $('#qdc-draft-note').classList.toggle('hidden',!INLINE_EDIT_MODE||fromAdmin);if(INLINE_EDIT_MODE)$('#qdc-note').value=DRAFT_NOTE;
  const old=$('#qdc-editor-banner');if(old)old.remove();
  const status=verified?'<span class="qdc-status-chip verified">✓ VERIFIED BY ADMIN</span>':pending?'<span class="qdc-status-chip pending">◷ WITH ADMIN FOR FINAL VERIFICATION</span>':'<span class="qdc-status-chip draft">FINAL ADMIN VERIFICATION REQUIRED</span>';
- const banner='<section id="qdc-editor-banner" class="qdc-editor-banner '+(INLINE_EDIT_MODE?'editing':'')+'"><div class="qdc-editor-banner-top"><div><span class="qdc-eyebrow">EMPLOYEE PROFILE WORKSPACE</span><h3>'+(INLINE_EDIT_MODE?'Update your complete profile':'Your complete profile')+'</h3><p>'+(verified?'Your latest approved profile is verified by Admin.':pending?'Your submitted profile is waiting for Admin final verification.':'Edit your details and profile photo together, then send the complete profile to Admin for final verification.')+'</p></div>'+status+'</div><div class="qdc-guide-flow"><div class="qdc-guide-step '+(INLINE_EDIT_MODE?'active':'done')+'"><i>1</i><b>Edit photo & details</b></div><span>›</span><div class="qdc-guide-step '+(INLINE_EDIT_MODE?'active':'')+'"><i>2</i><b>Save draft / confirm</b></div><span>›</span><div class="qdc-guide-step '+(pending?'active':verified?'done':'')+'"><i>3</i><b>Admin verifies</b></div></div><div class="qdc-v4-guidance-bar" role="note"><span class="qdc-v4-orb" aria-hidden="true">✦</span><span><b>LIVE FIELD ASSISTANT</b><small>Tap or select any profile field for its own clear instructions. Save a draft and send corrections together.</small></span><span class="qdc-v4-live">FIELD BY FIELD</span></div><div class="qdc-v4-completion" aria-live="polite"><div><span>PROFILE DETAILS COMPLETED</span><strong id="qdc-v4-progress-text">Checking fields…</strong></div><div class="qdc-v4-track"><i id="qdc-v4-progress-fill"></i></div></div>'+(INLINE_EDIT_MODE?'<div class="qdc-editor-photo-row"><label class="qdc-photo-pick" for="file-photo" title="Choose a profile photo"><span class="qdc-avatar-ring">'+(DRAFT_PHOTO||CUR.photo_url?'<img src="'+esc(DRAFT_PHOTO||CUR.photo_url)+'" alt="Profile photo">':esc(initials(CUR.employee_name)))+'<i>＋</i></span></label><div><b>Profile photo</b><small>Tap your photo to choose or replace it. It will be sent with all your profile details in the same request.</small><em>'+(DRAFT_PHOTO?'New photo ready to save with your draft':CUR.photo_url?'Current photo will stay until Admin approves your update':'A profile photo is required')+'</em></div></div>':'')+'</section>';
+ const banner='<section id="qdc-editor-banner" class="qdc-editor-banner '+(INLINE_EDIT_MODE?'editing':'')+'"><div class="qdc-editor-banner-top"><div><span class="qdc-eyebrow">'+(ADMIN_EDIT_MODE?'AUTHORIZED OFFICE EDITOR':'EMPLOYEE PROFILE WORKSPACE')+'</span><h3>'+(ADMIN_EDIT_MODE?'Edit Complete Employee Record':INLINE_EDIT_MODE?'Update your complete profile':'Your complete profile')+'</h3><p>'+(verified?'Your latest approved profile is verified by Admin.':pending?'Your submitted profile is waiting for Admin final verification.':(ADMIN_EDIT_MODE?'Office changes save directly. Replace the photograph from the Photo Editor panel.':'Edit your details and profile photo together, then send the complete profile to Admin for final verification.'))+'</p></div>'+status+'</div><div class="qdc-guide-flow"><div class="qdc-guide-step '+(INLINE_EDIT_MODE?'active':'done')+'"><i>1</i><b>Edit photo & details</b></div><span>›</span><div class="qdc-guide-step '+(INLINE_EDIT_MODE?'active':'')+'"><i>2</i><b>Save draft / confirm</b></div><span>›</span><div class="qdc-guide-step '+(pending?'active':verified?'done':'')+'"><i>3</i><b>Admin verifies</b></div></div><div class="qdc-v4-guidance-bar" role="note"><span class="qdc-v4-orb" aria-hidden="true">✦</span><span><b>LIVE FIELD ASSISTANT</b><small>Tap or select any profile field for its own clear instructions. Save a draft and send corrections together.</small></span><span class="qdc-v4-live">FIELD BY FIELD</span></div><div class="qdc-v4-completion" aria-live="polite"><div><span>PROFILE DETAILS COMPLETED</span><strong id="qdc-v4-progress-text">Checking fields…</strong></div><div class="qdc-v4-track"><i id="qdc-v4-progress-fill"></i></div></div>'+(INLINE_EDIT_MODE?'<div class="qdc-editor-photo-row"><label class="qdc-photo-pick" for="file-photo" title="Choose a profile photo"><span class="qdc-avatar-ring">'+(DRAFT_PHOTO||CUR.photo_url?'<img src="'+esc(DRAFT_PHOTO||CUR.photo_url)+'" alt="Profile photo">':esc(initials(CUR.employee_name)))+'<i>＋</i></span></label><div><b>Profile photo</b><small>Tap your photo to choose or replace it. It will be sent with all your profile details in the same request.</small><em>'+(DRAFT_PHOTO?'New photo ready to save with your draft':CUR.photo_url?'Current photo will stay until Admin approves your update':'A profile photo is required')+'</em></div></div>':'')+'</section>';
  $('#r-fields').insertAdjacentHTML('afterbegin',banner);
  ['btn-inline-save','btn-inline-submit','btn-inline-cancel'].forEach(id=>$("#"+id).disabled=PROFILE_BUSY);
  $('#btn-inline-submit').innerHTML='<span class="bicon" data-ic="paperplane"></span>&nbsp; Review &amp; Submit';
