@@ -2166,6 +2166,34 @@ body #support-panel .it-contact .aquib-profile-dp{display:block;flex:none;width:
 #qdc-cinematic-loader .qdc-op-label-large{font-size:15px}
 }
 @media(prefers-reduced-motion:reduce){#qdc-cinematic-loader .qdc-up-ambient,#qdc-cinematic-loader .qdc-up-wave i,#qdc-cinematic-loader .qdc-up-card:after{animation:none!important}}
+
+/* Circular, right-sided step orbit; every other opening element stays as deployed. */
+@media (min-width:1421px){
+ #qdc-cinematic-loader .qdc-up-timeline{left:59%;right:auto;top:12%;width:24%;height:65%;display:block}
+}
+@media (min-width:841px) and (max-width:1420px){
+ #qdc-cinematic-loader .qdc-up-timeline{left:63.5%;right:auto;top:17%;width:33.5%;height:57%;display:block}
+}
+@media (min-width:841px){
+ #qdc-cinematic-loader .qdc-up-step{position:absolute;left:var(--qdc-orbit-x);top:var(--qdc-orbit-y);width:clamp(205px,75%,315px);margin:0;transform:translateY(-50%);z-index:2;isolation:isolate}
+ #qdc-cinematic-loader .qdc-up-step.qdc-up-active{transform:translateY(-50%);border-color:#ffe49e;box-shadow:0 0 26px #f7c45a69,0 0 8px #f8d77950,inset 0 1px #ffe4a25d}
+ #qdc-cinematic-loader .qdc-up-step[data-qdc-op-step="0"]{--qdc-orbit-x:0%;--qdc-orbit-y:10%}
+ #qdc-cinematic-loader .qdc-up-step[data-qdc-op-step="1"]{--qdc-orbit-x:12%;--qdc-orbit-y:28%}
+ #qdc-cinematic-loader .qdc-up-step[data-qdc-op-step="2"]{--qdc-orbit-x:18%;--qdc-orbit-y:46%}
+ #qdc-cinematic-loader .qdc-up-step[data-qdc-op-step="3"]{--qdc-orbit-x:12%;--qdc-orbit-y:64%}
+ #qdc-cinematic-loader .qdc-up-step[data-qdc-op-step="4"]{--qdc-orbit-x:0%;--qdc-orbit-y:82%}
+ #qdc-cinematic-loader .qdc-up-orbit-svg{position:absolute;inset:0;width:100%;height:100%;z-index:1;overflow:visible;pointer-events:none}
+ #qdc-cinematic-loader .qdc-up-orbit-glow{fill:none;stroke:#eabd67;stroke-width:7;stroke-linecap:round;opacity:.17;filter:blur(5px)}
+ #qdc-cinematic-loader .qdc-up-orbit-base{fill:none;stroke:#5be6bc;stroke-width:1.6;stroke-linecap:round;opacity:.66}
+ #qdc-cinematic-loader .qdc-up-orbit-trace{fill:none;stroke:url(#qdc-up-orbit-gold);stroke-width:2.6;stroke-linecap:round;filter:drop-shadow(0 0 5px #f7ca68)}
+ #qdc-cinematic-loader .qdc-up-orbit-spark{fill:#ffe9a8;stroke:#e6bb5c;stroke-width:1.4;filter:drop-shadow(0 0 5px #ffd880)}
+ #qdc-cinematic-loader .qdc-up-step-mark{box-shadow:0 0 0 4px #308e6040,0 0 14px #69f5c54d}
+}
+@media (max-width:840px){
+ #qdc-cinematic-loader .qdc-up-orbit-svg{display:none}
+ #qdc-cinematic-loader .qdc-up-step{left:auto;top:auto}
+}
+
 </style></head>
 <body>
 <div class="qdc-op-intro" id="qdc-cinematic-loader" role="status" aria-live="off" aria-label="Cluster Hub School opening animation"><div class="qdc-op-crossline"></div><div class="qdc-up-campus" aria-hidden="true"></div><div class="qdc-up-reflection" aria-hidden="true"></div><div class="qdc-up-ambient" aria-hidden="true"></div><aside class="qdc-up-left" aria-label="Cluster highlights">
@@ -2173,7 +2201,7 @@ body #support-panel .it-contact .aquib-profile-dp{display:block;flex:none;width:
 <section class="qdc-up-card"><div class="qdc-up-quote">Education Connects Communities</div></section>
 <section class="qdc-up-card qdc-up-counter"><div><div class="qdc-up-card-sub">Schools Connected</div><div class="qdc-up-count" id="qdc-up-schools-count">—</div></div><div class="qdc-up-wave" aria-hidden="true"><i style="--n:1"></i><i style="--n:2"></i><i style="--n:3"></i><i style="--n:4"></i><i style="--n:5"></i><i style="--n:6"></i><i style="--n:7"></i></div></section>
 <section class="qdc-up-card qdc-up-counter"><div><div class="qdc-up-card-sub">Total Staff</div><div class="qdc-up-count" id="qdc-up-staff-count">—</div></div><span class="qdc-up-ico" aria-hidden="true">♙</span></section>
-</aside><aside class="qdc-up-timeline" aria-label="Opening sequence"><div class="qdc-up-step qdc-up-active" data-qdc-op-step="0"><span class="qdc-up-step-mark" aria-hidden="true">1</span><div><b>Connecting services</b><small>Preparing connection…</small></div></div><div class="qdc-up-step" data-qdc-op-step="1"><span class="qdc-up-step-mark" aria-hidden="true">2</span><div><b>Syncing school cells</b><small>Retrieving cluster records…</small></div></div><div class="qdc-up-step" data-qdc-op-step="2"><span class="qdc-up-step-mark" aria-hidden="true">3</span><div><b>Loading staff profiles</b><small>Preparing employee workspace…</small></div></div><div class="qdc-up-step" data-qdc-op-step="3"><span class="qdc-up-step-mark" aria-hidden="true">4</span><div><b>Accessing secure connections</b><small>Preparing protected access…</small></div></div><div class="qdc-up-step" data-qdc-op-step="4"><span class="qdc-up-step-mark" aria-hidden="true">5</span><div><b>Finalizing homepage</b><small>Almost ready…</small></div></div></aside><aside class="qdc-up-right" aria-label="Academic calendar and portal details">
+</aside><aside class="qdc-up-timeline" aria-label="Opening sequence"><svg class="qdc-up-orbit-svg" aria-hidden="true" focusable="false" viewBox="0 0 400 500" preserveAspectRatio="none"><defs><linearGradient id="qdc-up-orbit-gold" x1="0" x2="0" y1="0" y2="1"><stop offset="0%" stop-color="#69efd0"/><stop offset="48%" stop-color="#ffdf91"/><stop offset="100%" stop-color="#54e3bd"/></linearGradient></defs><path class="qdc-up-orbit-glow"/><path class="qdc-up-orbit-base"/><path class="qdc-up-orbit-trace"/><circle class="qdc-up-orbit-spark" cx="0" cy="0" r="4" opacity="0"/></svg><div class="qdc-up-step qdc-up-active" data-qdc-op-step="0"><span class="qdc-up-step-mark" aria-hidden="true">1</span><div><b>Connecting services</b><small>Preparing connection…</small></div></div><div class="qdc-up-step" data-qdc-op-step="1"><span class="qdc-up-step-mark" aria-hidden="true">2</span><div><b>Syncing school cells</b><small>Retrieving cluster records…</small></div></div><div class="qdc-up-step" data-qdc-op-step="2"><span class="qdc-up-step-mark" aria-hidden="true">3</span><div><b>Loading staff profiles</b><small>Preparing employee workspace…</small></div></div><div class="qdc-up-step" data-qdc-op-step="3"><span class="qdc-up-step-mark" aria-hidden="true">4</span><div><b>Accessing secure connections</b><small>Preparing protected access…</small></div></div><div class="qdc-up-step" data-qdc-op-step="4"><span class="qdc-up-step-mark" aria-hidden="true">5</span><div><b>Finalizing homepage</b><small>Almost ready…</small></div></div></aside><aside class="qdc-up-right" aria-label="Academic calendar and portal details">
 <section class="qdc-up-card"><div class="qdc-up-badge"><span class="qdc-up-ico" aria-hidden="true">▦</span><div class="qdc-up-card-title">Academic Year</div></div><div class="qdc-up-current" id="qdc-up-academic-year">2026–27</div><div class="qdc-up-card-sub">Together for a stronger tomorrow</div><div class="qdc-up-current" id="qdc-up-month">October 2026</div><div class="qdc-up-calendar" id="qdc-up-calendar" aria-label="Current month calendar"></div></section>
 <section class="qdc-up-card"><div class="qdc-up-card-title">Progress<br>in Unity</div><svg class="qdc-up-graph" viewBox="0 0 160 40" aria-hidden="true"><path d="M2 32 30 24 51 27 77 13 102 21 127 8 158 3" fill="none" stroke="#f0c574" stroke-width="2.3" stroke-linecap="round"/><g fill="#ffe3a4"><circle cx="77" cy="13" r="3"/><circle cx="127" cy="8" r="3"/><circle cx="158" cy="3" r="3"/></g></svg></section>
 <section class="qdc-up-card qdc-up-trust"><span class="qdc-up-ico" aria-hidden="true">♢</span><div><div class="qdc-up-card-title">Secure Portal</div><div class="qdc-up-card-sub">HTTPS connection</div></div></section>
@@ -2187,6 +2215,27 @@ body #support-panel .it-contact .aquib-profile-dp{display:block;flex:none;width:
   const root=document.getElementById('qdc-cinematic-loader');if(!root)return;
   const pct=document.getElementById('qdc-op-percent'),msg=document.getElementById('qdc-op-progress-msg');
   const marks=[...root.querySelectorAll('[data-qdc-op-step]')],schoolCount=document.getElementById('qdc-up-schools-count'),staffCount=document.getElementById('qdc-up-staff-count');
+
+  /* Match the glowing single-sided arc to the exact centers of the five real loading-step indicators. */
+  const orbit=root.querySelector('.qdc-up-timeline'),orbitSvg=root.querySelector('.qdc-up-orbit-svg');
+  const orbitGlow=root.querySelector('.qdc-up-orbit-glow'),orbitBase=root.querySelector('.qdc-up-orbit-base');
+  const orbitTrace=root.querySelector('.qdc-up-orbit-trace'),orbitSpark=root.querySelector('.qdc-up-orbit-spark');
+  let orbitLength=0;
+  function fitLoadingOrbit(){
+    if(!orbit||!orbitSvg||!orbitTrace||window.innerWidth<=840){orbitLength=0;return}
+    const r=orbit.getBoundingClientRect();if(!r.width||!r.height)return;
+    const points=marks.map(mark=>{const s=mark.querySelector('.qdc-up-step-mark').getBoundingClientRect();return [s.left+s.width/2-r.left,s.top+s.height/2-r.top]});
+    if(points.length!==5)return;
+    let d='M '+points[0][0].toFixed(1)+' '+points[0][1].toFixed(1);
+    for(let i=1;i<points.length;i++){const p=points[i-1],q=points[i],mid=(p[1]+q[1])/2;d+=' C '+p[0].toFixed(1)+' '+mid.toFixed(1)+', '+q[0].toFixed(1)+' '+mid.toFixed(1)+', '+q[0].toFixed(1)+' '+q[1].toFixed(1)}
+    orbitSvg.setAttribute('viewBox','0 0 '+r.width.toFixed(1)+' '+r.height.toFixed(1));
+    for(const path of [orbitGlow,orbitBase,orbitTrace])path.setAttribute('d',d);
+    try{orbitLength=orbitTrace.getTotalLength()}catch(_e){orbitLength=0}
+    if(orbitLength){orbitTrace.style.strokeDasharray=String(orbitLength);orbitTrace.style.strokeDashoffset=String(orbitLength)}
+  }
+  fitLoadingOrbit();
+  window.addEventListener('resize',fitLoadingOrbit,{passive:true});
+
   const now=new Date(),academicStart=now.getMonth()>=6?now.getFullYear():now.getFullYear()-1;
   const yr=document.getElementById('qdc-up-academic-year');if(yr)yr.textContent=academicStart+'–'+String(academicStart+1).slice(-2);
   const month=document.getElementById('qdc-up-month');if(month)month.textContent=now.toLocaleDateString('en-PK',{month:'long',year:'numeric'});
@@ -2206,6 +2255,7 @@ body #support-panel .it-contact .aquib-profile-dp{display:block;flex:none;width:
   syncStats();statsTimer=setInterval(syncStats,170);
   function close(){if(finished)return;finished=true;clearInterval(statsTimer);if(pct)pct.textContent='100%';if(msg)msg.textContent='OPENING THE HOMEPAGE';root.classList.add('qdc-op-hide');setTimeout(()=>root.remove(),300)}
   function frame(t){if(finished)return;const elapsed=t-started,n=Math.min(100,Math.floor(elapsed/30)),active=Math.min(4,Math.floor(elapsed/600));
+    if(orbitLength&&orbitTrace){const visible=Math.min(orbitLength,Math.max(0,elapsed/3000)*orbitLength);orbitTrace.style.strokeDashoffset=String(orbitLength-visible);if(orbitSpark){try{const pos=orbitTrace.getPointAtLength(visible);orbitSpark.setAttribute('cx',pos.x.toFixed(1));orbitSpark.setAttribute('cy',pos.y.toFixed(1));orbitSpark.setAttribute('opacity','1')}catch(_e){}}}
     if(pct)pct.textContent=n+'%';
     if(msg)msg.textContent=n<35?'FORMING THE SCHOOL EMBLEM':n<75?'LOADING OUR SCHOOL COMMUNITY':'OPENING THE HOMEPAGE';
     for(let i=0;i<marks.length;i++){const el=marks[i],done=i<active;el.classList.toggle('qdc-up-active',i===active);el.classList.toggle('qdc-up-done',done);const mark=el.querySelector('.qdc-up-step-mark');if(mark)mark.textContent=done?'✓':String(i+1)}
