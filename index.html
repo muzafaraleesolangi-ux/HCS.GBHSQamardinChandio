@@ -5164,30 +5164,75 @@ $("#btn-logout").addEventListener("click", async ()=>{
 });
 $("#btn-refresh").addEventListener("click", ()=>loadBoardAndShow(true));
 
-async function loadBoardAndShow(keepTab){
-  /* Authentication/refresh use the cinematic DP loader, never the yellow status strip. */
-  netOff();
-  try{
-    BOARD = await api.board(TOKEN); netOff();
-    if(!BOARD){ msg("Session ended","Please sign in again.","⚠"); $("#btn-logout").click(); return; }
-    OFFICER = BOARD.officer; IS_MASTER = OFFICER.role==="MASTER"; CAN_ADMIN = (OFFICER.role==="MASTER"||OFFICER.role==="HUBHM");
-    STAFF = BOARD.employees||[]; REQUESTS = BOARD.requests||[]; HISTORY = BOARD.history||[]; DELETION_REQUESTS=[]; if(IS_MASTER){try{await refreshDeletionRequests();}catch(delErr){DELETION_REQUESTS=[];}}
-    VERIFIED_MAP = new Map((BOARD.verified||[]).map(v=>[v.employee_id,v]));
-    $("#btn-addemp").classList.toggle("hidden", !CAN_ADMIN);
-    $("#notifwrap").classList.toggle("hidden", !OFFICER);
-    $("#tab-btn-hmdata").classList.remove("hidden");
-    $("#hmdata-admin-only").classList.toggle("hidden", !CAN_ADMIN);
-    renderDash();
-    if(!keepTab) CURTAB="cells";
-    openTab(CURTAB);
-    closeDashSearch();
-    $("#notif-panel").classList.remove("show");
-    if(CAN_ADMIN){ updateNotifBadge(); loadPasswordResetRequests(); loadHmTemplatesList(); } else renderPasswordResetNotice();
-    
-    
-    show("#screen-dash");
-  }catch(e){ netOff(); window.qdcUniversalLoader?.cancelPendingSignIn?.(); msg("Dashboard unavailable",friendlyErr(e),"⚠"); }
+/* Shared admin workspace renderer: a secondary widget must never block an
+   already-authorized Master, Hub HM or Cell Head account from opening. */
+function showVerifiedAdminWorkspace(keepTab){
+ if(!BOARD||!BOARD.officer||!BOARD.officer.role)throw new Error("Authorized account data was not received.");
+ OFFICER=BOARD.officer;IS_MASTER=OFFICER.role==="MASTER";CAN_ADMIN=IS_MASTER||OFFICER.role==="HUBHM";
+ STAFF=Array.isArray(BOARD.employees)?BOARD.employees:[];
+ REQUESTS=Array.isArray(BOARD.requests)?BOARD.requests:[];
+ HISTORY=Array.isArray(BOARD.history)?BOARD.history:[];
+ VERIFIED_MAP=new Map((Array.isArray(BOARD.verified)?BOARD.verified:[]).map(v=>[v.employee_id,v]));
+ const safe=(label,fn)=>{try{return fn()}catch(err){console.warn("[Qamardin] Optional admin dashboard step failed:",label,err);return null}};
+ // The authentication result is already verified. Open the user-facing dashboard FIRST.
+ show("#screen-dash");
+ safe("office access controls",()=>{
+   $("#btn-addemp")?.classList.toggle("hidden",!CAN_ADMIN);
+   $("#notifwrap")?.classList.toggle("hidden",!OFFICER);
+   $("#tab-btn-hmdata")?.classList.remove("hidden");
+   $("#hmdata-admin-only")?.classList.toggle("hidden",!CAN_ADMIN);
+   const label=$("#d-who");if(label)label.innerHTML=esc(OFFICER.name||"Officer")+" <small>"+esc(OFFICER.title||"")+"</small>";
+ });
+ safe("dashboard cards and directory",()=>renderDash());
+ if(!keepTab||!document.getElementById("tab-"+CURTAB))CURTAB="cells";
+ safe("dashboard tab",()=>openTab(CURTAB));
+ safe("dashboard search",()=>closeDashSearch());
+ safe("notifications",()=>$("#notif-panel")?.classList.remove("show"));
+ if(CAN_ADMIN){
+   safe("notification count",()=>updateNotifBadge());
+   safe("password reset requests",()=>loadPasswordResetRequests());
+   safe("HM report templates",()=>loadHmTemplatesList());
+ }else safe("role notifications",()=>renderPasswordResetNotice());
+ return true;
 }
+async function loadBoardAndShow(keepTab){
+ netOff(); // only hides the former yellow status banner; unrelated to authentication
+ try{
+   BOARD=null;
+   const response=await api.board(TOKEN);
+   if(!response||!response.officer){
+     window.qdcUniversalLoader?.cancelPendingSignIn?.();
+     TOKEN=null;try{localStorage.removeItem("qdc_token")}catch(_e){}
+     window.qdcUniversalLoader?.clearIdentity?.();
+     show("#screen-login");
+     setLoginTab("back");
+     showErr("#a-err","This admin session has expired. Please sign in again.");
+     return false;
+   }
+   BOARD=response;
+   DELETION_REQUESTS=[];
+   // A failed optional request never blocks a verified dashboard.
+   if(response.officer.role==="MASTER"){
+     try{await refreshDeletionRequests()}catch(error){console.warn("[Qamardin] Deletion queue skipped:",error);DELETION_REQUESTS=[]}
+   }
+   showVerifiedAdminWorkspace(keepTab);
+   return true;
+ }catch(e){
+   netOff();
+   window.qdcUniversalLoader?.cancelPendingSignIn?.();
+   console.error("[Qamardin] Admin workspace recovery:",e);
+   if(BOARD?.officer){
+     try{showVerifiedAdminWorkspace(keepTab)}catch(_e){}
+     msg("Dashboard partially loaded","Sign-in succeeded. Some optional panels could not load; refresh to retry.","⚠");
+     return true;
+   }
+   show("#screen-login");
+   try{setLoginTab("back")}catch(_e){}
+   showErr("#a-err",friendlyErr(e));
+   return false;
+ }
+}
+
 function byId(id){ return STAFF.find(e=>e.id===id) || null; }
 /* ---------- top-of-dashboard employee search (Master Admin + Cell Heads) ----------
    Client-side only, against the already-loaded STAFF array (STAFF is itself already
@@ -7295,29 +7340,14 @@ $$(".modal").forEach(m=>m.addEventListener("click",e=>{ if(e.target===m) closeMo
   document.title = "CLUSTER HUB SCHOOL GBHS QAMAR DIN CHANDIO OFFICIAL SITE";
 
   let savedToken=null;
-  try{ savedToken=localStorage.getItem("qdc_token"); }catch(e){}
+  try{ savedToken=localStorage.getItem("qdc_token"); }catch(_e){}
   if(savedToken){
     TOKEN=savedToken;
-    netOff(); /* Restoration uses a logo/DP loader; no yellow status strip. */
-    try{
-      BOARD = await api.board(TOKEN); netOff();
-      if(BOARD){
-        OFFICER=BOARD.officer; IS_MASTER=OFFICER.role==="MASTER"; CAN_ADMIN=(OFFICER.role==="MASTER"||OFFICER.role==="HUBHM");
-        STAFF=BOARD.employees||[]; REQUESTS=BOARD.requests||[]; HISTORY=BOARD.history||[]; if(CAN_ADMIN) await loadPasswordResetRequests();
-        VERIFIED_MAP=new Map((BOARD.verified||[]).map(v=>[v.employee_id,v]));
-        $("#btn-addemp").classList.toggle("hidden", !CAN_ADMIN);
-        $("#notifwrap").classList.toggle("hidden", !OFFICER);
-        $("#tab-btn-hmdata").classList.remove("hidden");
-        $("#hmdata-admin-only").classList.toggle("hidden", !CAN_ADMIN);
-        renderDash(); openTab("cells");
-        if(CAN_ADMIN){ updateNotifBadge(); loadPasswordResetRequests(); loadHmTemplatesList(); } else renderPasswordResetNotice();
-        
-        
-        show("#screen-dash");
-        return;
-      }
-    }catch(e){ netOff(); }
-    TOKEN=null; try{ localStorage.removeItem("qdc_token"); }catch(e){} window.qdcUniversalLoader?.clearIdentity?.();
+    // One shared authorization/render flow for both fresh login and refresh.
+    const restored=await loadBoardAndShow(false);
+    if(restored)return;
+    // Preserve a valid cached token after a temporary network failure;
+    // a genuinely expired token is removed by loadBoardAndShow.
   }
   await loadPublic();
   renderHomePublic(); paintFoot();
