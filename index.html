@@ -2074,12 +2074,24 @@ body #support-panel .it-contact .aquib-profile-dp{display:block;flex:none;width:
 @keyframes qdcRotate{to{transform:rotate(360deg)}}@keyframes qdcHover{50%{transform:translateY(-7px)}}@keyframes qdcGlow{50%{filter:brightness(1.24)}}@keyframes qdcBackdrop{to{transform:rotate(360deg)}}@keyframes qdcSweep{50%{transform:translateX(50%)}} 
 @media(max-width:760px){.qdc-cl-shell{padding:20px 16px}.qdc-cl-main{display:flex;flex-direction:column;gap:22px;margin:24px auto}.qdc-cl-orb{width:min(275px,65vw)}.qdc-cl-steps{width:min(450px,100%);gap:7px}.qdc-cl-step{padding:9px 11px}.qdc-cl-head{font-size:8px;letter-spacing:1px}.qdc-cl-head b{font-size:10px}.qdc-cl-orb-progress{font-size:32px}}
 @media(prefers-reduced-motion:reduce){#qdc-cinematic-loader *,#qdc-cinematic-loader:before,#qdc-cinematic-loader:after{animation:none!important;transition:none!important}}
+</style><style id="qdc-cinematic-official-logo-polish">
+#qdc-cinematic-loader .qdc-cl-orb{width:min(335px,72vw)}
+#qdc-cinematic-loader .qdc-cl-logo{width:68%;height:68%;gap:0}
+#qdc-cinematic-loader .qdc-cl-logo img{width:100%;height:100%;max-width:100%;object-fit:contain;filter:drop-shadow(0 8px 17px #0009);animation:qdcHover 4s ease-in-out infinite}
+#qdc-cinematic-loader .qdc-cl-school-titles{text-align:center;margin:11px auto 16px;max-width:550px}
+#qdc-cinematic-loader .qdc-cl-title-mini{font:700 clamp(11px,1.2vw,14px) Manrope,sans-serif;letter-spacing:4px;color:#ecdbaf}
+#qdc-cinematic-loader .qdc-cl-title-main{font:800 clamp(21px,3vw,38px) Georgia,serif;line-height:1.16;margin-top:8px;letter-spacing:.6px;color:#ffdf8c;text-shadow:0 2px 12px #ba854c75,0 3px 1px #00160e}
+#qdc-cinematic-loader .qdc-cl-title-sindhi{font-family:"Noto Nastaliq Urdu","Noto Naskh Arabic","Segoe UI",sans-serif;color:#fae5b2;font-weight:700;font-size:clamp(13px,1.65vw,19px);line-height:1.9}
+#qdc-cinematic-loader .qdc-cl-orb-progress{font-size:38px}
+#qdc-cinematic-loader .qdc-cl-steps{gap:14px}
+#qdc-cinematic-loader .qdc-cl-main{grid-template-columns:minmax(0,1fr) minmax(275px,375px)}
+@media(max-width:760px){#qdc-cinematic-loader .qdc-cl-orb{width:min(240px,62vw)}#qdc-cinematic-loader .qdc-cl-title-main{font-size:clamp(19px,5vw,29px)}#qdc-cinematic-loader .qdc-cl-title-mini{letter-spacing:2px}}
 </style></head>
 <body>
 <div id="qdc-cinematic-loader" role="status" aria-label="Loading Qamardin Cluster portal">
 <div class="qdc-cl-shell">
 <div class="qdc-cl-head"><span>✦ &nbsp; <b>QAMARDIN CLUSTER</b><span style="display:block;margin:6px 0 0 28px">GBHS QAMARDIN CHANDIO</span></span><span>EDUCATION · PEOPLE · PROGRESS</span></div>
-<div class="qdc-cl-main"><div><div class="qdc-cl-orb"><div class="qdc-cl-track"></div><div class="qdc-cl-logo"><img id="qdc-cl-official-logo" alt="Official homepage emblem"><strong>QAMARDIN<br>CLUSTER</strong><small>GBHS QAMARDIN CHANDIO</small></div></div><div class="qdc-cl-orb-progress"><span id="qdc-cl-pct">0</span>%</div><div class="qdc-cl-meter"><i id="qdc-cl-meter"></i></div><p class="qdc-cl-caption">Portal startup sequence</p><p class="qdc-cl-sub" id="qdc-cl-message">Loading your workspace…</p></div>
+<div class="qdc-cl-main"><div><div class="qdc-cl-orb"><div class="qdc-cl-track"></div><div class="qdc-cl-logo"><img id="qdc-cl-official-logo" src="./assets/gbhs-qamardin-chandio-logo.svg" alt="Official GBHS Qamardin Chandio cluster logo"></div><div class="qdc-cl-school-titles"><div class="qdc-cl-title-mini">CLUSTER HUB SCHOOL</div><div class="qdc-cl-title-main">GBHS QAMAR DIN CHANDIO</div><div class="qdc-cl-title-sindhi" lang="sd" dir="rtl">ڪلسٽر حب اسڪول · جي بي ايڇ ايس قمر الدين چانڊيو</div></div></div><div class="qdc-cl-orb-progress"><span id="qdc-cl-pct">0</span>%</div><div class="qdc-cl-meter"><i id="qdc-cl-meter"></i></div><p class="qdc-cl-caption">Portal startup sequence</p><p class="qdc-cl-sub" id="qdc-cl-message">Loading your workspace…</p></div>
 <div class="qdc-cl-steps">
 <div class="qdc-cl-step qdc-active"><span class="qdc-cl-dot">1</span><span><strong>Connecting services</strong><small>Establishing portal connections</small></span></div>
 <div class="qdc-cl-step"><span class="qdc-cl-dot">2</span><span><strong>Syncing school cells</strong><small>Preparing school information</small></span></div>
@@ -2093,7 +2105,8 @@ body #support-panel .it-contact .aquib-profile-dp{display:block;flex:none;width:
 const root=document.getElementById('qdc-cinematic-loader');if(!root)return;
 let p=0,ready=false,finished=false;const started=performance.now();
 const items=Array.from(root.querySelectorAll('.qdc-cl-step')),pct=document.getElementById('qdc-cl-pct'),meter=document.getElementById('qdc-cl-meter'),msg=document.getElementById('qdc-cl-message');
-function setLogo(){const source=document.getElementById('crest-img');const dest=document.getElementById('qdc-cl-official-logo');if(source&&source.src&&source.src!==location.href){dest.src=source.src;return true}return false}
+function setLogo(){const dest=document.getElementById('qdc-cl-official-logo');if(dest&&!dest.getAttribute('src'))dest.src='./assets/gbhs-qamardin-chandio-logo.svg';return !!dest}
+
 function update(){if(finished)return;setLogo();const limit=ready?100:88;p=Math.min(limit,p+(p<60?2.6:p<86?1.3:0.65));if(ready&&performance.now()-started>1250)p=Math.min(100,p+4);const n=Math.floor(p);pct.textContent=n;meter.style.width=n+'%';root.style.setProperty('--qdc-angle',(n*3.6)+'deg');const current=Math.min(4,Math.floor(n/20));items.forEach((e,i)=>{e.classList.toggle('qdc-active',i===current&&n<100);e.classList.toggle('qdc-complete',i<current||n===100);e.querySelector('.qdc-cl-dot').textContent=i<current||n===100?'✓':i+1});if(n===100){finished=true;msg.textContent='Workspace ready';setTimeout(()=>{root.classList.add('qdc-leaving');setTimeout(()=>root.remove(),900)},280);return}requestAnimationFrame(throttle)}
 let last=0;function throttle(t){if(t-last<40){requestAnimationFrame(throttle);return}last=t;update()}
 requestAnimationFrame(throttle);
