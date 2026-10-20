@@ -51,26 +51,22 @@
     overlay.classList.remove('is-active');
     document.documentElement.classList.remove('qdc-leaving');
   };
+  /* Direct navigation: never display the page-transition logo overlay when moving
+     from homepage to a monthly report, survey, DEO form or another portal page. */
   const go = (url, label) => {
-    if (pending) return;
-    pending = true;
-    title.textContent = label;
-    overlay.classList.add('is-active');
-    document.documentElement.classList.add('qdc-leaving');
-    setTimeout(() => location.assign(url), reduced.matches ? 40 : 300);
-    setTimeout(reset, 12000);
+    if(pending)return;
+    pending=true;
+    window.qdcUniversalLoader?.markInternalNavigation?.(url);
+    location.assign(url);
   };
   window.qdcNavigateBack = () => {
-    if (pending) return;
-    let sameOrigin = false;
-    try { sameOrigin = new URL(document.referrer).origin === location.origin; } catch (_) {}
-    if (!sameOrigin || history.length <= 1) return go('./index.html', labels['index.html']);
-    pending = true;
-    title.textContent = 'Returning to previous page';
-    overlay.classList.add('is-active');
-    document.documentElement.classList.add('qdc-leaving');
-    setTimeout(() => history.back(), reduced.matches ? 40 : 300);
-    setTimeout(reset, 12000);
+    if(pending)return;
+    let sameOrigin=false;
+    try{sameOrigin=new URL(document.referrer).origin===location.origin}catch(_){}
+    if(!sameOrigin||history.length<=1)return go('./index.html',labels['index.html']);
+    pending=true;
+    window.qdcUniversalLoader?.markInternalNavigation?.(document.referrer);
+    history.back();
   };
   document.addEventListener('click', event => {
     const anchor = event.target.closest('a[href]');
