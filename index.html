@@ -7310,11 +7310,13 @@ function clearInlineEditActive(){
   try{ sessionStorage.removeItem("qdc_inline_edit_active"); }catch(e){}
 }
 
+function qdcProfileActivity(stage,message){ document.dispatchEvent(new CustomEvent('qdc-profile-activity',{detail:{stage,message}})); }
+
 async function enterInlineEdit(fieldKey){
   if(!CUR || ADMIN_EDIT_MODE) return;
   if(CUR_STATUS==='CORRECTION'){ msg('Approval pending','A correction request is already waiting for office decision. You can edit again after it is approved or returned.','⏳'); return; }
-  netOn('Loading saved changes…');
-  try{ INLINE_DRAFT=await loadCorrectionDraft(CUR_KEY); netOff(); }catch(e){netFail(friendlyErr(e));return;}
+  netOn('Loading saved changes…');qdcProfileActivity('loading','Loading your saved draft…');
+  try{ INLINE_DRAFT=await loadCorrectionDraft(CUR_KEY); netOff();qdcProfileActivity('ready','Saved draft loaded. Review and update your details.'); }catch(e){qdcProfileActivity('error','Your saved draft could not load. Please retry.');netFail(friendlyErr(e));return;}
   INLINE_EDIT_MODE=true; markInlineEditActive(); renderRecordUI(); syncInlineDraftStatus();
   if(fieldKey){ const el=document.querySelector('#r-fields [data-field="'+CSS.escape(fieldKey)+'"]'); if(el){ setTimeout(()=>{el.focus();el.scrollIntoView({block:'center',behavior:'smooth'});},180); } }
 }
@@ -7357,21 +7359,24 @@ async function saveInlineChanges(alsoSubmit){
   const err=validateInlineChanges(changes,merged);if(err){msg('Review the entry',err,'⚠');return;}
   if(alsoSubmit){const candidate=Object.assign({},merged,{photo_url:DRAFT_PHOTO||CUR.photo_url});const missing=missingMandatoryFields(candidate);if(missing.length){msg('Complete your profile first',missing.map(x=>x[1]).join(', '),'⚠');return;}}
   if(changes.some(c=>c.field==='designation')&&!changes.some(c=>c.field==='staff_type')&&!merged.staff_type){const t=inferStaffTypeFromDesignation(merged.designation||'');if(t)changes.push({field:'staff_type',label:LABEL.staff_type,from:CUR.staff_type||'',to:t});}
-  PROFILE_BUSY=true;renderUnifiedWorkspace();netOn(alsoSubmit?'Saving data and photo…':'Saving draft…');
+  PROFILE_BUSY=true;renderUnifiedWorkspace();qdcProfileActivity('saving',alsoSubmit?'Saving your profile details and photo…':'Saving your draft to the server…');netOn(alsoSubmit?'Saving data and photo…':'Saving draft…');
   try{
     const saved=await api.saveProfileDraft(CUR_KEY,changes,DRAFT_PHOTO,$('#qdc-note').value.trim());
     if(!saved||!saved.ok){throw new Error(saved&&saved.status==='STALE_PROFILE'?'Your approved profile changed. Refresh and review before saving.':(saved&&saved.status)||'Save failed');}
     INLINE_DRAFT=saved.changes||[];DRAFT_PHOTO=saved.photo_data||null;DRAFT_NOTE=$('#qdc-note').value.trim();PROFILE_UNSAVED=false;
-    if(!alsoSubmit){netOff();renderRecordUI();msg('Draft saved','Your details and photo are saved in the system. Continue editing, or send one approval request when ready.','✓');return;}
-    netOn('Sending one combined request…');const r=await api.submitCorrectionDraft(CUR_KEY,DRAFT_NOTE);
+    if(!alsoSubmit){netOff();renderRecordUI();qdcProfileActivity('saved','Your draft has been saved successfully.');msg('Draft saved','Your details and photo are saved in the system. Continue editing, or send one approval request when ready.','✓');return;}
+    qdcProfileActivity('submitting','Sending your saved profile for admin verification…');netOn('Sending one combined request…');const r=await api.submitCorrectionDraft(CUR_KEY,DRAFT_NOTE);
     if(!r||!r.ok)throw new Error(r&&r.status==='INCOMPLETE'?'Complete '+r.missing+' before submitting.':r&&r.status==='DUPLICATE'?'The requested PID/CNIC already belongs to another employee.':r&&r.status==='EMPTY'?'There are no changes to send.':r&&r.status==='ALREADY_PENDING'?'Your request is already waiting for approval.':(r&&r.status)||'Submission failed. Your draft is saved.');
-    resetTransientProfileEditState();await lookupAndRender(CUR_KEY,false,null);msg('Sent for final verification','Your photo and complete profile are with Admin. Admin approval will mark your profile verified.','✓');
-  }catch(e){netFail(e.message||friendlyErr(e));}finally{PROFILE_BUSY=false;netOff();renderUnifiedWorkspace();}
+    resetTransientProfileEditState();await lookupAndRender(CUR_KEY,false,null);qdcProfileActivity('submitted','Your changes are with Admin for final verification.');msg('Sent for final verification','Your photo and complete profile are with Admin. Admin approval will mark your profile verified.','✓');
+  }catch(e){qdcProfileActivity('error',e.message||friendlyErr(e));netFail(e.message||friendlyErr(e));}finally{PROFILE_BUSY=false;netOff();renderUnifiedWorkspace();}
 }
 $('#btn-inline-edit').addEventListener('click',()=>enterInlineEdit());
 $('#btn-inline-cancel').addEventListener('click',()=>{ resetTransientProfileEditState(); renderRecordUI(); });
 $('#btn-inline-save').addEventListener('click',()=>saveInlineChanges(false));
-$('#btn-inline-submit').addEventListener('click',()=>saveInlineChanges(true));
+$('#btn-inline-submit').addEventListener('click',()=>{
+ if(typeof window.qdcNavyReview?.requestSubmission==='function')window.qdcNavyReview.requestSubmission();
+ else saveInlineChanges(true);
+});
 document.addEventListener('input',ev=>{
   const t=ev.target; if(!t||!INLINE_EDIT_MODE||!t.closest('#r-fields')) return;
   PROFILE_UNSAVED=true;const v=$('#btn-verify');if(v)v.disabled=true;
@@ -7683,7 +7688,7 @@ function renderUnifiedWorkspace(){
  const banner='<section id="qdc-editor-banner" class="qdc-editor-banner '+(INLINE_EDIT_MODE?'editing':'')+'"><div class="qdc-editor-banner-top"><div><span class="qdc-eyebrow">EMPLOYEE PROFILE WORKSPACE</span><h3>'+(INLINE_EDIT_MODE?'Update your complete profile':'Your complete profile')+'</h3><p>'+(verified?'Your latest approved profile is verified by Admin.':pending?'Your submitted profile is waiting for Admin final verification.':'Edit your details and profile photo together, then send the complete profile to Admin for final verification.')+'</p></div>'+status+'</div><div class="qdc-guide-flow"><div class="qdc-guide-step '+(INLINE_EDIT_MODE?'active':'done')+'"><i>1</i><b>Edit photo & details</b></div><span>›</span><div class="qdc-guide-step '+(INLINE_EDIT_MODE?'active':'')+'"><i>2</i><b>Save draft / confirm</b></div><span>›</span><div class="qdc-guide-step '+(pending?'active':verified?'done':'')+'"><i>3</i><b>Admin verifies</b></div></div><div class="qdc-v4-guidance-bar" role="note"><span class="qdc-v4-orb" aria-hidden="true">✦</span><span><b>LIVE FIELD ASSISTANT</b><small>Tap or select any profile field for its own clear instructions. Save a draft and send corrections together.</small></span><span class="qdc-v4-live">FIELD BY FIELD</span></div><div class="qdc-v4-completion" aria-live="polite"><div><span>PROFILE DETAILS COMPLETED</span><strong id="qdc-v4-progress-text">Checking fields…</strong></div><div class="qdc-v4-track"><i id="qdc-v4-progress-fill"></i></div></div>'+(INLINE_EDIT_MODE?'<div class="qdc-editor-photo-row"><label class="qdc-photo-pick" for="file-photo" title="Choose a profile photo"><span class="qdc-avatar-ring">'+(DRAFT_PHOTO||CUR.photo_url?'<img src="'+esc(DRAFT_PHOTO||CUR.photo_url)+'" alt="Profile photo">':esc(initials(CUR.employee_name)))+'<i>＋</i></span></label><div><b>Profile photo</b><small>Tap your photo to choose or replace it. It will be sent with all your profile details in the same request.</small><em>'+(DRAFT_PHOTO?'New photo ready to save with your draft':CUR.photo_url?'Current photo will stay until Admin approves your update':'A profile photo is required')+'</em></div></div>':'')+'</section>';
  $('#r-fields').insertAdjacentHTML('afterbegin',banner);
  ['btn-inline-save','btn-inline-submit','btn-inline-cancel'].forEach(id=>$("#"+id).disabled=PROFILE_BUSY);
- $('#btn-inline-submit').innerHTML='<span class="bicon" data-ic="paperplane"></span>&nbsp; Submit for Verification';
+ $('#btn-inline-submit').innerHTML='<span class="bicon" data-ic="paperplane"></span>&nbsp; Review &amp; Submit';
  $('#qdc-workflow-progress').innerHTML='';
  const agree=$('#chk-agree'),verify=$('#btn-verify');if(agree)agree.disabled=true;if(verify)verify.disabled=true;
 }
@@ -8462,3 +8467,7 @@ html body>footer.pearl-emerald-footer,html body:has(#screen-login:not(.hidden))>
 <!-- Approved employee Smart Nature + Tech workspace -->
 <link rel="stylesheet" href="./employee-smart-profile.css?v=2">
 <script src="./employee-smart-profile.js?v=2" defer></script>
+
+<!-- Selected C: Navy Review -->
+<link rel="stylesheet" href="./employee-navy-review.css?v=1">
+<script src="./employee-navy-review.js?v=1" defer></script>
