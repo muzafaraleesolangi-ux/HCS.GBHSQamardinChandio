@@ -2407,7 +2407,7 @@ body #support-panel .it-contact .aquib-profile-dp{display:block;flex:none;width:
     <button class="tab" data-tab="staff">Employee Records</button>
     <button class="tab" data-tab="requests">Unified Review Queue <span id="d-reqcount"></span></button>
     <button class="tab" data-tab="log">Activity Log</button>
-    <button class="tab" data-tab="building" type="button">Building Safety Survey</button><button class="tab hidden" id="tab-btn-hmdata" data-tab="hmdata" inert aria-hidden="true">HM Data Collection</button>
+    <button class="tab hidden" id="building-admin-nav" data-tab="building" type="button">Building Safety Survey · Exports</button><button class="tab hidden" id="tab-btn-hmdata" data-tab="hmdata" inert aria-hidden="true">HM Data Collection</button>
   </div><div class="qdc-admin-side-foot">Employee Data Verification Portal<br>UC Khairwah · Taluka Moro</div></aside><div class="qdc-admin-main">
   <div class="dashribbon" id="dash-ribbon">
     <span>Government of Sindh &middot; School Education &amp; Literacy Department</span>
@@ -2456,6 +2456,7 @@ body #support-panel .it-contact .aquib-profile-dp{display:block;flex:none;width:
   <div id="tab-cells" class="tabpane qdc-overview-tab">
     <div class="qdc-overview-head"><div><span class="qdc-overview-eyebrow">CLUSTER SERVICE OVERVIEW</span><h2>Five cell dashboard</h2><p>Live employee records, verification progress and school coverage.</p></div><span class="qdc-live-chip"><i></i> Supabase data connected</span></div>
     <div class="stats2" id="d-stats" aria-label="Live dashboard summary"></div>
+    <section id="building-admin-shortcut" class="hidden" style="margin:14px 0;padding:16px;border:1px solid #aac9bb;border-left:4px solid #bda576;border-radius:15px;background:linear-gradient(120deg,#fffdf6,#edf7f0)"><small style="font-weight:800;color:#567769">CLUSTER HUB INCHARGE · SURVEY EXPORTS</small><h3 style="margin:7px 0">Building Safety Survey</h3><p style="margin:5px 0 12px;font-size:12px">Download all submitted cluster schools in one Excel file, or export an individual school.</p><div style="display:flex;flex-wrap:wrap;gap:8px"><button id="building-overview-combined" type="button" class="btn sm primary">Combined Excel</button><button id="building-overview-schools" type="button" class="btn sm ghost">School-wise Export</button></div></section>
     <section class="qdc-analytics" id="qdc-service-analytics" aria-label="Employee service overview"></section>
     <section class="qdc-cell-register"><header class="qdc-cell-register-head"><div><h3>Cell school register</h3><p>Head school, cell head and live employee breakdown.</p></div><span>All visible counts follow your access role</span></header>
       <div class="tablewrap"><table><thead><tr>
@@ -2518,7 +2519,7 @@ body #support-panel .it-contact .aquib-profile-dp{display:block;flex:none;width:
     </tr></thead><tbody id="t-log"></tbody></table></div>
   </div>
 
-  <div id="tab-building" class="tabpane hidden"><section id="building-admin-root" style="padding:16px 4px"><h2>Building Safety Survey — Qamardin Cluster</h2><p id="building-admin-status">Open this tab to view cloud submissions.</p><div style="display:flex;flex-wrap:wrap;gap:8px;margin:12px 0"><select id="building-admin-cell" style="padding:9px;border-radius:8px"><option value="">All C1–C5</option><option>C1</option><option>C2</option><option>C3</option><option>C4</option><option>C5</option></select><button id="building-admin-refresh" class="btn sm ghost">Refresh</button><button id="building-admin-export" class="btn sm primary">Combined Excel</button></div><div class="tablewrap"><table><thead><tr><th>#</th><th>School / SEMIS</th><th>Cell</th><th>Rooms</th><th>Dangerous</th><th>Partial</th><th>Export</th></tr></thead><tbody id="building-admin-table"></tbody></table></div></section></div><div id="tab-hmdata" class="tabpane hidden">
+  <div id="tab-building" class="tabpane hidden"><section id="building-admin-root" style="padding:16px 4px"><h2>Building Safety Survey — Qamardin Cluster</h2><p style="font-size:12px">Master Admin and Hub Cluster Incharge can view submitted schools, download the combined Excel, or export one school from the list.</p><p id="building-admin-status">Open this tab to view cloud submissions.</p><div style="display:flex;flex-wrap:wrap;gap:8px;margin:12px 0"><select id="building-admin-cell" style="padding:9px;border-radius:8px"><option value="">All C1–C5</option><option>C1</option><option>C2</option><option>C3</option><option>C4</option><option>C5</option></select><button id="building-admin-refresh" class="btn sm ghost">Refresh</button><button id="building-admin-export" class="btn sm primary">Combined Excel</button></div><div class="tablewrap"><table><thead><tr><th>#</th><th>School / SEMIS</th><th>Cell</th><th>Rooms</th><th>Dangerous</th><th>Partial</th><th>Export</th></tr></thead><tbody id="building-admin-table"></tbody></table></div></section></div><div id="tab-hmdata" class="tabpane hidden">
     <p class="lead" style="margin:0 0 14px">Head Masters first declare which classes (ECE to Matric) exist at their school — that goes to you for approval. Once approved, their dashboard shows Boys / Girls / Total enrollment cells for exactly those classes, which auto-total and compile below for every school.</p>
 
     <div class="hmcard">
@@ -5262,6 +5263,7 @@ function renderServiceAnalytics(){
 }
 function renderDash(){
   if(!OFFICER) return;
+  if(window.qdcBuildingAdmin) window.qdcBuildingAdmin.sync();
   $("#d-who").innerHTML = esc(OFFICER.name)+" <small>"+esc(OFFICER.title||"")+"</small>";
   if($("#ribbon-role")) $("#ribbon-role").textContent = (OFFICER.title||"Officer")+" · "+SETTINGS.clusterName;
   const active = STAFF.filter(e=>e.is_active);
@@ -8265,4 +8267,4 @@ html body>footer.pearl-emerald-footer,html body:has(#screen-login:not(.hidden))>
 @keyframes mprArrowClickRays{0%,50%{opacity:0}56%,61%{opacity:1}72%,100%{opacity:0}}
 @media(max-width:640px){#screen-login .mpr-animated-click{width:33px;height:39px;right:12px;top:10px}}
 @media(prefers-reduced-motion:reduce){#screen-login .mpr-animated-click{animation:none;opacity:1}#screen-login .mpr-animated-click i,#screen-login .mpr-animated-click:before,#screen-login .mpr-animated-click:after{animation:none;display:none}}
-</style><script src="./building-survey-template.js?v=2" defer></script><script src="https://cdn.jsdelivr.net/npm/fflate@0.8.2/umd/index.js" defer></script><script src="./building-survey-admin.js?v=1" defer></script>
+</style><script src="./building-survey-template.js?v=2" defer></script><script src="https://cdn.jsdelivr.net/npm/fflate@0.8.2/umd/index.js" defer></script><script src="./building-survey-admin.js?v=2" defer></script>
