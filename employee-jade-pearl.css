@@ -1,0 +1,84 @@
+/* Selected Jade Pearl: glass surfaces, jade ribbons and premium icon buttons.
+   Presentation only; the original form, draft and verification handlers remain active. */
+body:has(#screen-record.qdc-jade-pearl:not(.hidden):not(.hm-tab-dashboard)){background:radial-gradient(ellipse at 15% 25%,#e7f7ef,transparent 60%),#f6fcf9!important}
+#screen-record.qdc-emerald-flow.qdc-jade-pearl:not(.hm-tab-dashboard){--jp-ink:#123e3e;--jp-jade:#006c54;--jp-line:#b9dacf;background:#eef9f4 url('./assets/jade-pearl-ribbons.svg') center/cover!important;border-radius:25px;padding:22px 14px!important;isolation:isolate}
+#screen-record.qdc-emerald-flow.qdc-jade-pearl:not(.hm-tab-dashboard)>.card{background:#f5fffa85!important;border:1px solid #fff!important;border-radius:23px!important;box-shadow:0 16px 50px #307b6320,inset 0 1px #fff!important;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);overflow:visible!important}
+#screen-record.qdc-emerald-flow.qdc-jade-pearl:not(.hm-tab-dashboard) .qsp-toolbar{background:linear-gradient(110deg,#f5fffcdd,#dff4eb99)!important;border:0!important;border-bottom:1px solid #ffffffdc!important;border-radius:23px 23px 0 0!important;overflow:hidden!important;padding:15px 20px!important;color:var(--jp-ink)!important}
+#screen-record.qdc-emerald-flow.qdc-jade-pearl .qsp-toolbar:after{opacity:.15!important;background:linear-gradient(120deg,transparent 15%,#fff9 25%,transparent 35%)!important;animation:jade-header-light 12s ease-in-out infinite!important;mask-image:none!important;transform:none!important}
+#screen-record.qdc-emerald-flow.qdc-jade-pearl .qsp-toolbar-brand{font-size:17px!important;letter-spacing:.8px!important;color:#0e4d41!important}
+#screen-record.qdc-emerald-flow.qdc-jade-pearl .qsp-toolbar-brand>svg{width:25px!important;height:25px!important;color:#00956e!important}
+#screen-record.qdc-emerald-flow.qdc-jade-pearl .qsp-toolbar-brand small{color:#5a7f75!important;font-size:9px!important}
+#screen-record.qdc-emerald-flow.qdc-jade-pearl .qsp-top-actions .qsp-button{position:relative;display:flex;align-items:center;justify-content:center;background:linear-gradient(140deg,#ffffffe6,#ecfaf4a3)!important;border:1px solid #c0dfd3!important;border-radius:11px!important;color:#164943!important;box-shadow:inset 0 1px #fff,0 3px 9px #43856f08!important;padding:9px 12px!important;gap:8px!important;transition:transform .2s,box-shadow .2s,border-color .2s!important}
+#screen-record.qdc-emerald-flow.qdc-jade-pearl .qsp-top-actions .qsp-button svg{width:18px!important;height:18px!important;color:#166451!important;transition:transform .2s}
+#screen-record.qdc-emerald-flow.qdc-jade-pearl .qsp-top-actions .qsp-button:hover{background:linear-gradient(140deg,#fff,#def7eccc)!important;border-color:#89c7b0!important;box-shadow:0 5px 14px #4589741c,inset 0 1px #fff!important;transform:translateY(-2px)!important}
+#screen-record.qdc-emerald-flow.qdc-jade-pearl .qsp-top-actions .qsp-button:hover svg{transform:scale(1.12)}
+#screen-record.qdc-emerald-flow.qdc-jade-pearl .qsp-top-actions #btn-emp-logout{color:#276458!important}
+#screen-record.qdc-emerald-flow.qdc-jade-pearl:not(.hm-tab-dashboard) .ptopbar{background:#eefbf58c!important;border-bottom:1px solid #fff!important}
+#screen-record.qdc-emerald-flow.qdc-jade-pearl .ptop-tab.active{background:#ffffffc4!important;border:1px solid #c3e3d5!important;color:#146a50!important;box-shadow:inset 0 -2px #9acdb6!important;border-radius:9px!important}
+#screen-record.qdc-emerald-flow.qdc-jade-pearl .qef-stepper{background:linear-gradient(110deg,#ffffffbd,#f2fffaa3)!important;border:1px solid #fff!important;border-radius:15px!important;padding:9px 12px!important;margin:12px 16px!important;box-shadow:0 3px 15px #367e5910!important;gap:6px!important}
+#screen-record.qdc-emerald-flow.qdc-jade-pearl .qef-step{border-radius:10px!important;background:transparent!important;border-color:transparent!important;box-shadow:none!important;padding:10px!important;min-height:56px!important}
+#screen-record.qdc-emerald-flow.qdc-jade-pearl .qef-step>i{background:#dfece7!important;border:1px solid #d8e5df!important;color:#406d62!important;box-shadow:inset 0 1px #fff!important}
+#screen-record.qdc-emerald-flow.qdc-jade-pearl .qef-step b{color:#2f685a!important;font-size:14px!important}
+#screen-record.qdc-emerald-flow.qdc-jade-pearl .qef-step small{color:#688e80!important}
+#screen-record.qdc-emerald-flow.qdc-jade-pearl .qef-step.current{background:#e8f8ef7d!important}
+#screen-record.qdc-emerald-flow.qdc-jade-pearl .qef-step.current>i{background:linear-gradient(145deg,#0a9b74,#004e42)!important;color:white!important;border-color:#a3d6b8!important;box-shadow:0 3px 12px #068b6725!important;animation:jade-active-glow 3.6s ease-in-out infinite!important}
+#screen-record.qdc-emerald-flow.qdc-jade-pearl .qef-step.current b{color:#007353!important}
+#screen-record.qdc-emerald-flow.qdc-jade-pearl .qef-step:not(:last-child):after{border-color:#c5d9cc!important}
+#screen-record.qdc-emerald-flow.qdc-jade-pearl .qef-step:hover{background:#ffffffc2!important;transform:translateY(-2px)!important}
+#screen-record.qdc-emerald-flow.qdc-jade-pearl:not(.hm-tab-dashboard) .recordhead{background:linear-gradient(145deg,#effdf8b3,#dbf3e87d)!important;border:0!important;border-right:1px solid #ffffffc9!important;border-radius:0 0 0 23px!important}
+#screen-record.qdc-emerald-flow.qdc-jade-pearl .qef-identity-label{color:#598474!important;letter-spacing:1.1px!important}
+#screen-record.qdc-emerald-flow.qdc-jade-pearl:not(.hm-tab-dashboard) .avatar{background:linear-gradient(145deg,#0a9c75,#004b42)!important;border:2px solid #edfdf5!important;box-shadow:0 0 0 1px #95c6ac,0 8px 18px #258b6926!important;color:#f5fff9!important}
+#screen-record.qdc-emerald-flow.qdc-jade-pearl:not(.hm-tab-dashboard) .recordhead h2{color:#134a43!important}
+#screen-record.qdc-emerald-flow.qdc-jade-pearl .qef-identity-meter{border-top-color:#b6dbca80!important}
+#screen-record.qdc-emerald-flow.qdc-jade-pearl #qsp-progress-ring{background:conic-gradient(#05a77a var(--qsp-progress,0%),#cde4d8 0)!important;box-shadow:0 0 0 1px #ffffff9c,0 4px 15px #217b5a12!important}
+#screen-record.qdc-emerald-flow.qdc-jade-pearl #qsp-progress-ring:before{background:#e5f6ee!important}
+#screen-record.qdc-emerald-flow.qdc-jade-pearl .rh-idbox{background:#ffffff8a!important;border-color:#d0e8dc!important;box-shadow:inset 0 1px #fff!important;border-radius:10px!important}
+#screen-record.qdc-emerald-flow.qdc-jade-pearl:not(.hm-tab-dashboard) .recbody{background:transparent!important}
+#screen-record.qdc-emerald-flow.qdc-jade-pearl:not(.hm-tab-dashboard) .recmain{background:#ffffff2e!important;border-radius:0 0 23px!important;padding:20px!important}
+#screen-record.qdc-emerald-flow.qdc-jade-pearl .qdc7-overview{border-bottom-color:#badaca77!important;background:transparent!important}
+#screen-record.qdc-emerald-flow.qdc-jade-pearl .qdc7-overview-copy small{color:#438773!important}
+#screen-record.qdc-emerald-flow.qdc-jade-pearl .qdc7-overview-copy h2{color:#123f3e!important}
+#screen-record.qdc-emerald-flow.qdc-jade-pearl .qdc7-overview-icon{background:#dbf5e9b3!important;color:#097a58!important;border:1px solid #c5e8d5!important;border-radius:10px!important}
+#screen-record.qdc-emerald-flow.qdc-jade-pearl #qdc7-edit{background:linear-gradient(135deg,#fffefbdd,#e4f8ed99)!important;border:1px solid #b9dec9!important;border-radius:10px!important;color:#156950!important;box-shadow:0 3px 10px #478b6a0b!important;min-height:39px!important;transition:transform .2s,box-shadow .2s!important}
+#screen-record.qdc-emerald-flow.qdc-jade-pearl #qdc7-edit:hover{border-color:#71b693!important;box-shadow:0 4px 16px #39a67420!important;transform:translateY(-2px)!important}
+#screen-record.qdc-emerald-flow.qdc-jade-pearl .qef-activity{background:#f5fff8aa!important;border-color:#c9e7d4!important;border-radius:11px!important}
+#screen-record.qdc-emerald-flow.qdc-jade-pearl .qef-activity-icon{background:#e3f8ed!important;color:#0b805f!important;border-color:#c3e3ce!important;border-radius:8px!important}
+#screen-record.qdc-emerald-flow.qdc-jade-pearl .qef-activity[data-state=error]{background:#fff1edeb!important;border-color:#e0ada2!important}
+#screen-record.qdc-emerald-flow.qdc-jade-pearl:not(.hm-tab-dashboard) #r-fields{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:12px!important}
+#screen-record.qdc-emerald-flow.qdc-jade-pearl:not(.hm-tab-dashboard) #r-fields .field{background:linear-gradient(125deg,#ffffffc7,#f4fff8a3)!important;border:1px solid #fff!important;outline:1px solid #c5e3d26e!important;border-radius:13px!important;box-shadow:inset 0 1px #fff,0 5px 14px #4b957007!important;padding:14px!important;transition:border-color .22s,box-shadow .22s,transform .22s!important;min-height:96px!important}
+#screen-record.qdc-emerald-flow.qdc-jade-pearl:not(.hm-tab-dashboard) #r-fields .field:is(:hover,:focus-within){border-color:#77c4a1!important;outline-color:#b4ddc8!important;box-shadow:0 7px 20px #3d966b1c,inset 0 1px #fff!important;transform:translateY(-2px)!important}
+#screen-record.qdc-emerald-flow.qdc-jade-pearl #r-fields .field .ficon{width:28px!important;height:28px!important;background:linear-gradient(135deg,#daf5e7,#effdf8)!important;border:1px solid #bee5d2!important;border-radius:9px!important;color:#096c50!important}
+#screen-record.qdc-emerald-flow.qdc-jade-pearl #r-fields .field .ficon svg{width:16px!important;height:16px!important}
+#screen-record.qdc-emerald-flow.qdc-jade-pearl #r-fields .field .k{color:#1f6450!important;font-size:12px!important}
+#screen-record.qdc-emerald-flow.qdc-jade-pearl #r-fields .field .v{color:#18483b!important}
+#screen-record.qdc-emerald-flow.qdc-jade-pearl #r-fields .field :is(input,select,textarea){background:#ffffffc7!important;border:1px solid #b9d7c7!important;border-radius:8px!important;color:#16423c!important;box-shadow:inset 0 1px 2px #42765805!important}
+#screen-record.qdc-emerald-flow.qdc-jade-pearl #r-fields .field :is(input,select,textarea):focus{outline-color:#57b68d!important;background:#fffffff2!important}
+#screen-record.qdc-emerald-flow.qdc-jade-pearl .qdc-editor-banner{background:#effcf5b0!important;border:1px solid #d5edd9!important;border-radius:14px!important;box-shadow:inset 0 1px #fff!important}
+#screen-record.qdc-emerald-flow.qdc-jade-pearl .qef-flow-footer{border-top-color:#c1ddcc88!important}
+#screen-record.qdc-emerald-flow.qdc-jade-pearl .qef-flow-footer button{border-radius:13px!important;min-height:43px!important;padding:10px 17px!important;box-shadow:inset 0 1px #fff!important;letter-spacing:.3px!important}
+#screen-record.qdc-emerald-flow.qdc-jade-pearl :is(#qef-step-prev,#btn-inline-save,#qef-return-edit){background:linear-gradient(135deg,#fafffbe6,#def4e88a)!important;color:#245d49!important;border:1px solid #a8d3bc!important}
+#screen-record.qdc-emerald-flow.qdc-jade-pearl #btn-inline-save{display:flex;align-items:center;justify-content:center;gap:8px!important;min-height:43px!important;border-radius:13px!important;font-size:13px!important;box-shadow:inset 0 1px #fff!important;padding:10px 17px!important}
+#screen-record.qdc-emerald-flow.qdc-jade-pearl #btn-inline-save svg{width:17px;height:17px;flex:none}
+#screen-record.qdc-emerald-flow.qdc-jade-pearl :is(#qef-step-next,#qsp-submit-top,#btn-inline-submit,#qef-final-preview){background:linear-gradient(135deg,#079b70,#006147 65%,#004938)!important;border:1px solid #cab575!important;border-radius:13px!important;color:#f5fff8!important;box-shadow:inset 0 1px #cbf7df99,0 4px 14px #0b876a28!important;animation:jade-button-breathe 4s ease-in-out infinite!important;background-size:180% 100%!important}
+#screen-record.qdc-emerald-flow.qdc-jade-pearl :is(#qef-step-next,#qsp-submit-top,#btn-inline-submit,#qef-final-preview):hover{background-position:100% 50%!important;box-shadow:0 0 0 3px #e1d39e33,0 7px 22px #0b876a38!important;transform:translateY(-2px)!important}
+#screen-record.qdc-emerald-flow.qdc-jade-pearl :is(#qef-step-next,#qsp-submit-top,#qdc7-edit):before{display:none!important}
+#screen-record.qdc-emerald-flow.qdc-jade-pearl .qdc-draft-note{background:#f7fff9b3!important;border-color:#c4e2cf!important;border-radius:12px!important}
+#screen-record.qdc-emerald-flow.qdc-jade-pearl .qef-inline-review>aside{background:#effbf4b8!important;border-color:#c3e3d0!important;border-radius:13px!important}
+#screen-record.qdc-emerald-flow.qdc-jade-pearl .qef-review-table table{background:#ffffffbc!important;border-color:#c4dfcc!important}
+#screen-record.qdc-emerald-flow.qdc-jade-pearl .qef-review-table tr:nth-child(even){background:#effbf3b0!important}
+#qef-review-dialog{background:#f5fff8f5!important;border:1px solid #a5ceb8!important;box-shadow:0 30px 100px #0a3d2e55!important;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
+#qef-review-dialog .qef-dialog-top{background:linear-gradient(120deg,#e8fbf0,#d0eddd)!important;border-bottom-color:#accdb5!important;color:#154b38!important}
+#qef-review-dialog .qef-dialog-top h2{color:#144d3c!important}
+#qef-review-dialog .qef-dialog-top :is(small,p){color:#5a856e!important}
+#qef-review-dialog .qef-dialog-top>button{background:#ffffffb3!important;color:#237055!important;border-color:#aacfba!important}
+#qef-review-dialog .qef-dialog-foot{background:#f5fff6f5!important;border-top-color:#c2ddc8!important}
+#qef-review-dialog .qef-dialog-foot button{border-radius:12px!important;color:#275e47!important;background:#e6f6ec!important;border-color:#b1d4bc!important}
+#qef-review-dialog .qef-dialog-foot #qef-confirm-submit{background:linear-gradient(125deg,#079269,#00513f)!important;color:#f6fff9!important;border-color:#b5ba76!important}
+#qef-review-dialog::backdrop{background:#123d2b66!important}
+@keyframes jade-header-light{0%,100%{background-position:0 0;opacity:.1}50%{background-position:70px 0;opacity:.28}}
+@keyframes jade-active-glow{50%{box-shadow:0 0 0 4px #9bdcbe22,0 4px 13px #16876324}}
+@keyframes jade-button-breathe{50%{box-shadow:inset 0 1px #cbf7df99,0 0 0 3px #9bdcbe1f,0 5px 17px #0b876a28}}
+@media(max-width:720px){#screen-record.qdc-emerald-flow.qdc-jade-pearl:not(.hm-tab-dashboard){padding:10px 6px!important;border-radius:19px!important}#screen-record.qdc-emerald-flow.qdc-jade-pearl .qsp-toolbar{padding:13px!important;border-radius:19px 19px 0 0!important}#screen-record.qdc-emerald-flow.qdc-jade-pearl .qsp-toolbar-brand{font-size:15px!important}#screen-record.qdc-emerald-flow.qdc-jade-pearl .qsp-top-actions .qsp-button{padding:8px 4px!important;gap:5px!important;min-height:48px!important}#screen-record.qdc-emerald-flow.qdc-jade-pearl .qef-stepper{margin:8px!important;padding:7px!important;gap:2px!important}#screen-record.qdc-emerald-flow.qdc-jade-pearl .qef-step{padding:8px 2px!important;gap:6px!important;min-height:65px!important}#screen-record.qdc-emerald-flow.qdc-jade-pearl .qef-step b{font-size:11px!important}#screen-record.qdc-emerald-flow.qdc-jade-pearl:not(.hm-tab-dashboard) .recordhead{border-right:0!important;border-bottom:1px solid #fff!important;border-radius:0!important}#screen-record.qdc-emerald-flow.qdc-jade-pearl:not(.hm-tab-dashboard) .recmain{padding:14px!important}#screen-record.qdc-emerald-flow.qdc-jade-pearl .qef-flow-footer button{padding:10px 12px!important}#screen-record.qdc-emerald-flow.qdc-jade-pearl #btn-inline-save{padding:10px 12px!important;font-size:12px!important}}
+@media(max-width:540px){#screen-record.qdc-emerald-flow.qdc-jade-pearl:not(.hm-tab-dashboard) #r-fields{grid-template-columns:minmax(0,1fr)!important}#screen-record.qdc-emerald-flow.qdc-jade-pearl .qef-step b{font-size:10px!important}#screen-record.qdc-emerald-flow.qdc-jade-pearl .qef-step small{font-size:7px!important}#screen-record.qdc-emerald-flow.qdc-jade-pearl:not(.hm-tab-dashboard) #r-fields .field{padding:13px!important;min-height:91px!important}#screen-record.qdc-emerald-flow.qdc-jade-pearl #qef-step-next{min-width:100px!important}}
+@media(prefers-reduced-motion:reduce){#screen-record.qdc-jade-pearl *,#screen-record.qdc-jade-pearl :before,#screen-record.qdc-jade-pearl :after,#qef-review-dialog *{animation:none!important;transition:none!important}}
+@media print{#screen-record.qdc-emerald-flow.qdc-jade-pearl:not(.hm-tab-dashboard){background:white!important;padding:0!important}#screen-record.qdc-emerald-flow.qdc-jade-pearl:not(.hm-tab-dashboard)>.card{background:white!important;box-shadow:none!important;backdrop-filter:none!important}#screen-record.qdc-emerald-flow.qdc-jade-pearl :is(.recordhead,.recbody,.recmain){background:white!important}#screen-record.qdc-emerald-flow.qdc-jade-pearl:not(.hm-tab-dashboard) #r-fields{grid-template-columns:repeat(2,minmax(0,1fr))!important}#screen-record.qdc-emerald-flow.qdc-jade-pearl:not(.hm-tab-dashboard) #r-fields .field{background:white!important;border:1px solid #ccc!important;box-shadow:none!important;outline:none!important}}

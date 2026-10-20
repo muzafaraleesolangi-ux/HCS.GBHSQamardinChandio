@@ -4,6 +4,7 @@
  'use strict';
  const q=(s,r=document)=>r.querySelector(s),qa=(s,r=document)=>Array.from(r.querySelectorAll(s));
  const paths={shield:'M12 3 3 7v5c0 5 9 10 9 10s9-5 9-10V7l-9-4Zm-4 9 3 3 5-6',chip:'M7 7h10v10H7zM3 9h4m-4 6h4m10-6h4m-4 6h4M9 3v4m6-4v4m-6 10v4m6-4v4',review:'M4 3h16v18H4zM8 7h8m-8 5h8m-8 5h4',arrow:'M4 12h16m-6-6 6 6-6 6',edit:'m4 16 12-12 4 4-12 12H4v-4Zm10-10 4 4',check:'m5 12 4 4L19 6',close:'m6 6 12 12M6 18 18 6',send:'m3 3 18 9-18 9 4-9-4-9Zm4 9h14',clock:'M12 7v5l4 2M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0'};
+ Object.assign(paths,{people:'M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2m20 0v-2a4 4 0 0 0-3-3.87M9 3a4 4 0 1 0 0 8 4 4 0 0 0 0-8m8 .13a4 4 0 0 1 0 7.75',back:'m14 5-7 7 7 7M7 12h14',print:'M7 8V3h10v5M7 17H4V8h16v9h-3M7 14h10v7H7z',history:'M3 11a9 9 0 1 1 2 7M3 4v7h7m2-5v6l4 2',logout:'M10 4H4v16h6m4-12 4 4-4 4m-6-4h12',save:'M6 3h9l4 4v14H5V3h1Zm2 0v6h7V3M9 13h6m-6 4h6'});
  const icon=n=>'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="'+(paths[n]||paths.review)+'"/></svg>';
  const text=(node,value)=>{if(node&&node.textContent!==String(value))node.textContent=String(value);};
  const editing=()=>!!q('#inline-edit-bar')&&!q('#inline-edit-bar').classList.contains('hidden');
@@ -110,11 +111,12 @@
  function start(){
   screen=q('#screen-record');const card=q('#screen-record > .card'),main=q('#screen-record .recmain'),header=q('#screen-record .recordhead'),frame=q('.qsp-workspace-grid');
   if(!screen||!card||!main||!header||!frame)return;
-  screen.classList.add('qdc-emerald-flow');
+  screen.classList.add('qdc-emerald-flow','qdc-jade-pearl');
   const shell=document.createElement('div');shell.className='qef-shell';header.before(shell);shell.append(header,q('#screen-record .recbody'));const tabs=q('#ptopbar');if(tabs)card.insertBefore(tabs,shell);
   const label=document.createElement('div');label.className='qef-identity-label';label.textContent='MY EMPLOYEE PROFILE';header.prepend(label);
   const meter=q('.qdc7-overview-kpi');if(meter){const wrap=document.createElement('div');wrap.className='qef-identity-meter';wrap.append(meter);header.append(wrap);}
-  const crest=q('.qsp-toolbar-brand svg');if(crest)crest.outerHTML=icon('chip');text(q('.qsp-toolbar-brand small'),'Your profile. One clear step at a time.');
+  const crest=q('.qsp-toolbar-brand svg');if(crest)crest.outerHTML=icon('people');text(q('.qsp-toolbar-brand small'),'Your profile. One clear step at a time.');
+  [['btn-back','Back','back'],['btn-print','Print / PDF','print'],['qsp-history-button','Update History','history'],['btn-emp-logout','Logout','logout'],['btn-inline-save','Save Draft','save']].forEach(([id,label,name])=>{const b=q('#'+id);if(b)b.innerHTML=icon(name)+'<span>'+label+'</span>';});
   const ring=q('#qsp-progress-ring');if(ring)ring.innerHTML=icon('shield');const overviewIcon=q('.qdc7-overview-icon');if(overviewIcon)overviewIcon.innerHTML=icon('review');
   text(q('.qdc7-overview-copy small'),'EMPLOYEE RECORD • EMERALD FLOW');text(q('.qdc7-overview-copy h2'),'Employee Information');text(q('.qdc7-overview-copy p'),'Review every change before sending your profile for verification.');
   text(q('#qdc7-missing')?.nextElementSibling,'Complete required details before submitting');
