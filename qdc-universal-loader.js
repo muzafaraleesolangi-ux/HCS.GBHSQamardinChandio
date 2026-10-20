@@ -4,6 +4,59 @@
 const TEMPLATE="<div class=\"qdc-op-intro\" id=\"qdc-cinematic-loader\" role=\"status\" aria-live=\"off\" aria-label=\"Cluster Hub School opening animation\"><div class=\"qdc-op-crossline\"></div><div class=\"qdc-up-campus\" aria-hidden=\"true\"></div><div class=\"qdc-up-reflection\" aria-hidden=\"true\"></div><div class=\"qdc-up-ambient\" aria-hidden=\"true\"></div><aside class=\"qdc-up-left\" aria-label=\"Cluster highlights\">\n<section class=\"qdc-up-card\"><span class=\"qdc-up-ico\" aria-hidden=\"true\">▤</span><div class=\"qdc-up-card-title\">Building<br>Brighter Futures</div><div class=\"qdc-up-card-sub\">A unified portal for schools</div></section>\n<section class=\"qdc-up-card\"><div class=\"qdc-up-quote\">Education Connects Communities</div></section>\n<section class=\"qdc-up-card qdc-up-counter\"><div><div class=\"qdc-up-card-sub\">Schools Connected</div><div class=\"qdc-up-count\" id=\"qdc-up-schools-count\">—</div></div><div class=\"qdc-up-wave\" aria-hidden=\"true\"><i style=\"--n:1\"></i><i style=\"--n:2\"></i><i style=\"--n:3\"></i><i style=\"--n:4\"></i><i style=\"--n:5\"></i><i style=\"--n:6\"></i><i style=\"--n:7\"></i></div></section>\n<section class=\"qdc-up-card qdc-up-counter\"><div><div class=\"qdc-up-card-sub\">Total Staff</div><div class=\"qdc-up-count\" id=\"qdc-up-staff-count\">—</div></div><span class=\"qdc-up-ico\" aria-hidden=\"true\">♙</span></section>\n</aside><aside class=\"qdc-up-timeline\" aria-label=\"Opening sequence\"><svg class=\"qdc-up-orbit-svg\" aria-hidden=\"true\" focusable=\"false\" viewBox=\"0 0 400 500\" preserveAspectRatio=\"none\"><defs><linearGradient id=\"qdc-up-orbit-gold\" x1=\"0\" x2=\"0\" y1=\"0\" y2=\"1\"><stop offset=\"0%\" stop-color=\"#69efd0\"/><stop offset=\"48%\" stop-color=\"#ffdf91\"/><stop offset=\"100%\" stop-color=\"#54e3bd\"/></linearGradient></defs><path class=\"qdc-up-orbit-glow\"/><path class=\"qdc-up-orbit-base\"/><path class=\"qdc-up-orbit-trace\"/><circle class=\"qdc-up-orbit-spark\" cx=\"0\" cy=\"0\" r=\"4\" opacity=\"0\"/></svg><div class=\"qdc-up-step qdc-up-active\" data-qdc-op-step=\"0\"><span class=\"qdc-up-step-mark\" aria-hidden=\"true\">1</span><div><b>Connecting services</b><small>Preparing connection…</small></div></div><div class=\"qdc-up-step\" data-qdc-op-step=\"1\"><span class=\"qdc-up-step-mark\" aria-hidden=\"true\">2</span><div><b>Syncing school cells</b><small>Retrieving cluster records…</small></div></div><div class=\"qdc-up-step\" data-qdc-op-step=\"2\"><span class=\"qdc-up-step-mark\" aria-hidden=\"true\">3</span><div><b>Loading staff profiles</b><small>Preparing employee workspace…</small></div></div><div class=\"qdc-up-step\" data-qdc-op-step=\"3\"><span class=\"qdc-up-step-mark\" aria-hidden=\"true\">4</span><div><b>Accessing secure connections</b><small>Preparing protected access…</small></div></div><div class=\"qdc-up-step\" data-qdc-op-step=\"4\"><span class=\"qdc-up-step-mark\" aria-hidden=\"true\">5</span><div><b>Finalizing homepage</b><small>Almost ready…</small></div></div></aside><aside class=\"qdc-up-right\" aria-label=\"Academic calendar and portal details\">\n<section class=\"qdc-up-card\"><div class=\"qdc-up-badge\"><span class=\"qdc-up-ico\" aria-hidden=\"true\">▦</span><div class=\"qdc-up-card-title\">Academic Year</div></div><div class=\"qdc-up-current\" id=\"qdc-up-academic-year\">2026–27</div><div class=\"qdc-up-card-sub\">Together for a stronger tomorrow</div><div class=\"qdc-up-current\" id=\"qdc-up-month\">October 2026</div><div class=\"qdc-up-calendar\" id=\"qdc-up-calendar\" aria-label=\"Current month calendar\"></div></section>\n<section class=\"qdc-up-card\"><div class=\"qdc-up-card-title\">Progress<br>in Unity</div><svg class=\"qdc-up-graph\" viewBox=\"0 0 160 40\" aria-hidden=\"true\"><path d=\"M2 32 30 24 51 27 77 13 102 21 127 8 158 3\" fill=\"none\" stroke=\"#f0c574\" stroke-width=\"2.3\" stroke-linecap=\"round\"/><g fill=\"#ffe3a4\"><circle cx=\"77\" cy=\"13\" r=\"3\"/><circle cx=\"127\" cy=\"8\" r=\"3\"/><circle cx=\"158\" cy=\"3\" r=\"3\"/></g></svg></section>\n<section class=\"qdc-up-card qdc-up-trust\"><span class=\"qdc-up-ico\" aria-hidden=\"true\">♢</span><div><div class=\"qdc-up-card-title\">Secure Portal</div><div class=\"qdc-up-card-sub\">HTTPS connection</div></div></section>\n</aside><div class=\"qdc-op-corner\">✧ QAMARDIN CLUSTER <small>OFFICIAL PORTAL · OPENING</small></div><div class=\"qdc-op-corner right\">EDUCATION ✦ KNOWLEDGE ✦ TECHNOLOGY</div>\n<div class=\"qdc-op-stage\"><div class=\"qdc-op-halo\"><svg viewBox=\"0 0 350 350\" aria-hidden=\"true\"><circle class=\"circle1\" cx=\"175\" cy=\"175\" r=\"151\"/><circle class=\"circle2\" cx=\"175\" cy=\"175\" r=\"162\"/><circle class=\"circle3\" cx=\"175\" cy=\"175\" r=\"154\"/></svg><span class=\"qdc-op-glyph a\">✒</span><span class=\"qdc-op-glyph b\">⌘</span><span class=\"qdc-op-glyph c\">✦</span><img class=\"qdc-op-brand-logo\" src=\"./assets/qamardin-selected-logo-3.svg\" alt=\"Final selected GBHS Qamardin Chandio logo number three\"><span class=\"qdc-op-spark\" style=\"left:13%;top:25%;--delay:.02s\"></span><span class=\"qdc-op-spark\" style=\"right:8%;top:32%;--delay:.22s\"></span><span class=\"qdc-op-spark\" style=\"left:20%;bottom:15%;--delay:.37s\"></span><span class=\"qdc-op-spark\" style=\"right:25%;bottom:14%;--delay:.42s\"></span></div>\n<div class=\"qdc-op-label-small\">CLUSTER HUB SCHOOL</div><div class=\"qdc-op-label-large\">GBHS QAMAR DIN CHANDIO</div>\n<div class=\"qdc-op-quotes\" lang=\"sd\" dir=\"rtl\" aria-label=\"Sindhi verses and cluster motto\"><img class=\"qdc-op-qline one\" src=\"./assets/qamardin-opening-line-1.svg\" alt=\"علم جي شمع سان، هر اوندهه کي هٽائينداسين\"><img class=\"qdc-op-qline two\" src=\"./assets/qamardin-opening-line-2.svg\" alt=\"هٿن ۾ هٿ ڏئي، اسين نئين تاريخ جوڙينداسين\"><img class=\"qdc-op-qline three\" src=\"./assets/qamardin-opening-line-3.svg\" alt=\"اتحاد، علم ۽ شعور — اسان جي ڪلسٽر جو نئون عزم!\"></div>\n<div class=\"qdc-op-progress\" aria-hidden=\"true\"><i></i></div><div class=\"qdc-op-bottomline\"><i class=\"qdc-op-dot\"></i><span id=\"qdc-op-progress-msg\">PREPARING YOUR SCHOOL PORTAL</span><span id=\"qdc-op-percent\">0%</span></div></div></div>";
 const WIDTH=4000;
 let live=null;
+/* This marker is consumed by the FIRST screen transition after fresh successful sign-in.
+   Existing site openings, reloaded sessions, welcome pages and refresh are untouched. */
+let signInUntil=0;
+function expectSignIn(){signInUntil=Date.now()+90000}
+function cancelPendingSignIn(){signInUntil=0}
+function isFreshSignIn(identity){const yes=!!(identity&&identity.role&&signInUntil>Date.now());signInUntil=0;return yes}
+const SI_STEPS=[
+["Verify Identity","Authorized account"],
+["Load Profile DP","Personal photograph"],
+["Sync Service Data","Employee records"],
+["Assign Access","Workspace permissions"],
+["Open Dashboard","Secure entry"]
+];
+const NO_PHOTO='<svg viewBox="0 0 140 140" role="img" aria-label="Profile photograph not available"><circle cx="70" cy="70" r="68" fill="#205e4b"/><circle cx="70" cy="48" r="24" fill="#ebd9b1"/><path d="M12 129C19 63 121 63 128 129Z" fill="#bdcdb8"/></svg>';
+function personalSignIn(root,identity){
+ root.classList.add('qdc-signin-only');
+ root.setAttribute('aria-label','Personalized sign-in transition');
+ const left=root.querySelector('.qdc-up-left');
+ if(left)left.innerHTML='<section class="qdc-si-plate"><div class="qdc-si-heading">◈ PERSONAL DATA SYNC</div>'+
+ '<div class="qdc-si-detail"><span class="qdc-si-icon">◎</span><div><b>Profile Photograph</b><small>Retrieving your own DP</small></div></div>'+
+ '<div class="qdc-si-detail"><span class="qdc-si-icon">▤</span><div><b>Service Record</b><small>Preparing your personal data</small></div></div>'+
+ '<div class="qdc-si-detail"><span class="qdc-si-icon">◇</span><div><b>School Association</b><small>Matching your account</small></div></div></section>'+
+ '<section class="qdc-si-plate"><div class="qdc-si-heading">SESSION STATUS</div><div class="qdc-si-secure"><i></i> Authorized Workspace</div>'+
+ '<div class="qdc-si-chips"><span>Identity</span><span>Records</span><span>Access</span></div></section>';
+ const right=root.querySelector('.qdc-up-right');if(right)right.setAttribute('aria-hidden','true');
+ const timeline=root.querySelector('.qdc-up-timeline');
+ if(timeline){
+   timeline.setAttribute('aria-label','Your personal sign-in sequence');
+   const head=document.createElement('div');head.className='qdc-si-heading qdc-si-orbit-title';head.textContent='◈ LIVE ACCESS SEQUENCE';timeline.prepend(head);
+   timeline.querySelectorAll('[data-qdc-op-step]').forEach((el,i)=>{
+     const b=el.querySelector('b'),sm=el.querySelector('small');
+     if(b)b.textContent=SI_STEPS[i][0];if(sm)sm.textContent=SI_STEPS[i][1];
+   });
+ }
+ const halo=root.querySelector('.qdc-op-halo');
+ if(halo){
+   const logo=halo.querySelector('.qdc-op-brand-logo');if(logo)logo.remove();
+   const avatar=document.createElement('div');avatar.className='qdc-si-avatar';
+   const url=safePhoto(identity.photo_url||identity.photo);
+   if(url){const pic=document.createElement('img');pic.alt='Your saved account profile photograph';pic.src=url;
+     pic.onerror=function(){pic.remove();avatar.innerHTML=NO_PHOTO;avatar.classList.add('qdc-si-no-photo')};
+     avatar.appendChild(pic);
+   }else{avatar.innerHTML=NO_PHOTO;avatar.classList.add('qdc-si-no-photo')}
+   halo.appendChild(avatar);
+   const badge=document.createElement('span');badge.className='qdc-si-dp-badge';badge.textContent=url?'YOUR PROFILE DP':'PHOTO NOT AVAILABLE';halo.appendChild(badge);
+ }
+ const quotes=root.querySelector('.qdc-op-quotes');if(quotes)quotes.remove();
+ const label=root.querySelector('.qdc-op-label-small');if(label)label.textContent='PERSONALIZED SECURE ACCESS';
+ const heading=root.querySelector('.qdc-op-label-large');if(heading)heading.textContent='Preparing Your Workspace';
+ const corner=root.querySelector('.qdc-op-corner');if(corner)corner.innerHTML='✧ QAMARDIN CLUSTER <small>SIGN-IN · PERSONAL ACCESS</small>';
+ const cornerRight=root.querySelector('.qdc-op-corner.right');if(cornerRight)cornerRight.textContent='IDENTITY ✦ SERVICE ✦ TECHNOLOGY';
+}
+
 function safePhoto(url){
   const t=String(url||'').trim();
   return /^https:\/\//i.test(t)||/^http:\/\//i.test(t)||/^data:image\/(?:png|jpe?g|webp|gif);base64,/i.test(t)?t:null;
@@ -56,14 +109,14 @@ function initialize(root){
   }
   updateStats();timer=setInterval(updateStats,250);
   function close(){if(finished)return;finished=true;clearInterval(timer);window.removeEventListener('resize',fit);
-    if(pct)pct.textContent='100%';if(msg)msg.textContent='OPENING THE PORTAL';
+    if(pct)pct.textContent='100%';if(msg)msg.textContent=root.classList.contains('qdc-signin-only')?'OPENING YOUR WORKSPACE':'OPENING THE PORTAL';
     root.classList.add('qdc-op-hide');setTimeout(()=>{root.remove();if(live===root)live=null},320);
   }
   function frame(now){
     if(finished)return;
     const elapsed=now-started,n=Math.min(100,Math.floor(elapsed/WIDTH*100)),active=Math.min(4,Math.floor(elapsed/(WIDTH/5)));
     if(pct)pct.textContent=n+'%';
-    if(msg)msg.textContent=n<35?'FORMING THE SCHOOL EMBLEM':n<75?'LOADING OUR SCHOOL COMMUNITY':'OPENING THE PORTAL';
+    if(msg)msg.textContent=root.classList.contains('qdc-signin-only')?(n<20?'VERIFYING IDENTITY':n<40?'LOADING PROFILE PHOTO':n<60?'SYNCING SERVICE DATA':n<80?'ASSIGNING WORKSPACE ACCESS':'OPENING YOUR DASHBOARD'):(n<35?'FORMING THE SCHOOL EMBLEM':n<75?'LOADING OUR SCHOOL COMMUNITY':'OPENING THE PORTAL');
     marks.forEach((el,i)=>{const done=i<active;el.classList.toggle('qdc-up-active',i===active);el.classList.toggle('qdc-up-done',done);
       const mark=el.querySelector('.qdc-up-step-mark');if(mark)mark.textContent=done?'✓':String(i+1);
     });
@@ -77,16 +130,21 @@ function initialize(root){
   requestAnimationFrame(frame);setTimeout(close,WIDTH+80);
 }
 function play(identity){
+  const signin=isFreshSignIn(identity);
   let root=document.getElementById('qdc-cinematic-loader');
-  if(root&&!root.classList.contains('qdc-op-hide')){customize(root,identity);return}
+  if(root&&!root.classList.contains('qdc-op-hide')){
+    if(!signin){customize(root,identity);return}
+    root.remove();root=null;
+  }
   if(root){root.remove();root=null}
   if(!document.body)return;
   document.body.insertAdjacentHTML('afterbegin',TEMPLATE);
   root=document.getElementById('qdc-cinematic-loader');live=root;
-  customize(root,identity);
+  if(signin)personalSignIn(root,identity);
+  else customize(root,identity);
   initialize(root);
 }
-window.qdcUniversalLoader={play,show:play};
+window.qdcUniversalLoader={play,show:play,expectSignIn,cancelPendingSignIn};
 if(document.readyState==='loading'){
   // On index.html the original loader is already embedded; on all secondary
   // pages this script is placed immediately after <body>, before the app.
