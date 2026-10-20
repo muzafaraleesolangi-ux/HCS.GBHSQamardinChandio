@@ -36,6 +36,19 @@
   host.replaceChildren();cells().forEach(field=>{const row=document.createElement('tr'),label=document.createElement('th'),value=document.createElement('td');label.scope='row';label.textContent=labelOf(field);value.textContent=valueOf(field).trim()||'Not on record';row.append(label,value);host.append(row);});
  }
  function refreshFlow(data,current){
+  const officeEdit=typeof ADMIN_EDIT_MODE!=='undefined'&&!!ADMIN_EDIT_MODE;
+  screen.classList.toggle('qdc-office-edit',officeEdit);
+  const officeStepper=q('.qef-stepper'),officeFooter=q('.qef-flow-footer'),officePreview=q('#qef-inline-review');
+  if(officeStepper)officeStepper.hidden=officeEdit;
+  if(officeFooter)officeFooter.hidden=officeEdit;
+  if(officeEdit){
+   current.forEach(f=>f.classList.remove('qef-step-hidden'));
+   if(officePreview)officePreview.hidden=true;
+   text(q('.qdc7-overview-copy h2'),'Edit Employee — Complete Record');
+   text(q('.qdc7-overview-copy p'),'Edit all personal, service and qualification fields in this full-window office editor. Save updates with the official Save button.');
+   text(q('.qdc7-overview-copy small'),'AUTHORIZED OFFICE EDITOR');
+   return;
+  }
   if(screen.dataset.flowStep!==String(step))screen.dataset.flowStep=String(step);
   current.forEach(f=>{const hide=step===3||bucket(f)!==step;if(f.classList.contains('qef-step-hidden')!==hide)f.classList.toggle('qef-step-hidden',hide);});
   text(q('.qdc7-overview-copy h2'),titles[step]);text(q('.qdc7-overview-copy p'),subtitles[step]);text(q('.qdc7-overview-copy small'),'EMERALD FLOW • STEP '+(step+1)+' OF 4');
