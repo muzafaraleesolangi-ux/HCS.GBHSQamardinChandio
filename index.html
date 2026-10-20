@@ -2607,8 +2607,21 @@ body #support-panel .it-contact .aquib-profile-dp{display:block;flex:none;width:
               <label class="cert-agree"><input type="checkbox" id="chk-agree"> I Agree</label>
             </div>
             <div class="adminbox hidden" id="admin-edit-box">
-              <div class="at"><span data-ic="pen"></span>Admin Edit Mode</div>
+              <div class="at"><span data-ic="pen"></span>Full Profile Editor</div>
               <p>Authorized office editing. Record updates save directly with an audit history.</p>
+              <div class="qdc-admin-photo-editor" id="qdc-admin-photo-editor">
+                <div class="qdc-admin-photo-thumb"><img id="qdc-admin-photo-preview" alt="Employee profile photo preview" hidden><span id="qdc-admin-photo-empty">No photo</span></div>
+                <div class="qdc-admin-photo-controls">
+                  <strong>Employee Profile Photograph</strong>
+                  <small>Choose a JPG, PNG or WebP image. The square profile photo is compressed and stored securely.</small>
+                  <div class="qdc-admin-photo-buttons">
+                    <button type="button" class="btn ghost" id="btn-admin-photo-choose">Choose Photo</button>
+                    <button type="button" class="btn primary" id="btn-admin-photo-upload" disabled>Save Photo</button>
+                  </div>
+                  <span id="qdc-admin-photo-status" role="status" aria-live="polite">No new photo selected</span>
+                </div>
+                <input type="file" accept="image/jpeg,image/png,image/webp" id="file-admin-photo" class="hidden">
+              </div>
             </div>
             <button class="btn primary hidden" id="btn-admin-save"><span class="bicon" data-ic="check"></span>&nbsp; SAVE DRAFT</button>
             <button class="btn primary hidden" id="btn-verify" disabled inert aria-hidden="true"><span class="bicon" data-ic="check"></span>&nbsp; VERIFY &amp; SUBMIT</button>
@@ -3908,6 +3921,7 @@ const api = {
   board:           t              => callFn("sv_board",    {p_token:t}),
   decide:          (t,id,d,r)     => callFn("sv_decide",   {p_token:t, p_id:id, p_decision:d, p_reason:r||null}),
   edit:            (t,emp,ch)     => callFn("sv_edit",     {p_token:t, p_emp:emp, p_changes:ch}),
+  adminSetPhoto:   (t,emp,photo)  => callFn("sv_admin_update_employee_photo",{p_token:t,p_emp:emp,p_photo:photo}),
   publicSummary:   ()             => callFn("sv_public_summary", {}),
   addEmployee:     (t,data)       => callFn("sv_admin_add_employee",    {p_token:t, p_data:data}),
   removeEmployee:  (t,emp)        => callFn("sv_admin_remove_employee", {p_token:t, p_emp:emp}),
@@ -3948,6 +3962,7 @@ let INLINE_EDIT_MODE=false, INLINE_DRAFT=[], DRAFT_PHOTO=null, DRAFT_NOTE="", PR
 let CUR=null, CUR_KEY=null, CUR_STATUS=null, CUR_HISTORY=[], CUR_FROMDASH=false, CUR_DOB=null;
 let PW_KEY=null, PW_PREFETCHED=null;
 let ADMIN_EDIT_MODE=false; // authorized Master Admin or Hub HM full profile edit mode
+let ADMIN_PHOTO_DRAFT=null;
 let CURTAB="cells";
 const PER=14; let PAGE={schools:1,staff:1};
 
@@ -4356,6 +4371,7 @@ function renderRecordUI(){
   const agree=$("#chk-agree"); if(agree) agree.checked=false;
   const vb=$("#btn-verify"); if(vb) vb.disabled=true;
   applyAdminEditModeUI();
+  renderAdminPhotoUI();
   const resetBtn=$("#btn-admin-reset-account"); if(resetBtn) resetBtn.classList.toggle("show",!!CAN_ADMIN&&!!CUR&&!!CUR.is_active);
   const hmBtn=$("#btn-hmdash"); if(hmBtn) hmBtn.classList.toggle("show",!!CUR&&CUR.is_school_head==="Yes");
   if(CUR && CUR.is_school_head==="Yes") renderHmSchoolHeader();
@@ -4381,6 +4397,52 @@ function applyAdminEditModeUI(){
   if(save) save.classList.toggle("hidden", !on);
   if(ralert) ralert.classList.toggle("hidden", on);
 }
+/* Master Admin + HUB HM: the SAME full profile view used by View includes its own photo editor.
+   No ordinary employee, Cell Head or unrelated role can use the direct photo endpoint. */
+function renderAdminPhotoUI(){
+  const panel=$("#qdc-admin-photo-editor"),pic=$("#qdc-admin-photo-preview"),
+        empty=$("#qdc-admin-photo-empty"),save=$("#btn-admin-photo-upload"),status=$("#qdc-admin-photo-status");
+  if(!panel||!pic)return;
+  const enabled=!!ADMIN_EDIT_MODE&&!!CUR&&(IS_MASTER||OFFICER?.role==="HUBHM");
+  panel.hidden=!enabled;
+  if(!enabled)return;
+  const url=ADMIN_PHOTO_DRAFT||CUR.photo_url||"";
+  if(/^(https?:\/\/|data:image\/jpeg;base64,)/i.test(String(url))){
+    pic.src=url;pic.hidden=false;empty.hidden=true;
+    pic.onerror=()=>{pic.hidden=true;empty.hidden=false;};
+  }else{pic.removeAttribute("src");pic.hidden=true;empty.hidden=false;}
+  save.disabled=!ADMIN_PHOTO_DRAFT;
+  status.textContent=ADMIN_PHOTO_DRAFT?"New photo ready. Tap Save Photo to apply.":"No new photo selected";
+}
+$("#btn-admin-photo-choose").addEventListener("click",()=>{
+  if(ADMIN_EDIT_MODE&&CUR&&(IS_MASTER||OFFICER?.role==="HUBHM"))$("#file-admin-photo").click();
+});
+$("#file-admin-photo").addEventListener("change",async ev=>{
+ const file=ev.target.files&&ev.target.files[0];ev.target.value="";
+ if(!file||!ADMIN_EDIT_MODE||!CUR||!(IS_MASTER||OFFICER?.role==="HUBHM"))return;
+ const status=$("#qdc-admin-photo-status");
+ if(!["image/jpeg","image/png","image/webp"].includes(file.type)){status.textContent="Choose a JPG, PNG or WebP image.";return;}
+ try{
+  status.textContent="Preparing photograph…";
+  const data=await fileToSquareJPEG(file,320,.72);
+  if(data.length>400000)throw Error("Photo is too large. Try a smaller image.");
+  ADMIN_PHOTO_DRAFT=data;renderAdminPhotoUI();
+ }catch(e){status.textContent=e.message||"Could not prepare photo.";}
+});
+$("#btn-admin-photo-upload").addEventListener("click",async ()=>{
+ if(!ADMIN_PHOTO_DRAFT||!ADMIN_EDIT_MODE||!CUR||!(IS_MASTER||OFFICER?.role==="HUBHM"))return;
+ const data=ADMIN_PHOTO_DRAFT,id=CUR.id;
+ const save=$("#btn-admin-photo-upload"),status=$("#qdc-admin-photo-status");
+ save.disabled=true;status.textContent="Saving employee profile photo…";
+ try{
+  const result=await api.adminSetPhoto(TOKEN,id,data);
+  if(result!=="OK"){status.textContent="Photo not saved: "+String(result||"Server declined update");save.disabled=false;return;}
+  if(CUR&&CUR.id===id)CUR.photo_url=data;
+  const employee=byId(id);if(employee)employee.photo_url=data;
+  ADMIN_PHOTO_DRAFT=null;renderRecordUI();
+  $("#qdc-admin-photo-status").textContent="Photo updated successfully.";
+ }catch(e){status.textContent=friendlyErr(e);save.disabled=false;}
+});
 $("#btn-admin-reset-account").addEventListener("click", async ()=>{
   if(!CAN_ADMIN || !CUR || !CUR.is_active) return;
   const name=CUR.employee_name||"this employee";
@@ -4516,7 +4578,7 @@ function lookupFromBoard(id){
 }
 function openRecordFrom(r,key,fromDash,dob){
   CUR=r.employee; CUR_KEY=key; CUR_STATUS=r.status; CUR_PENDING_REQUEST=r.pending_request||null; CUR_HISTORY=r.history||[]; CUR_FROMDASH=!!fromDash; CUR_DOB=dob||null;
-  INLINE_EDIT_MODE=false; INLINE_DRAFT=[]; DRAFT_PHOTO=null;DRAFT_NOTE='';PROFILE_UNSAVED=false;
+  INLINE_EDIT_MODE=false; INLINE_DRAFT=[]; DRAFT_PHOTO=null;DRAFT_NOTE='';PROFILE_UNSAVED=false; ADMIN_PHOTO_DRAFT=null;
   renderRecordUI();
   show("#screen-record");
   if(!fromDash && !CUR_PENDING_REQUEST) refreshInlineDraftDisplay();
