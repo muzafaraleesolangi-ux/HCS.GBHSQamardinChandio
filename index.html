@@ -2253,11 +2253,11 @@ body #support-panel .it-contact .aquib-profile-dp{display:block;flex:none;width:
     if(staffCount&&Number.isFinite(staff)&&staff>=0)staffCount.textContent=String(staff);
   }catch(_error){}}
   syncStats();statsTimer=setInterval(syncStats,170);
-  function close(){if(finished)return;finished=true;clearInterval(statsTimer);if(pct)pct.textContent='100%';if(msg)msg.textContent='OPENING THE HOMEPAGE';root.classList.add('qdc-op-hide');setTimeout(()=>root.remove(),300)}
+  function close(){if(finished)return;finished=true;clearInterval(statsTimer);if(pct)pct.textContent='100%';if(msg)msg.textContent=root.classList.contains('qdc-signin-only')?'OPENING YOUR WORKSPACE':'OPENING THE HOMEPAGE';root.classList.add('qdc-op-hide');setTimeout(()=>root.remove(),300)}
   function frame(t){if(finished)return;const elapsed=t-started,n=Math.min(100,Math.floor(elapsed/40)),active=Math.min(4,Math.floor(elapsed/800));
     if(orbitLength&&orbitTrace){const visible=Math.min(orbitLength,Math.max(0,elapsed/4000)*orbitLength);orbitTrace.style.strokeDashoffset=String(orbitLength-visible);if(orbitSpark){try{const pos=orbitTrace.getPointAtLength(visible);orbitSpark.setAttribute('cx',pos.x.toFixed(1));orbitSpark.setAttribute('cy',pos.y.toFixed(1));orbitSpark.setAttribute('opacity','1')}catch(_e){}}}
     if(pct)pct.textContent=n+'%';
-    if(msg)msg.textContent=n<35?'FORMING THE SCHOOL EMBLEM':n<75?'LOADING OUR SCHOOL COMMUNITY':'OPENING THE HOMEPAGE';
+    if(msg)msg.textContent=root.classList.contains('qdc-signin-only')?(n<20?'VERIFYING IDENTITY':n<40?'LOADING PROFILE PHOTO':n<60?'SYNCING SERVICE DATA':n<80?'ASSIGNING ACCESS':'OPENING YOUR DASHBOARD'):(n<35?'FORMING THE SCHOOL EMBLEM':n<75?'LOADING OUR SCHOOL COMMUNITY':'OPENING THE HOMEPAGE');
     for(let i=0;i<marks.length;i++){const el=marks[i],done=i<active;el.classList.toggle('qdc-up-active',i===active);el.classList.toggle('qdc-up-done',done);const mark=el.querySelector('.qdc-up-step-mark');if(mark)mark.textContent=done?'✓':String(i+1)}
     if(elapsed>=4000){close();return}requestAnimationFrame(frame)}
   requestAnimationFrame(frame);setTimeout(close,4080);
@@ -3714,7 +3714,7 @@ function show(id){
   if(id!=="#screen-record" && typeof resetTransientProfileEditState==='function') resetTransientProfileEditState();
   SCREENS.forEach(s=>$(s).classList.toggle("hidden", s!==id));
   window.scrollTo({top:0,behavior:"instant"});
-  if(fromHome && window.qdcUniversalLoader){
+  if(fromHome && window.qdcUniversalLoader?.hasPendingSignIn?.()){
     try{
       let role="",name="",photo="";
       if(id==="#screen-record" && CUR && !CUR_FROMDASH){
@@ -3728,7 +3728,11 @@ function show(id){
           if(matching.length===1)photo=matching[0].photo_url||"";
         }
       }
-      if(role)window.qdcUniversalLoader.play({role,name,photo_url:photo});
+      if(role){
+        const identity={role,name,photo_url:photo};
+        window.qdcUniversalLoader.rememberIdentity(identity);
+        window.qdcUniversalLoader.play(identity);
+      }
     }catch(_e){}
   }
 }
@@ -4644,6 +4648,7 @@ $("#btn-signin").addEventListener("click", async ()=>{
       return;
     }
     await window.qdcForestAuth?.success();
+    window.qdcUniversalLoader?.expectSignIn?.();
     /* Open the Employee Profile directly on this same page, like before — the Profile screen
        already includes the HM Dashboard top tab for a School Head. */
     try{ localStorage.removeItem("qdc_token"); }catch(e){}
@@ -4704,6 +4709,7 @@ async function employeeLogout(){
   /* Explicit LOGOUT only — the one action that is allowed to end the employee's session. */
   CUR=null; CUR_KEY=null; CUR_STATUS=null; CUR_PENDING_REQUEST=null; CUR_HISTORY=[]; CUR_FROMDASH=false; CUR_DOB=null; INLINE_EDIT_MODE=false; INLINE_DRAFT=[];
   try{ localStorage.removeItem("qdc_employee_session"); }catch(e){}
+  window.qdcUniversalLoader?.clearIdentity?.();
   $("#empid").value=""; $("#emp-pass").value=""; showLoginStep1();
   await loadPublic(); renderHomePublic(); show("#screen-login"); setLoginTab("front");
   renderContinueBanner();
@@ -5070,6 +5076,7 @@ $("#f-admin").addEventListener("submit", async (ev)=>{
     const r = await api.login(u,p); netOff();
     if(!r){ showErr("#a-err","That user ID and password do not match."); return; }
     await window.qdcForestAuth?.success();
+    window.qdcUniversalLoader?.expectSignIn?.();
     await completeAdminLogin(r);
   }catch(e){ netFail(friendlyErr(e)); }finally{window.qdcForestAuth?.finish();}
 });
@@ -5088,6 +5095,7 @@ $("#btn-logout").addEventListener("click", async ()=>{
   if(window.qdcAdminAccounts) window.qdcAdminAccounts.sync();
   ADMIN_EDIT_MODE=false;
   try{ localStorage.removeItem("qdc_token"); }catch(e){}
+  window.qdcUniversalLoader?.clearIdentity?.();
   if(t) api.logout(t).catch(()=>{});
   await loadPublic(); renderHomePublic(); show("#screen-login"); setLoginTab("front");
 });
