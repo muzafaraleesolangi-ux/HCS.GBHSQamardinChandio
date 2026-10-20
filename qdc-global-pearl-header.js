@@ -69,6 +69,20 @@
   });
   body.insertBefore(premium,native);
   body.classList.add('qgh-installed',homePage?'qgh-home':'qgh-module');
+  /* Keep the old header in the DOM for legacy application selectors, but
+     remove its visual layout so it cannot duplicate the approved new header. */
+  const legacyDeoNotice=native.querySelector('.deo-request-banner');
+  if(legacyDeoNotice){
+    const retained=document.createElement('section');
+    retained.className='qgh-retained-notice';
+    retained.setAttribute('aria-label','District Education Office official instructions');
+    retained.append(legacyDeoNotice);
+    premium.after(retained);
+  }
+  native.classList.add('qgh-retired-header');
+  native.setAttribute('aria-hidden','true');
+  native.setAttribute('hidden','');
+  native.style.setProperty('display','none','important');
   const unified=body.querySelector(':scope > .portal-navigation');
   if(unified&&unified!==premium)premium.after(unified);
   if(homePage&&location.hash){
