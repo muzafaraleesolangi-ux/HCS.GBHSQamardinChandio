@@ -29,7 +29,7 @@
   let draft={},pending={},photo=false,unsaved=false;
   try{draft=inlineDraftMap();pending=pendingCorrectionMap();photo=!!DRAFT_PHOTO;unsaved=!!PROFILE_UNSAVED;}catch(e){}
   const waiting=Object.keys(pending).length>0;const count=Object.keys(draft).length;
-  putText(q('#qsp-draft-title'),waiting?'Submitted for Review':'Saved Draft');
+  putText(q('#qsp-draft-title'),waiting?'Submitted to Admin':'Saved Draft');
   putText(q('#qsp-draft-state'),waiting?'Awaiting admin verification':unsaved?'Unsaved edits — save your draft':count||photo?'Your saved work is ready to continue':'No saved changes yet');
   putText(q('#qsp-draft-count'),waiting?Object.keys(pending).length+' submitted changes':count+' saved change'+(count===1?'':'s')+(photo?' · Photo saved':''));
   aside.classList.toggle('qsp-unsaved',unsaved);aside.classList.toggle('qsp-pending',waiting);
@@ -80,7 +80,7 @@
   q('#qdc7-guide-dock')?.remove();
   const first=q('.qdc7-kpi-icon',overview);first.id='qsp-progress-ring';first.setAttribute('role','progressbar');first.setAttribute('aria-label','Profile completion');first.setAttribute('aria-valuemin','0');first.setAttribute('aria-valuemax','100');first.innerHTML=icon('leaf');
   qa('.qdc7-kpi-icon',overview).slice(1).forEach((n,i)=>n.innerHTML=icon(i?'info':'check'));
-  topSubmit=button('qsp-submit-top','Submit for Verification','send');topSubmit.classList.add('qsp-primary');topSubmit.hidden=true;q('.qdc7-overview-actions',overview).append(topSubmit);
+  topSubmit=button('qsp-submit-top','Submit for Admin Approval','send');topSubmit.classList.add('qsp-primary');topSubmit.hidden=true;q('.qdc7-overview-actions',overview).append(topSubmit);
   topSubmit.addEventListener('click',()=>{const native=q('#btn-inline-submit');if(isEditing()&&native&&!native.disabled)native.click();});
   frame=document.createElement('div');frame.className='qsp-workspace-grid';const fields=q('#r-fields');fields.before(frame);frame.append(fields);
   aside=document.createElement('aside');aside.className='qsp-draft-panel';aside.setAttribute('aria-label','Saved draft overview');

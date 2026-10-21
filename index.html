@@ -2545,7 +2545,7 @@ body #support-panel .it-contact .aquib-profile-dp{display:block;flex:none;width:
           <div class="inline-edit-actions">
             <button type="button" class="btn ghost" id="btn-inline-cancel">CANCEL</button>
             <button type="button" class="btn ghost" id="btn-inline-save"><span class="bicon" data-ic="save"></span>&nbsp; SAVE DRAFT</button>
-            <button type="button" class="btn primary" id="btn-inline-submit"><span class="bicon" data-ic="paperplane"></span>&nbsp; CONFIRM &amp; SEND FOR FINAL VERIFICATION</button>
+            <button type="button" class="btn primary" id="btn-inline-submit"><span class="bicon" data-ic="paperplane"></span>&nbsp; SUBMIT FOR ADMIN APPROVAL</button>
           </div>
         </div>
 <label class="qdc-draft-note hidden noprint" id="qdc-draft-note">Note for office (optional)<textarea id="qdc-note" maxlength="1500" rows="2" placeholder="Explain your corrections"></textarea></label>
@@ -2623,7 +2623,7 @@ body #support-panel .it-contact .aquib-profile-dp{display:block;flex:none;width:
                 <input type="file" accept="image/jpeg,image/png,image/webp" id="file-admin-photo" class="hidden">
               </div>
             </div>
-            <button class="btn primary hidden" id="btn-admin-save"><span class="bicon" data-ic="check"></span>&nbsp; SAVE DRAFT</button>
+            <button class="btn primary hidden" id="btn-admin-save"><span class="bicon" data-ic="check"></span>&nbsp; SAVE EMPLOYEE</button>
             <button class="btn primary hidden" id="btn-verify" disabled inert aria-hidden="true"><span class="bicon" data-ic="check"></span>&nbsp; VERIFY &amp; SUBMIT</button>
             <button class="btn ghost" id="btn-back"><span class="bicon" data-ic="arrowleft"></span>&nbsp; BACK</button>
             <button class="btn ghost" id="btn-emp-logout">LOGOUT</button>
@@ -4459,8 +4459,13 @@ $("#btn-admin-reset-account").addEventListener("click", async ()=>{
   }catch(err){ netFail("Account reset failed."); }
 });
 
-$("#btn-admin-save").addEventListener("click", async ()=>{
-  if(!ADMIN_EDIT_MODE || !CUR) return;
+let OFFICE_EDIT_BUSY=false;
+async function saveAdminEmployee(){
+  if(!TOKEN || !CAN_ADMIN || !['MASTER','HUBHM'].includes(OFFICER?.role) || !ADMIN_EDIT_MODE || !CUR || OFFICE_EDIT_BUSY)return;
+  OFFICE_EDIT_BUSY=true;
+  $("#btn-admin-save").disabled=true;
+  document.dispatchEvent(new CustomEvent('qdc-office-busy',{detail:{busy:true}}));
+  try{
   const e=CUR;
   const changes=[];
   $$("#r-fields [data-field]").forEach(inp=>{
@@ -4507,7 +4512,10 @@ $("#btn-admin-save").addEventListener("click", async ()=>{
     if(r==="DUPLICATE_CNIC"){ msg("Duplicate CNIC","That CNIC is already assigned to another employee.","⚠"); return; }
     if(r==="DUPLICATE_HEAD"){ msg("Already has a Head","This school already has a Head (HM). Please remove the existing Head first.","⚠"); return; }
     if(r!=="OK"){ msg("Could not save", String(r), "⚠"); return; }
-    /* refresh the in-memory board quietly, without switching away from this screen */
+    // Keep the successful values if the optional board refresh is unavailable.
+    const patched=Object.assign({},e,Object.fromEntries(changes.map(c=>[c.field,c.to])));
+    STAFF=STAFF.map(row=>row.id===e.id?patched:row);
+    /* refresh the in-memory board before returning to the same dashboard */
     try{
       const b = await api.board(TOKEN);
       if(b){
@@ -4516,11 +4524,16 @@ $("#btn-admin-save").addEventListener("click", async ()=>{
         VERIFIED_MAP=new Map((b.verified||[]).map(v=>[v.employee_id,v]));
       }
     }catch(err){}
-    const fresh = byId(e.id);
-    if(fresh) openRecordFrom(lookupFromBoard(fresh.id), CUR_KEY, true, null);
+    ADMIN_EDIT_MODE=false;
+    renderDash();show("#screen-dash");
     msg("Record updated", changes.length+" field(s) changed for "+e.employee_name+".","✔");
   }catch(err){ netFail(friendlyErr(err)); }
-});
+  }finally{
+    OFFICE_EDIT_BUSY=false;$("#btn-admin-save").disabled=false;
+    document.dispatchEvent(new CustomEvent('qdc-office-busy',{detail:{busy:false}}));
+  }
+}
+$("#btn-admin-save").addEventListener("click",saveAdminEmployee);
 function setActiveTab(key){
   $$(".rtab").forEach(t=>t.classList.toggle("active", t.dataset.tab===key));
   $$(".rpanel").forEach(p=>p.classList.toggle("hidden", p.dataset.panel!==key));
@@ -5282,8 +5295,7 @@ $("#ds-results").addEventListener("click", (ev)=>{
   const e = byId(+row.dataset.id); if(!e) return;
   closeDashSearch();
   if(CAN_ADMIN){
-    ADMIN_EDIT_MODE=true;
-    lookupAndRender(empKey(e), true);
+    openAdminEmployeeEditor(e.id);
   }else{
     ADMIN_EDIT_MODE=false;
     const info = lookupFromBoard(e.id);
@@ -5763,12 +5775,10 @@ function renderStaff(){
     '</td></tr>';
   }).join("") : '<tr><td colspan="9"><div class="empty">No staff match.</div></td></tr>';
   $$("#t-staff button[data-view]").forEach(b=>b.addEventListener("click",()=>{ const e=byId(+b.dataset.view); if(e){ ADMIN_EDIT_MODE=false; lookupAndRender(empKey(e),true); } }));
-  $("#t-staff button[data-edit]").forEach(b=>b.addEventListener("click",()=>{
+  $$("#t-staff button[data-edit]").forEach(b=>b.addEventListener("click",()=>{
     const e=byId(+b.dataset.edit);if(!e)return;
-    if(IS_MASTER || OFFICER?.role==="HUBHM"){
-      ADMIN_EDIT_MODE=true;
-      lookupAndRender(empKey(e),true); // Reuse the full profile window used by View.
-    }else openEditor(e.id); // Preserve existing scoped Cell Head editing.
+    if(CAN_ADMIN) openAdminEmployeeEditor(e.id);
+    else openEditor(e.id); // Preserve existing scoped Cell Head editing.
   }));
   $$("#t-staff button[data-delete]").forEach(b=>b.addEventListener("click",async ()=>{
     const e=byId(+b.dataset.delete); if(!e) return;
@@ -5787,6 +5797,15 @@ function renderStaff(){
     if(reason===null)return;if(reason.trim().length<5){msg("Add a reason","Please provide at least five characters for the Master Admin.","⚠");return;}
     netOn("Sending request to Master Admin…");try{const r=await api.requestEmployeeDeletion(TOKEN,e.id,reason.trim());netOff();if(!r||r.ok!==true){msg("Request not sent",r?.status||"Please try again.","⚠");return;}await loadBoardAndShow(true);msg("Deletion request sent",e.employee_name+" is now waiting for Master Admin review.","✓");}catch(err){netFail(friendlyErr(err));}
   }));
+}
+
+function openAdminEmployeeEditor(id){
+  if(!TOKEN || !CAN_ADMIN || !['MASTER','HUBHM'].includes(OFFICER?.role))return false;
+  const info=lookupFromBoard(id);
+  if(!info || !info.employee){msg('Record unavailable','Refresh the employee list and try again.','⚠');return false;}
+  ADMIN_EDIT_MODE=true;
+  openRecordFrom(info,empKey(info.employee),true,null);
+  return true;
 }
 
 let EDIT_ID=null;
@@ -7557,10 +7576,7 @@ async function saveInlineChanges(alsoSubmit){
 $('#btn-inline-edit').addEventListener('click',()=>enterInlineEdit());
 $('#btn-inline-cancel').addEventListener('click',()=>{ resetTransientProfileEditState(); renderRecordUI(); });
 $('#btn-inline-save').addEventListener('click',()=>saveInlineChanges(false));
-$('#btn-inline-submit').addEventListener('click',()=>{
- if(typeof window.qdcProfileReview?.requestSubmission==='function')window.qdcProfileReview.requestSubmission();
- else saveInlineChanges(true);
-});
+$('#btn-inline-submit').addEventListener('click',()=>saveInlineChanges(true));
 document.addEventListener('input',ev=>{
   const t=ev.target; if(!t||!INLINE_EDIT_MODE||!t.closest('#r-fields')) return;
   PROFILE_UNSAVED=true;const v=$('#btn-verify');if(v)v.disabled=true;
@@ -7872,7 +7888,7 @@ function renderUnifiedWorkspace(){
  const banner='<section id="qdc-editor-banner" class="qdc-editor-banner '+(INLINE_EDIT_MODE?'editing':'')+'"><div class="qdc-editor-banner-top"><div><span class="qdc-eyebrow">'+(ADMIN_EDIT_MODE?'AUTHORIZED OFFICE EDITOR':'EMPLOYEE PROFILE WORKSPACE')+'</span><h3>'+(ADMIN_EDIT_MODE?'Edit Complete Employee Record':INLINE_EDIT_MODE?'Update your complete profile':'Your complete profile')+'</h3><p>'+(verified?'Your latest approved profile is verified by Admin.':pending?'Your submitted profile is waiting for Admin final verification.':(ADMIN_EDIT_MODE?'Office changes save directly. Replace the photograph from the Photo Editor panel.':'Edit your details and profile photo together, then send the complete profile to Admin for final verification.'))+'</p></div>'+status+'</div><div class="qdc-guide-flow"><div class="qdc-guide-step '+(INLINE_EDIT_MODE?'active':'done')+'"><i>1</i><b>Edit photo & details</b></div><span>›</span><div class="qdc-guide-step '+(INLINE_EDIT_MODE?'active':'')+'"><i>2</i><b>Save draft / confirm</b></div><span>›</span><div class="qdc-guide-step '+(pending?'active':verified?'done':'')+'"><i>3</i><b>Admin verifies</b></div></div><div class="qdc-v4-guidance-bar" role="note"><span class="qdc-v4-orb" aria-hidden="true">✦</span><span><b>LIVE FIELD ASSISTANT</b><small>Tap or select any profile field for its own clear instructions. Save a draft and send corrections together.</small></span><span class="qdc-v4-live">FIELD BY FIELD</span></div><div class="qdc-v4-completion" aria-live="polite"><div><span>PROFILE DETAILS COMPLETED</span><strong id="qdc-v4-progress-text">Checking fields…</strong></div><div class="qdc-v4-track"><i id="qdc-v4-progress-fill"></i></div></div>'+(INLINE_EDIT_MODE?'<div class="qdc-editor-photo-row"><label class="qdc-photo-pick" for="file-photo" title="Choose a profile photo"><span class="qdc-avatar-ring">'+(DRAFT_PHOTO||CUR.photo_url?'<img src="'+esc(DRAFT_PHOTO||CUR.photo_url)+'" alt="Profile photo">':esc(initials(CUR.employee_name)))+'<i>＋</i></span></label><div><b>Profile photo</b><small>Tap your photo to choose or replace it. It will be sent with all your profile details in the same request.</small><em>'+(DRAFT_PHOTO?'New photo ready to save with your draft':CUR.photo_url?'Current photo will stay until Admin approves your update':'A profile photo is required')+'</em></div></div>':'')+'</section>';
  $('#r-fields').insertAdjacentHTML('afterbegin',banner);
  ['btn-inline-save','btn-inline-submit','btn-inline-cancel'].forEach(id=>$("#"+id).disabled=PROFILE_BUSY);
- $('#btn-inline-submit').innerHTML='<span class="bicon" data-ic="paperplane"></span>&nbsp; Review &amp; Submit';
+ $('#btn-inline-submit').innerHTML='<span class="bicon" data-ic="paperplane"></span>&nbsp; Submit for Admin Approval';
  $('#qdc-workflow-progress').innerHTML='';
  const agree=$('#chk-agree'),verify=$('#btn-verify');if(agree)agree.disabled=true;if(verify)verify.disabled=true;
 }
@@ -8650,10 +8666,11 @@ html body>footer.pearl-emerald-footer,html body:has(#screen-login:not(.hidden))>
 </style><script src="./building-survey-template.js?v=2" defer></script><script src="https://cdn.jsdelivr.net/npm/fflate@0.8.2/umd/index.js" defer></script><script src="./building-survey-admin.js?v=2" defer></script>
 <!-- Approved employee Smart Nature + Tech workspace -->
 <link rel="stylesheet" href="./employee-smart-profile.css?v=2">
-<script src="./employee-smart-profile.js?v=2" defer></script>
+<script src="./employee-smart-profile.js?v=3" defer></script>
 
 <!-- Selected A: Emerald Flow -->
 <link rel="stylesheet" href="./employee-emerald-flow.css?v=1">
 <link rel="stylesheet" href="./employee-jade-pearl.css?v=1">
 <link rel="stylesheet" href="./qdc-review-admin-mobile-v1.css?v=1">
-<script src="./employee-emerald-flow.js?v=2" defer></script>
+<link rel="stylesheet" href="./employee-single-dashboard.css?v=1">
+<script src="./employee-single-dashboard.js?v=1" defer></script>

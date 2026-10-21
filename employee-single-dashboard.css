@@ -1,0 +1,31 @@
+/* Single-page employee dashboard and full-window office editor. */
+#screen-record.qdc-onepage-profile.qdc-emerald-flow.qdc-jade-pearl [hidden]{display:none!important}
+#screen-record.qdc-onepage-profile.qdc-emerald-flow.qdc-jade-pearl .qsp-workspace-grid{display:block!important}
+#screen-record.qdc-onepage-profile.qdc-emerald-flow.qdc-jade-pearl #r-fields{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important}
+#screen-record.qdc-onepage-profile.qdc-emerald-flow.qdc-jade-pearl #r-fields .field.qef-step-hidden{display:block!important}
+#screen-record.qdc-onepage-profile.qdc-emerald-flow.qdc-jade-pearl #r-fields .field[hidden]{display:none!important}
+#screen-record.qdc-onepage-profile.qdc-emerald-flow.qdc-jade-pearl #r-fields:before{display:none!important}
+#screen-record.qdc-onepage-profile.qdc-emerald-flow.qdc-jade-pearl #r-fields .qdc-field-section{display:flex!important;grid-column:1/-1;gap:9px!important;align-items:center;padding:13px 3px 9px!important;margin-top:4px!important;border-bottom:1px solid #bdd9c6!important}
+#screen-record.qdc-onepage-profile.qdc-emerald-flow.qdc-jade-pearl .qdc7-overview-kpis{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important;margin:13px 0!important}
+#screen-record.qdc-onepage-profile.qdc-emerald-flow.qdc-jade-pearl .qdc7-overview-kpis .qdc7-overview-kpi{grid-column:auto!important}
+#screen-record.qdc-onepage-profile.qdc-emerald-flow.qdc-jade-pearl #qsp-submit-top:not([hidden]){display:flex!important;min-height:44px!important}
+#screen-record.qdc-onepage-profile.qdc-emerald-flow.qdc-jade-pearl #btn-inline-submit{display:inline-flex!important;min-height:44px!important}
+#screen-record.qdc-onepage-profile.qdc-emerald-flow.qdc-jade-pearl #qdc-editor-banner:not(.qsp-compact-banner){display:block!important;grid-column:1/-1}
+#screen-record.qdc-onepage-profile.qdc-emerald-flow.qdc-jade-pearl .qsp-draft-panel{display:block!important;position:static!important;margin-top:18px!important}
+#screen-record.qdc-onepage-profile :is(.qsp-nature-art,#qsp-section-status,.qsp-draft-caption){display:none!important}
+#screen-record.qdc-onepage-profile.qdc-office-view .qsp-draft-panel{display:none!important}
+#screen-record.qdc-onepage-profile .qdc-office-panel{margin:0 0 15px}
+#screen-record.qdc-onepage-profile .qdc-office-panel #admin-edit-box{margin:0!important;padding:16px!important;background:#f5fcf4e6!important;border:1px solid #c5dec8!important;border-radius:14px!important;min-width:0}
+#screen-record.qdc-onepage-profile .qdc-office-actions{display:flex;justify-content:flex-end;gap:10px;flex-wrap:wrap;margin-top:18px;padding:15px 0;border-top:1px solid #c7dece}
+#screen-record.qdc-onepage-profile .qdc-office-actions .qsp-button,#screen-record.qdc-onepage-profile #btn-admin-save{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:10px 16px;border:1px solid #afcdb8;border-radius:11px;background:#f4fff8;color:#285d43;font:800 12px/1.5 Manrope,system-ui}
+#screen-record.qdc-onepage-profile #btn-admin-save{background:linear-gradient(130deg,#128660,#004e3a)!important;color:white!important;border-color:#cab477!important}
+#screen-record.qdc-onepage-profile #btn-admin-save svg{width:18px;height:18px;flex:none}
+#screen-record.qdc-onepage-profile.qdc-office-edit .qef-activity{display:flex!important}
+#screen-record.qdc-onepage-profile.qdc-office-edit>.card{max-width:none!important}
+body:has(#screen-record.qdc-office-edit:not(.hidden))>.wrap{width:100%!important;max-width:none!important}
+#screen-record.qdc-onepage-profile.qdc-office-view #btn-emp-logout{display:none!important}
+#screen-record.qdc-onepage-profile #qdc-office-save-top:not([hidden]){background:#096247!important;color:white!important;border-color:#c4af6f!important}
+#screen-record.qdc-onepage-profile .qdc-office-actions button:disabled{opacity:.5;cursor:wait}
+@media(max-width:720px){#screen-record.qdc-onepage-profile.qdc-office-view .qsp-top-actions{grid-template-columns:repeat(2,minmax(0,1fr))!important}#screen-record.qdc-onepage-profile .qdc-office-actions>*{flex:1 1 140px}#screen-record.qdc-onepage-profile .qdc-office-panel #admin-edit-box{padding:12px!important}}
+@media(max-width:540px){#screen-record.qdc-onepage-profile.qdc-emerald-flow.qdc-jade-pearl #r-fields{grid-template-columns:minmax(0,1fr)!important}#screen-record.qdc-onepage-profile.qdc-emerald-flow.qdc-jade-pearl #r-fields .field :is(input,select,textarea){font-size:16px!important;min-height:44px!important}}
+@media print{#screen-record.qdc-onepage-profile :is(.qdc-office-panel,.qdc-office-actions,.qef-activity,.qsp-draft-panel){display:none!important}#screen-record.qdc-onepage-profile.qdc-emerald-flow.qdc-jade-pearl #r-fields{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
