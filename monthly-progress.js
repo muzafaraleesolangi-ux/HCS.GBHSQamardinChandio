@@ -151,7 +151,19 @@ function validateTeacherProgress(tid){const t=data.teachers.find(t=>t.id===tid);
 function validateCompleteProgress(){const p=data.profile;if(!p.school?.trim()||!p.hm?.trim()||!p.bps||!data.date){$('#hm-setup').open=true;$('#profile-fields').scrollIntoView({behavior:'smooth',block:'center'});throw Error('Complete School Name, HM Name, HM BPS and Report Date before final save');}if(!data.classes.length)throw Error('Select the school classes before final save');for(const g of data.classes)if(!data.assignments.some(a=>Number(a.grade)===Number(g)))throw Error(roman(g)+': Select at least one subject for this selected class');for(const t of data.teachers)validateTeacherProgress(t.id);}
 document.addEventListener('input',e=>{if(e.target.classList?.contains('mpr-invalid')){e.target.classList.remove('mpr-invalid');e.target.removeAttribute('aria-invalid');}});document.addEventListener('change',e=>{if(e.target.classList?.contains('mpr-invalid')){e.target.classList.remove('mpr-invalid');e.target.removeAttribute('aria-invalid');}});
 
-if(token)task(async()=>{try{await enter()}catch(e){notice(e.message,true);$('#auth').hidden=false;$('#workspace').hidden=true}});
+// A Sign Out in the shared header on another page sends the user here to
+// invalidate the school-owned monthly session, not merely hide the button.
+if(new URLSearchParams(location.search).has('qdc_signout')){
+  (async()=>{
+    if(token){try{await api('logout')}catch(_e){}}
+    try{localStorage.removeItem('qdc-mpr-v2-token')}catch(_e){}
+    token=null;
+    $('#auth').hidden=false;
+    $('#workspace').hidden=true;
+    try{history.replaceState(null,'',location.pathname)}catch(_e){}
+    window.dispatchEvent(new Event('storage'));
+  })();
+}else if(token)task(async()=>{try{await enter()}catch(e){notice(e.message,true);$('#auth').hidden=false;$('#workspace').hidden=true}});
 })();
 
 
