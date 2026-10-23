@@ -2,12 +2,11 @@
   'use strict';
   if (window.top !== window.self) return;
 
-  const portals = new Set(['index.html', 'monthly-progress.html', 'monthly-management.html', 'seniority-data.html', 'building-survey.html']);
+  const portals = new Set(['index.html', 'monthly-progress.html', 'monthly-management.html', 'building-survey.html']);
   const labels = {
     'index.html': 'Opening cluster homepage',
     'monthly-progress.html': 'Opening monthly progress report',
     'monthly-management.html': 'Opening monthly report management',
-    'seniority-data.html': 'Opening teacher data generator',
     'building-survey.html': 'Opening building safety survey'
   };
   const css = `
