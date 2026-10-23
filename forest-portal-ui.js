@@ -4,11 +4,7 @@ const file=location.pathname.split('/').pop()||'index.html';
 const contexts={'index.html':'EMPLOYEE PROFILE & ADMIN WORKSPACE','building-survey.html':'BUILDING SAFETY SURVEY','seniority-data.html':'DEO TEACHER DATA GENERATOR'};
 const cssClass={'index.html':'qf-index','building-survey.html':'qf-survey','seniority-data.html':'qf-seniority'}[file];
 if(cssClass)document.body.classList.add(cssClass);
-if(contexts[file]){
- const hero=document.createElement('section');hero.className='qf-hero';hero.setAttribute('aria-label','Cluster Hub School introduction');
- hero.innerHTML=`<div class="qf-top"><a class="qf-emblem" href="./index.html" aria-label="Cluster Hub School homepage"><img src="./assets/gbhs-qamardin-chandio-logo.svg" alt="GBHS Qamardin Chandio logo" width="72" height="72"></a><div class="qf-identity"><span class="qf-kicker">CLUSTER HUB SCHOOL</span><h1 class="qf-title">GBHS QAMAR DIN CHANDIO</h1><span class="qf-dept">School Education &amp; Literacy Department · Government of Sindh</span><span class="qf-context">${contexts[file]}</span></div><span class="qf-emblem qf-emblem--sindh"><img src="./assets/government-sindh-crest.png" alt="Government of Sindh crest" width="58" height="58"></span></div><div class="qf-content"><p class="qf-lead"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M3 5c3-1 6-1 9 1 3-2 6-2 9-1v14c-3-1-6-1-9 1-3-2-6-2-9-1V5Zm9 1v14"/></svg><span>Connected schools. Better learning.</span></p><div class="qf-panels"><div class="qf-panel"><span class="qf-label">VISION</span><p>Clear records. Stronger schools.</p></div><div class="qf-panel"><span class="qf-label">PURPOSE</span><p>Staff, progress and reporting in one reliable place.</p></div></div></div>`;
- const nav=document.querySelector('.portal-navigation');(nav||document.body.firstElementChild).after(hero);
-}else if(file==='monthly-progress.html'||file==='monthly-management.html'){
+if(file==='monthly-progress.html'||file==='monthly-management.html'){
  const powered=document.createElement('div');powered.className='qf-powered';powered.setAttribute('role','note');
  powered.innerHTML='<strong>Powered by Cluster Hub School GBHS Qamardin Chandio</strong><span>Schools across District Naushahro Feroze can create and export Monthly Academic Progress Reports here. This service is open beyond the Qamardin cluster.</span>';
  (document.querySelector('.portal-navigation')||document.body.firstElementChild).after(powered);
