@@ -25,6 +25,7 @@
     .qdc-emerald-header .qeh-nav a:hover,.qdc-emerald-header .qeh-nav button:hover{transform:translateY(-3px);border-color:#b9a767;background:#f3df9d1f}
     .qdc-emerald-header .qeh-nav .qeh-current{background:#e9d493!important;color:#103e32!important}
     .qdc-emerald-header .qeh-nav .qeh-sign{border-color:#bfaa67;margin-left:auto!important}
+    .qdc-emerald-header .qeh-nav .qeh-sign[hidden]{display:none!important}
     .qdc-emerald-header .qeh-nav a:focus-visible,.qdc-emerald-header .qeh-nav button:focus-visible{outline:3px solid #f2d073;outline-offset:2px}
     .qdc-emerald-header .qeh-foot{display:flex;justify-content:space-between;gap:12px;padding:9px clamp(16px,3vw,38px);color:#b5d6c3;font-size:9px;letter-spacing:.08em}
     .qdc-emerald-header .qeh-foot strong{color:#e4cb7c}
@@ -37,8 +38,37 @@
   style.textContent = css;
   document.head.append(style);
 
+  // The same portal domain has employee, officer and monthly HM sessions.
+  // Only show the header Sign In link when none of these sessions is stored.
+  function hasSavedSignIn() {
+    try {
+      if (localStorage.getItem('qdc_token') || localStorage.getItem('qdc-mpr-v2-token')) return true;
+      const raw = localStorage.getItem('qdc_employee_session');
+      return !!(raw && JSON.parse(raw)?.key);
+    } catch (_) { return false; }
+  }
+  function syncSignInLink() {
+    const signedIn = hasSavedSignIn();
+    document.querySelectorAll('.qdc-emerald-header .qeh-sign').forEach(link => {
+      link.hidden = signedIn;
+      if (signedIn) link.setAttribute('aria-hidden', 'true');
+      else link.removeAttribute('aria-hidden');
+    });
+  }
+  let authObserver = null;
+  function watchSignInState() {
+    syncSignInLink();
+    window.addEventListener('storage', syncSignInLink);
+    window.addEventListener('pageshow', syncSignInLink);
+    document.addEventListener('visibilitychange', syncSignInLink);
+    const watched = ['screen-login', 'screen-record', 'screen-dash', 'workspace', 'auth'];
+    authObserver = new MutationObserver(syncSignInLink);
+    watched.map(id => document.getElementById(id)).filter(Boolean).forEach(el => {
+      authObserver.observe(el, {attributes:true,attributeFilter:['class','hidden']});
+    });
+  }
   function mount() {
-    if (document.querySelector('.qdc-emerald-header')) return;
+    if (document.querySelector('.qdc-emerald-header')) { watchSignInState(); return; }
     const page = location.pathname.split('/').pop() || 'index.html';
     const active = page === 'monthly-management.html' || page === 'monthly-progress.html' ? 'monthly' : page === 'building-survey.html' ? 'building' : 'home';
     const header = document.createElement('header');
@@ -52,6 +82,7 @@
     const oldHeader = [...document.body.children].find(el => el.tagName === 'HEADER' && el !== header);
     const deoBanner = oldHeader?.querySelector('.deo-request-banner');
     if (deoBanner) oldHeader.after(deoBanner);
+    watchSignInState();
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', mount, {once:true});
   else mount();
