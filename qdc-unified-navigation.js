@@ -5,7 +5,7 @@
   const css = `
     body > header:not(.qdc-emerald-header){display:none!important}
     .qdc-emerald-header,.qdc-emerald-header *{box-sizing:border-box}
-    .qdc-emerald-header{position:relative;z-index:25;width:100%;margin:0!important;color:#f8f4df!important;background:radial-gradient(circle at 79% 35%,#176b51 0%,#083f35 43%,#062e29 100%);font-family:Arial,Helvetica,sans-serif!important;box-shadow:0 13px 26px #072b2550;isolation:isolate}
+    .qdc-emerald-header{display:block!important;position:relative;z-index:25;width:100%;height:auto!important;min-height:0!important;margin:0!important;padding:0!important;border:0!important;color:#f8f4df!important;background:radial-gradient(circle at 79% 35%,#176b51 0%,#083f35 43%,#062e29 100%);font-family:Arial,Helvetica,sans-serif!important;box-shadow:0 13px 26px #072b2550;isolation:isolate}
     .qdc-emerald-header .qeh-top{display:flex;justify-content:space-between;gap:12px;padding:9px clamp(16px,3vw,38px);background:#06241f66;border-bottom:1px solid #e6c87355;color:#e6d6a2;font-size:10px;font-weight:800;letter-spacing:.12em}
     .qdc-emerald-header .qeh-main{display:flex;align-items:center;gap:clamp(14px,3vw,30px);max-width:1600px;margin:auto;padding:17px clamp(16px,3vw,38px)}
     .qdc-emerald-header .qeh-school-logo{display:block;flex:none;width:clamp(79px,9vw,135px);height:clamp(83px,9.5vw,143px);object-fit:contain;filter:drop-shadow(0 8px 14px #0005);transition:transform .5s,filter .5s;animation:qeh-rise .7s both}
