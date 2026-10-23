@@ -33,6 +33,83 @@
     @keyframes qeh-draw{from{transform:scaleX(0)}to{transform:scaleX(1)}}
     @media(max-width:620px){.qdc-emerald-header .qeh-top span:last-child,.qdc-emerald-header .qeh-gov small{display:none}.qdc-emerald-header .qeh-main{gap:10px;padding:14px 13px}.qdc-emerald-header .qeh-school-logo{width:67px;height:72px}.qdc-emerald-header .qeh-gov{width:42px}.qdc-emerald-header .qeh-gov img{width:38px;height:43px}.qdc-emerald-header .qeh-title{font-size:clamp(18px,5vw,28px)!important}.qdc-emerald-header .qeh-place{font-size:9px!important}.qdc-emerald-header .qeh-nav{justify-content:flex-start;flex-wrap:nowrap;overflow-x:auto;padding:7px 10px}.qdc-emerald-header .qeh-nav a,.qdc-emerald-header .qeh-nav button{flex:none;white-space:nowrap;font-size:10px!important;padding:6px 9px}.qdc-emerald-header .qeh-foot{font-size:8px}.qdc-emerald-header .qeh-foot span{display:none}}
     @media(prefers-reduced-motion:reduce){.qdc-emerald-header *, .qdc-emerald-header *:before,.qdc-emerald-header *:after{animation:none!important;transition:none!important}}
+
+    /* MONTHLY PROGRESS — always prominent across home, employee & admin pages. */
+    .qdc-emerald-header .qeh-nav{padding-top:22px!important;padding-bottom:11px!important;overflow:visible}
+    .qdc-emerald-header .qeh-nav a[data-page="monthly"]{
+      position:relative;isolation:isolate;overflow:visible;display:inline-flex;gap:8px;align-items:center;
+      min-height:44px;margin:0 5px!important;padding:10px 15px!important;
+      border:1.5px solid #e5c987!important;border-radius:12px!important;
+      background:linear-gradient(120deg,#0e8167,#075f56 55%,#123e58)!important;
+      color:#fff7dc!important;font:850 12px/1.2 Manrope,Arial,Helvetica,sans-serif!important;
+      letter-spacing:.3px;box-shadow:0 4px 14px #002c2885,inset 0 1px 0 #ffffff3b;
+      text-decoration:none!important;transform:translateZ(0);
+      animation:qeh-monthly-breathe 4.4s ease-in-out infinite;
+      transition:transform .35s cubic-bezier(.2,.9,.2,1),box-shadow .35s,border-color .35s!important;
+    }
+    .qdc-emerald-header .qeh-nav a[data-page="monthly"]:hover,
+    .qdc-emerald-header .qeh-nav a[data-page="monthly"]:focus-visible{
+      color:#fff!important;background:linear-gradient(120deg,#0b9673,#0b7566 60%,#175577)!important;
+      border-color:#f8dc91!important;transform:translateY(-4px) scale(1.04);
+      box-shadow:0 10px 23px #001c2359,0 0 0 3px #f7d78730;
+    }
+    .qdc-emerald-header .qeh-nav a[data-page="monthly"]:focus-visible{
+      outline:3px solid #fee4a1!important;outline-offset:3px!important;
+    }
+    .qdc-emerald-header .qeh-monthly-label,.qdc-emerald-header .qeh-monthly-arrow{
+      position:relative;z-index:2;white-space:nowrap;
+    }
+    .qdc-emerald-header .qeh-monthly-arrow{
+      font-size:16px;line-height:1;color:#fce49a;transition:transform .35s ease;
+    }
+    .qdc-emerald-header .qeh-nav a[data-page="monthly"]:hover .qeh-monthly-arrow{transform:translate(2px,-2px)}
+    .qdc-emerald-header .qeh-monthly-glint{
+      position:absolute;inset:1px;z-index:1;overflow:hidden;border-radius:10px;pointer-events:none;
+    }
+    .qdc-emerald-header .qeh-monthly-glint::after{
+      content:"";position:absolute;inset:-60% auto -60% -50%;width:25%;
+      background:linear-gradient(90deg,transparent,#ffffff38,transparent);
+      transform:rotate(20deg);animation:qeh-monthly-sheen 5.4s ease-in-out infinite;
+    }
+    .qdc-emerald-header .qeh-new-flyer{
+      position:absolute;right:-9px;top:-14px;z-index:5;display:inline-flex;align-items:center;justify-content:center;
+      min-width:42px;padding:5px 9px;border:1.5px solid #fff0b6;border-radius:7px;
+      background:linear-gradient(125deg,#ffeeb2,#ffc453 64%,#ef9a43);
+      color:#553012!important;font:950 9.5px/1 Manrope,Arial,Helvetica,sans-serif!important;
+      letter-spacing:1px;text-shadow:0 1px 0 #fff7bd90;box-shadow:0 4px 12px #030d2470,0 0 0 3px #f6bf5433;
+      pointer-events:none;transform:rotate(7deg);animation:qeh-new-flight 3.2s ease-in-out infinite;
+    }
+    .qdc-emerald-header .qeh-new-flyer::before{
+      content:"";position:absolute;inset:-5px;border:1px solid #ffcf736c;border-radius:10px;pointer-events:none;
+      animation:qeh-new-ring 3.2s ease-out infinite;
+    }
+    @keyframes qeh-monthly-breathe{
+      0%,100%{box-shadow:0 4px 14px #002c2885,inset 0 1px 0 #ffffff3b}
+      50%{box-shadow:0 5px 18px #002c289c,0 0 0 3px #efce7940,inset 0 1px 0 #ffffff4c}
+    }
+    @keyframes qeh-new-flight{
+      0%,100%{transform:translateY(0) rotate(7deg)}
+      50%{transform:translateY(-5px) rotate(2deg)}
+    }
+    @keyframes qeh-new-ring{
+      0%{transform:scale(.91);opacity:.9}
+      65%,100%{transform:scale(1.19);opacity:0}
+    }
+    @keyframes qeh-monthly-sheen{
+      0%,55%{left:-50%}90%,100%{left:140%}
+    }
+    @media(max-width:620px){
+      .qdc-emerald-header .qeh-nav{padding:23px 10px 10px!important;overflow-x:auto!important;overflow-y:hidden}
+      .qdc-emerald-header .qeh-nav a[data-page="monthly"]{
+        flex:none;min-height:42px;margin:0 4px!important;padding:9px 13px!important;font-size:11px!important;
+      }
+      .qdc-emerald-header .qeh-new-flyer{top:-14px;right:-6px;font-size:9px!important;padding:4px 7px}
+    }
+    @media(prefers-reduced-motion:reduce){
+      .qdc-emerald-header .qeh-nav a[data-page="monthly"],
+      .qdc-emerald-header .qeh-new-flyer,.qdc-emerald-header .qeh-new-flyer::before,
+      .qdc-emerald-header .qeh-monthly-glint::after{animation:none!important;transition:none!important}
+    }
   `;
   const style = document.createElement('style');
   style.textContent = css;
@@ -106,7 +183,7 @@
     header.className = 'qdc-emerald-header';
     header.innerHTML = `<div class="qeh-top"><span>GOVERNMENT OF SINDH · SCHOOL EDUCATION &amp; LITERACY DEPARTMENT</span><span>OFFICIAL EMPLOYEE PORTAL</span></div>
       <div class="qeh-main"><img class="qeh-school-logo" src="./assets/qamardin-selected-logo-3.svg" alt="Official GBHS Qamar Din Chandio school logo"><div class="qeh-identity"><span class="qeh-kicker">CLUSTER HUB SCHOOL</span><h1 class="qeh-title">GBHS QAMAR DIN<br>CHANDIO</h1><p class="qeh-place">UC Khairwah · Taluka Moro · District Naushahro Feroze</p><span class="qeh-trace" aria-hidden="true"></span></div><div class="qeh-gov"><img src="./assets/government-sindh-crest.png" alt="Government of Sindh emblem"><small>GOVERNMENT<br>OF SINDH</small></div></div>
-      <nav class="qeh-nav" aria-label="Portal navigation"><a href="./index.html" data-page="home">Home</a><a href="./index.html#screen-login" data-page="employee">Employee</a><a href="./monthly-progress.html" data-page="monthly">Monthly Report</a><a href="./building-survey.html" data-page="building">Building Survey</a><a class="qeh-sign" href="./index.html#screen-login">Sign In →</a></nav>
+      <nav class="qeh-nav" aria-label="Portal navigation"><a href="./index.html" data-page="home">Home</a><a href="./index.html#screen-login" data-page="employee">Employee</a><a href="./monthly-progress.html" data-page="monthly" aria-label="Monthly Academic Progress Report - New"><span class="qeh-monthly-glint" aria-hidden="true"></span><span class="qeh-monthly-label">Monthly Report</span><span class="qeh-monthly-arrow" aria-hidden="true">↗</span><span class="qeh-new-flyer" aria-hidden="true">NEW</span></a><a href="./building-survey.html" data-page="building">Building Survey</a><a class="qeh-sign" href="./index.html#screen-login">Sign In →</a></nav>
       <div class="qeh-foot"><strong>CONNECTED SCHOOLS. BETTER LEARNING.</strong><span>Employee profile &amp; admin workspace</span></div>`;
     header.querySelector(`[data-page="${active}"]`)?.classList.add('qeh-current');
     document.body.prepend(header);
