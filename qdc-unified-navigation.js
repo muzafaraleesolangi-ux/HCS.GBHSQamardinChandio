@@ -38,31 +38,62 @@
   style.textContent = css;
   document.head.append(style);
 
-  // The same portal domain has employee, officer and monthly HM sessions.
-  // Only show the header Sign In link when none of these sessions is stored.
-  function hasSavedSignIn() {
+  // One header action for the employee, office-admin and monthly-HM sign-in systems.
+  // A visible authorized workspace takes precedence over a saved session on this tab.
+  function sessionType() {
+    const visible = id => { const el = document.getElementById(id); return !!el && !el.hidden && !el.classList.contains('hidden'); };
+    if (visible('workspace') && document.getElementById('logout')) return 'monthly';
+    if (visible('screen-dash')) return 'officer';
     try {
-      if (localStorage.getItem('qdc_token') || localStorage.getItem('qdc-mpr-v2-token')) return true;
-      const raw = localStorage.getItem('qdc_employee_session');
-      return !!(raw && JSON.parse(raw)?.key);
-    } catch (_) { return false; }
+      if (localStorage.getItem('qdc_token')) return 'officer';
+      if (visible('screen-record')) return 'employee';
+      const employee = localStorage.getItem('qdc_employee_session');
+      if (employee && JSON.parse(employee)?.key) return 'employee';
+      if (localStorage.getItem('qdc-mpr-v2-token')) return 'monthly';
+    } catch (_) {}
+    return 'none';
   }
-  function syncSignInLink() {
-    const signedIn = hasSavedSignIn();
+  function syncAuthAction() {
+    const signedIn = sessionType() !== 'none';
     document.querySelectorAll('.qdc-emerald-header .qeh-sign').forEach(link => {
-      link.hidden = signedIn;
-      if (signedIn) link.setAttribute('aria-hidden', 'true');
-      else link.removeAttribute('aria-hidden');
+      link.hidden = false;
+      link.removeAttribute('aria-hidden');
+      link.textContent = signedIn ? 'Sign Out →' : 'Sign In →';
+      link.setAttribute('aria-label', signedIn ? 'Sign out of your portal account' : 'Sign in to the portal');
+      link.href = signedIn ? '#portal-sign-out' : './index.html#screen-login';
+      link.dataset.authAction = signedIn ? 'logout' : 'login';
     });
   }
   let authObserver = null;
+  function onAuthActionClick(event) {
+    const link = event.target.closest?.('.qdc-emerald-header .qeh-sign');
+    if (!link) return;
+    const type = sessionType();
+    if (type === 'none') return;
+    event.preventDefault();
+    const page = location.pathname.split('/').pop() || 'index.html';
+    if (type === 'monthly' && page === 'monthly-progress.html') {
+      document.getElementById('logout')?.click();
+      return;
+    }
+    if (page === 'index.html' && type === 'officer' && document.getElementById('btn-logout')) {
+      document.getElementById('btn-logout').click();
+      return;
+    }
+    if (page === 'index.html' && type === 'employee' && document.getElementById('btn-emp-logout')) {
+      document.getElementById('btn-emp-logout').click();
+      return;
+    }
+    location.href = type === 'monthly' ? './monthly-progress.html?qdc_signout=1' : './index.html?qdc_signout=1';
+  }
   function watchSignInState() {
-    syncSignInLink();
-    window.addEventListener('storage', syncSignInLink);
-    window.addEventListener('pageshow', syncSignInLink);
-    document.addEventListener('visibilitychange', syncSignInLink);
+    syncAuthAction();
+    window.addEventListener('storage', syncAuthAction);
+    window.addEventListener('pageshow', syncAuthAction);
+    document.addEventListener('visibilitychange', syncAuthAction);
+    document.addEventListener('click', onAuthActionClick);
     const watched = ['screen-login', 'screen-record', 'screen-dash', 'workspace', 'auth'];
-    authObserver = new MutationObserver(syncSignInLink);
+    authObserver = new MutationObserver(syncAuthAction);
     watched.map(id => document.getElementById(id)).filter(Boolean).forEach(el => {
       authObserver.observe(el, {attributes:true,attributeFilter:['class','hidden']});
     });
