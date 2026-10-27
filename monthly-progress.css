@@ -192,3 +192,16 @@ main{max-width:1320px;padding:16px 12px 100px}h1{font-size:clamp(23px,4vw,32px)}
 .mpr-subject-dialog textarea{min-height:96px;resize:vertical}
 @media(max-width:720px){#class-options{grid-template-columns:repeat(5,minmax(0,1fr))}#class-options .class-check{padding:8px 4px;font-size:16px;min-height:55px;gap:4px;flex-direction:column}.teacher-tabs{grid-template-columns:repeat(2,minmax(0,1fr))!important}.subject-toolbar .new-custom-subject{width:100%}}
 @media(max-width:380px){#class-options{grid-template-columns:repeat(4,minmax(0,1fr))}}
+
+.mpr-invite-panel{border:1px solid #b8d8c9!important;background:linear-gradient(120deg,#f7fcf8,#edf7f2)!important}
+.mpr-invite-panel h2{font-size:18px;margin-bottom:5px}
+.mpr-invite-panel .actions{display:flex;align-items:center;flex-wrap:wrap;gap:9px}
+.teacher-invite-link{display:inline-flex;align-items:center;justify-content:center;min-height:43px;padding:11px 15px;border:1px solid #82b29c;border-radius:11px;background:#e3f3ea;color:#125c42;font-weight:850;font-size:12px;text-decoration:none}
+.teacher-invite-result{margin:14px 0;padding:14px;background:#fff9e9;border:1px solid #d7c18a;border-radius:12px;color:#4d4b30}
+.teacher-invite-result code{display:block;font-family:ui-monospace,Consolas,monospace;font-weight:900;font-size:clamp(15px,4vw,24px);letter-spacing:2px;user-select:all;overflow-wrap:anywhere}
+.teacher-invite-result p{margin:8px 0 0;font-size:11px}
+.teacher-accounts-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:9px;margin-top:11px}
+.teacher-account-tile{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;padding:10px 12px;background:white;border:1px solid #cbdcd1;border-radius:11px}
+.teacher-account-tile b,.teacher-account-tile small{display:block}
+.teacher-account-tile small{font-size:10px;color:#688479;margin-top:4px}
+.teacher-account-tile button{min-height:36px;padding:7px 11px;font-size:10px}
