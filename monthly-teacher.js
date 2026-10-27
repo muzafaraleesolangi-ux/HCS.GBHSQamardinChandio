@@ -15,15 +15,39 @@ async function openMonth(month){if(dirty&& !confirm('You have unsaved changes. S
 function changed(){dirty=true;editVersion++;$('#save-state').textContent='● Changes pending · auto-save';clearTimeout(autosave);autosave=setTimeout(()=>{if(busy){autosave=setTimeout(()=>save(true),2500);return;}save(true);},2500);}
 function input(label,value,key,type='text',readonly=false){return '<label>'+esc(label)+'<input data-key="'+key+'" type="'+type+'" '+(type==='number'?'min="0"':'')+(readonly?'readonly':'')+' value="'+esc(value??'')+'"></label>';}
 function rating(label,key,value){return '<label>'+esc(label)+'<select data-key="'+key+'"><option value="">Choose</option>'+['Fair','Good','Very Good','Excellent'].map(v=>'<option '+(v===value?'selected':'')+'>'+v+'</option>').join('')+'</select></label>';}
+
+function teacherChapterPicker(a){
+ const chapters=Array.isArray(a.chapters)?a.chapters:[],total=Number(a.total)||0;
+ if(!total||chapters.length!==total||!chapters.every(c=>String(c).trim()))return '';
+ const prior=Number(a.previous||0),last=a.last_current_unit!=null?Number(a.last_current_unit):(a.current!==''&&a.current!=null?prior+Number(a.current):null);
+ return '<label class="teacher-chapter-picker">Current Month · Last Completed Chapter / Unit<select class="teacher-last-chapter" aria-label="Select last chapter completed this month"><option value="">Choose last completed chapter</option><option value="0" '+(last===0?'selected':'')+'>0 · No new chapters completed</option>'+chapters.map((name,i)=>'<option value="'+(i+1)+'" '+(last===i+1?'selected':'')+' '+(i+1<=prior?'disabled':'')+'>'+(i+1)+' · '+esc(name)+'</option>').join('')+'</select><small>Select the last chapter taught; Current and Remaining update automatically.</small></label>';
+}
+
 function render(){if(!teacher||!school)return;$('#auth').hidden=true;$('#workspace').hidden=false;$('#school-name').textContent=school.profile?.school||'Your School';$('#teacher-name').textContent=teacher.name+' · PID '+teacher.pid+' · SEMIS '+school.semis;
 const choices=[...new Set([...months,nowMonth(),currentMonth])].sort().reverse();$('#month-select').innerHTML=choices.map(m=>'<option value="'+m+'">'+m+'</option>').join('');$('#month-select').value=currentMonth;
 const classes=report?.data?.classes||[];$('#classes').innerHTML=classes.length?classes.map(n=>'<span>'+roman(n)+'</span>').join(''):'<div class="empty">Ask HM to select school classes and save school setup first.</div>';
 $('#open-subject').disabled=!classes.length||!report;
 const root=$('#my-subjects');root.replaceChildren();
 if(!mine().length)root.innerHTML='<div class="empty">No subjects yet. Press + Add Subject to add your class and subject.</div>';
-for(const a of mine()){if(a.previous==null||a.previous==='')a.previous=0;const panel=document.createElement('section');panel.className='assignment';panel.innerHTML='<div class="assignment-head"><strong>'+roman(a.grade)+' · '+esc(a.name)+'</strong><div class="actions"><button type="button" class="subtle edit">Edit</button><button type="button" class="danger remove">Remove</button></div></div><div class="assignment-grid">'+input('Total',a.total,'total','number',true)+input('Previous Covered',a.previous,'previous','number')+input('Current Covered',a.current,'current','number')+'</div><p class="hint remaining" role="status"></p><div class="assignment-inspection">'+input('Notebooks / Textbooks %',a.notebooks,'notebooks','number')+rating('Cleanliness','cleanliness',a.cleanliness)+rating('Formative Test Feedback','feedback',a.feedback)+input('Suggestions',a.suggestions,'suggestions')+'</div><div class="teacher-inline-reminders" role="status"></div><details><summary>Chapter / Unit Names</summary><ol>'+((a.chapters||[]).filter(x=>String(x).trim()).map(x=>'<li>'+esc(x)+'</li>').join('')||'<li>Numerical progress only</li>')+'</ol></details>';
+for(const a of mine()){if(a.previous==null||a.previous==='')a.previous=0;const panel=document.createElement('section');panel.className='assignment';panel.innerHTML='<div class="assignment-head"><strong>'+roman(a.grade)+' · '+esc(a.name)+'</strong><div class="actions"><button type="button" class="subtle edit">Edit</button><button type="button" class="danger remove">Remove</button></div></div><div class="assignment-grid">'+input('Total',a.total,'total','number',true)+input('Previous Covered',a.previous,'previous','number')+input('Current Covered',a.current,'current','number')+'</div>'+teacherChapterPicker(a)+'<p class="hint remaining" role="status"></p><div class="assignment-inspection">'+input('Notebooks / Textbooks %',a.notebooks,'notebooks','number')+rating('Cleanliness','cleanliness',a.cleanliness)+rating('Formative Test Feedback','feedback',a.feedback)+input('Suggestions',a.suggestions,'suggestions')+'</div><div class="teacher-inline-reminders" role="status"></div><details><summary>Chapter / Unit Names</summary><ol>'+((a.chapters||[]).filter(x=>String(x).trim()).map(x=>'<li>'+esc(x)+'</li>').join('')||'<li>Numerical progress only</li>')+'</ol></details>';
 const indicator=()=>{panel.querySelector('.remaining').textContent='↻ Remaining: '+(Number(a.total)-Number(a.previous||0)-Number(a.current||0))+' · calculated automatically';updateTeacherReminders(panel,a);};
-indicator();panel.querySelectorAll('[data-key]').forEach(el=>{el.oninput=()=>{a[el.dataset.key]=el.value;indicator();changed()};el.onchange=()=>{a[el.dataset.key]=el.value;indicator();changed()};});
+indicator();
+const endpoint=panel.querySelector('.teacher-last-chapter');
+const setEndpoint=()=>{if(!endpoint)return;const previous=Number(a.previous||0);
+ for(const o of endpoint.options)o.disabled=o.value!==''&&o.value!=='0'&&Number(o.value)<=previous;
+ if(a.last_current_unit!=null&&Number(a.last_current_unit)!==0&&Number(a.last_current_unit)<=previous){a.last_current_unit=null;a.current='';panel.querySelector('[data-key="current"]').value='';endpoint.value='';}
+};
+if(endpoint)endpoint.onchange=()=>{if(endpoint.value==='')return;const last=Number(endpoint.value),previous=Number(a.previous||0);
+ if(last!==0&&last<=previous){notice('Choose a chapter after previous coverage',true);return;}
+ a.last_current_unit=last;a.current=last===0?0:last-previous;a.current_units=last===0?[]:Array.from({length:a.current},(_,i)=>previous+i+1);
+ panel.querySelector('[data-key="current"]').value=String(a.current);indicator();changed();};
+panel.querySelectorAll('[data-key]').forEach(el=>{
+ const change=()=>{a[el.dataset.key]=el.value;
+ if(el.dataset.key==='previous')setEndpoint();
+ if(el.dataset.key==='current'&&endpoint){a.last_current_unit=null;endpoint.value='';}
+ indicator();changed();};
+ el.oninput=change;el.onchange=change;
+});
 panel.querySelector('.edit').onclick=()=>openEditor(a);panel.querySelector('.remove').onclick=()=>{if(!confirm('Remove '+a.name+' from your monthly report?'))return;report.data.assignments=report.data.assignments.filter(x=>x.id!==a.id);changed();render();};root.append(panel);}
 }
 
