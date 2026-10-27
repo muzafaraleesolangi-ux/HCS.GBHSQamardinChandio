@@ -107,7 +107,7 @@ function buildExcel(d,m,semis){
   const merges=doc.getElementsByTagName('mergeCells')[0];Array.from(merges.children).filter(x=>/^A5:/.test(x.getAttribute('ref')||'')).forEach(x=>x.remove());
   for(const ref of ['A5:F5','I5:N5']){const merge=doc.createElementNS(ns,'mergeCell');merge.setAttribute('ref',ref);merges.append(merge);}merges.setAttribute('count',merges.children.length);
   const monthParts=String(m).split('-'),monthLabel=['January','February','March','April','May','June','July','August','September','October','November','December'][Number(monthParts[1])-1]||monthParts[1];
-  const today=(/^\\d{4}-\\d{2}-\\d{2}$/.test(String(d.date||''))?String(d.date).split('-').reverse().join('/'):new Date().toLocaleDateString('en-GB',{timeZone:'Asia/Karachi'}));
+  const today=(String(d.date||'').length===10?String(d.date).split('-').reverse().join('/'):new Date().toLocaleDateString('en-GB',{timeZone:'Asia/Karachi'}));
   put('A5','Report Month: '+monthLabel+' '+monthParts[0]);put('I5','Reporting Date: '+today);
   for(const [ref,horizontal] of [['A5','left'],['I5','right']]){const c=cell(ref),base=Number(c.getAttribute('s')),xf=(baseXfs[base]||extraXfs[base-baseXfs.length]).replace(/horizontal="[^"]*"/,'horizontal="'+horizontal+'"');c.setAttribute('s',baseXfs.length+extraXfs.length);extraXfs.push(xf);}
 
