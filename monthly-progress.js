@@ -4,6 +4,8 @@ function monthlyExportFilename(school,semis,m){const parts=String(m).split('-'),
 const CONFIG={"url":"https://oypqcizrlhdouygvazyb.supabase.co","key":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im95cHFjaXpybGhkb3V5Z3ZhenliIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg2MzkyMzUsImV4cCI6MjEwNDIxNTIzNX0.w5DJojqN-zF81j0Bi3jFcuhnNOIFH9ipZg3G6GyYNvM"};
 const roman=g=>['','I','II','III','IV','V','VI','VII','VIII','IX','X'][Number(g)]||String(g);
 const $=s=>document.querySelector(s),esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+// Compatibility guard for an older cached HTML file: never show retired teacher-invite UI.
+document.querySelectorAll('.mpr-invite-panel').forEach(node=>node.remove());
 let token=localStorage.getItem('qdc-mpr-v2-token'),mode='login',catalog=[],workspace={},data=null,month='',revision=0,dirty=false,busy=false;
 // Teacher selection and deletion actions are initialized below.
 let baseData=null,remoteSnapshot=null,activeTeacher='',recordStatus='Draft',syncing=false;const teacherFilters={};
@@ -132,7 +134,7 @@ document.querySelectorAll('#assignments [data-assignment]').forEach(row=>{const 
 if(dirty){clearTimeout(autoSaveTimer);autoSaveTimer=setTimeout(()=>{if(!busy)task(()=>save(false,'autosave'));else changed();},2400);}}catch(e){$('#save-state').textContent='Not saved — your edits are retained on this device';throw e;}finally{controls.forEach(c=>c.disabled=false);}}
 $('#manage-teachers').onclick=()=>{$('#hm-setup').open=true;$('#teacher-setup-panel').scrollIntoView({behavior:'smooth',block:'start'});notice('Add or remove teachers in School & Teacher Setup');};
 $('#save-setup').onclick=()=>task(async()=>{await save(false,'setup');notice(data.teachers.length?'Classes, teacher and subjects saved as a draft.':'School classes saved as a draft. You can add teachers later.');});
-$('#save-classes-draft').onclick=()=>task(async()=>{
+if($('#save-classes-draft'))$('#save-classes-draft').onclick=()=>task(async()=>{
  await save(false,'setup');
  const btn=$('#save-classes-draft');btn.textContent='✓ Classes Draft Saved';
  setTimeout(()=>{btn.textContent='✓ Save Classes as Draft';},2500);
