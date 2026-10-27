@@ -156,3 +156,39 @@ main{max-width:1320px;padding:16px 12px 100px}h1{font-size:clamp(23px,4vw,32px)}
 .save-subject-button{display:block!important;margin:15px 0 0 auto;padding:8px 14px!important;min-height:42px!important;font-size:12px!important;border:1px solid #adc4a8!important;background:linear-gradient(120deg,#24563d,#35704c)!important;color:#fff!important;border-radius:10px!important;box-shadow:0 3px 9px #22503918!important}.subject-edit-button{min-height:40px!important;padding:8px 15px!important;border:1px solid #b6c8dd!important;border-radius:10px!important;color:#315779!important;background:linear-gradient(120deg,#f3f7fd,#e7effa)!important;font-size:12px!important;font-weight:800!important;white-space:nowrap}.subject-edit-button[hidden]{display:none!important}.subject-is-complete .subject-card-toggle{padding-block:5px!important}
 
 #save-popup.save-popup-enter{animation:save-work-popup-in .22s ease-out both}#save-popup.save-popup-leave{animation:save-work-popup-out .25s ease-in both;pointer-events:none}@keyframes save-work-popup-in{from{opacity:0;transform:translateY(10px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}@keyframes save-work-popup-out{from{opacity:1;transform:translateY(0) scale(1)}to{opacity:0;transform:translateY(7px) scale(.98)}}@media(prefers-reduced-motion:reduce){#save-popup.save-popup-enter,#save-popup.save-popup-leave{animation:none}}
+
+
+/* Class I-X school onboarding and separate teacher spaces — October 2026 */
+#hm-setup{border:1px solid #c6dbd2;border-radius:18px;padding:14px;background:#f8fcfa}
+#hm-setup>summary{padding:12px 14px;font-weight:850;font-size:14px;color:#155c48;cursor:pointer;list-style-position:inside}
+#hm-setup>.panel{margin:14px 0;background:#fff;border:1px solid #dce8e1;box-shadow:none;border-radius:15px}
+#class-options{display:grid!important;grid-template-columns:repeat(5,minmax(0,1fr));gap:9px;margin:15px 0!important}
+#class-options .class-check{min-height:66px;display:flex;align-items:center;justify-content:center;gap:10px;cursor:pointer;border-radius:14px;border:2px solid #bcd8c7;background:#f2faf5;color:#164c3c;font-size:18px;font-weight:900;padding:9px}
+#class-options .class-check:has(input:checked){border-color:#23875a;background:#dff4e6;box-shadow:0 0 0 2px #a9ddba inset}
+#class-options input{width:18px;height:18px;margin:0;accent-color:#177f50}
+#teacher-setup-panel[hidden]{display:none!important}
+.teacher-roster-toolbar{display:flex;justify-content:flex-end}
+.teacher-roster-toolbar>input[type=hidden]{display:none}
+#add-teacher{min-height:46px;border-radius:12px}
+#teacher-tabs{display:grid!important;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:10px!important;padding:12px 0!important;overflow:visible!important;border:0!important}
+#teacher-tabs button{display:flex!important;min-height:78px;flex-direction:column;justify-content:center;align-items:flex-start;text-align:left;gap:6px;padding:13px 15px!important;border-radius:16px!important;border:2px solid #d2e2d8!important;background:#f8fcfa!important;color:#295946!important;box-shadow:0 3px 12px #164c3020!important;white-space:normal!important}
+#teacher-tabs button span{font-size:14px;font-weight:850;line-height:1.25;overflow-wrap:anywhere}
+#teacher-tabs button small{font-size:10px;opacity:.83;font-weight:650}
+#teacher-tabs button[aria-selected=true]{background:linear-gradient(125deg,#0c6348,#179b67)!important;color:white!important;border-color:#c9ae68!important;box-shadow:0 8px 23px #0b745634!important}
+#teacher-tabs .final-report-tab{background:#fff9e8!important;border-color:#e5cea0!important;color:#745220!important}
+#teacher-tabs .final-report-tab[aria-selected=true]{background:linear-gradient(115deg,#8c682a,#c39b48)!important;color:white!important}
+.teacher-workspace{border:1px solid #b9d9c8;border-radius:18px;padding:17px;margin:12px 0;background:linear-gradient(135deg,#fff,#f3faf5)}
+.teacher-workspace-heading{padding-bottom:12px;border-bottom:1px solid #dce9df}
+.teacher-workspace-heading h3{font-size:20px;color:#126547}
+.subject-toolbar{display:flex;flex-wrap:wrap;align-items:end;gap:10px;padding:15px 0}
+.subject-toolbar label{flex:1;min-width:135px}
+.subject-toolbar button{min-height:44px}
+.subject-toolbar .new-custom-subject{background:#f3f7ff;color:#334f7e;border:1px solid #b5c8df;white-space:normal}
+.subject-row-actions{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.subject-row-actions button{min-height:33px;padding:7px 9px;font-size:11px}
+.mpr-subject-dialog{width:min(520px,calc(100vw - 22px));padding:20px;border:1px solid #b4d7c2;border-radius:16px}
+.mpr-subject-dialog form{display:grid;gap:12px}
+.mpr-subject-dialog label{display:grid;gap:6px}
+.mpr-subject-dialog textarea{min-height:96px;resize:vertical}
+@media(max-width:720px){#class-options{grid-template-columns:repeat(5,minmax(0,1fr))}#class-options .class-check{padding:8px 4px;font-size:16px;min-height:55px;gap:4px;flex-direction:column}.teacher-tabs{grid-template-columns:repeat(2,minmax(0,1fr))!important}.subject-toolbar .new-custom-subject{width:100%}}
+@media(max-width:380px){#class-options{grid-template-columns:repeat(4,minmax(0,1fr))}}
