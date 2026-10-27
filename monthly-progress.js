@@ -13,6 +13,7 @@ const monthLabel=m=>{const [y,n]=m.split('-');return ['January','February','Marc
 async function api(action,payload={},override){const res=await fetch(CONFIG.url+'/rest/v1/rpc/sv_monthly_v2',{method:'POST',headers:{apikey:CONFIG.key,Authorization:'Bearer '+CONFIG.key,'Content-Type':'application/json'},body:JSON.stringify({p_action:action,p_payload:payload,p_token:override===undefined?token:override})});const r=await res.json();if(!res.ok||r?.error)throw Error(r?.error||r?.message||'Could not connect');return r}
 async function task(fn){if(busy)return;busy=true;try{await fn()}catch(e){notice(e.message,true)}finally{busy=false}}
 const classesPanel=$('#class-options').closest('section'),setupRoot=$('#hm-setup');if(classesPanel&&setupRoot&&classesPanel!==setupRoot.firstElementChild?.nextElementSibling)setupRoot.insertBefore(classesPanel,$('#profile-fields').closest('section'));
+const teacherPanel=$('#teacher-setup-panel'),invitePanel=document.querySelector('.mpr-invite-panel');if(teacherPanel&&invitePanel)teacherPanel.before(invitePanel);
 let autoSaveTimer=null;
 function changed(){dirty=true;$('#save-state').textContent='Unsaved changes · autosave pending';try{sessionStorage.setItem('qdc-mpr-recovery-'+workspace.semis+'-'+month,JSON.stringify({data,base:baseData,revision,at:Date.now()}))}catch(e){}
 clearTimeout(autoSaveTimer);if(!month||!data?.classes?.length)return;
