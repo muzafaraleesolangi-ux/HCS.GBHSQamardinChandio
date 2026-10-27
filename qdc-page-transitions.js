@@ -2,12 +2,11 @@
   'use strict';
   if (window.top !== window.self) return;
 
-  const portals = new Set(['index.html', 'monthly-progress.html', 'monthly-management.html', 'building-survey.html']);
+  const portals = new Set(['index.html', 'monthly-progress.html', 'monthly-management.html']);
   const labels = {
     'index.html': 'Opening cluster homepage',
     'monthly-progress.html': 'Opening monthly progress report',
-    'monthly-management.html': 'Opening monthly report management',
-    'building-survey.html': 'Opening building safety survey'
+    'monthly-management.html': 'Opening monthly report management'
   };
   const css = `
     .qdc-page-loader{position:fixed;inset:0;z-index:2147483000;display:grid;place-items:center;padding:24px;background:radial-gradient(ellipse at 48% 37%,#126647f5,#07392dec 65%,#031910f5);backdrop-filter:blur(8px);color:#fff;text-align:center;font:700 14px/1.5 Manrope,system-ui,sans-serif;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .25s ease,visibility .25s ease}

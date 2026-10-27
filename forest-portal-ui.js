@@ -1,8 +1,8 @@
 (()=>{'use strict';
 if(window.top!==window.self&&new URLSearchParams(location.search).has('embedded'))return;
 const file=location.pathname.split('/').pop()||'index.html';
-const contexts={'index.html':'EMPLOYEE PROFILE & ADMIN WORKSPACE','building-survey.html':'BUILDING SAFETY SURVEY','seniority-data.html':'DEO TEACHER DATA GENERATOR'};
-const cssClass={'index.html':'qf-index','building-survey.html':'qf-survey','seniority-data.html':'qf-seniority'}[file];
+const contexts={'index.html':'EMPLOYEE PROFILE & ADMIN WORKSPACE','seniority-data.html':'DEO TEACHER DATA GENERATOR'};
+const cssClass={'index.html':'qf-index','seniority-data.html':'qf-seniority'}[file];
 if(cssClass)document.body.classList.add(cssClass);
 if(file==='monthly-progress.html'||file==='monthly-management.html'){
  const powered=document.createElement('div');powered.className='qf-powered';powered.setAttribute('role','note');
