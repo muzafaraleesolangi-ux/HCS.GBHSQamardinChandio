@@ -205,3 +205,37 @@ main{max-width:1320px;padding:16px 12px 100px}h1{font-size:clamp(23px,4vw,32px)}
 .teacher-account-tile b,.teacher-account-tile small{display:block}
 .teacher-account-tile small{font-size:10px;color:#688479;margin-top:4px}
 .teacher-account-tile button{min-height:36px;padding:7px 11px;font-size:10px}
+
+
+/* October 2026: clear class-first launcher and in-place progress feedback */
+#hm-setup{overflow:visible!important;padding:10px!important;border:1px solid #b6d4c4!important;border-radius:22px!important;background:linear-gradient(145deg,#f9fffb,#f0f8f2)!important;box-shadow:0 9px 32px #164e3320!important}
+#hm-setup>summary.qdc-setup-trigger{display:flex!important;align-items:center!important;flex-wrap:wrap!important;gap:12px!important;min-height:76px!important;padding:14px 18px!important;background:linear-gradient(112deg,#07543f,#138561)!important;border:1px solid #d4b874!important;border-radius:16px!important;color:#fff!important;list-style:none!important;cursor:pointer!important;position:relative!important;box-shadow:0 8px 23px #07563f30!important;transition:transform .24s,box-shadow .24s!important}
+#hm-setup>summary.qdc-setup-trigger::-webkit-details-marker{display:none!important}
+#hm-setup>summary.qdc-setup-trigger:hover{transform:translateY(-2px);box-shadow:0 11px 28px #07563f3b!important}
+#hm-setup>summary.qdc-setup-trigger:focus-visible{outline:3px solid #d3ae55!important;outline-offset:4px!important}
+#hm-setup .qdc-setup-symbol{display:grid;place-items:center;flex:0 0 50px;width:50px;height:50px;border-radius:13px;font-size:26px;background:#ffffff25;border:1px solid #ffffff55;box-shadow:inset 0 2px 5px #ffffff17}
+#hm-setup .qdc-setup-copy{flex:1 1 180px;display:flex;flex-direction:column;min-width:0;gap:4px;line-height:1.25}
+#hm-setup .qdc-setup-copy strong{font:900 clamp(17px,3vw,23px)/1.15 Manrope,'Segoe UI',system-ui,sans-serif;letter-spacing:.1px;color:#fff!important}
+#hm-setup .qdc-setup-copy small{font:750 11px/1.6 Manrope,'Segoe UI',system-ui,sans-serif;opacity:.9;color:#e8fff0!important;letter-spacing:.2px}
+#hm-setup .qdc-setup-toggle{display:flex;align-items:center;gap:9px;padding:10px 13px;flex:none;border-radius:50px;border:1px solid #ebd6a2;background:#ffffffed;color:#125844;font-size:11px;font-weight:900;white-space:nowrap}
+#hm-setup .qdc-setup-chevron{display:inline-block;transition:transform .25s;font-size:20px;line-height:.7}
+#hm-setup[open] .qdc-setup-chevron{transform:rotate(180deg)}
+#hm-setup .qdc-setup-collapse,#hm-setup[open] .qdc-setup-expand{display:none}
+#hm-setup[open] .qdc-setup-collapse{display:inline}
+#hm-setup[open]>summary.qdc-setup-trigger{border-radius:16px 16px 13px 13px}
+.mpr-field-reminders{margin:12px 0 2px;padding:12px 15px;line-height:1.6;border-radius:11px;font-size:12px;font-weight:760;background:#fff8e9;color:#856120;border:1px solid #e1cca1}
+.mpr-field-reminders.mpr-reminders-done{background:#edf9f2;color:#1a7150;border-color:#b9dec6}
+.mpr-field-pending select,.mpr-field-pending input,.mpr-field-pending textarea{border-color:#d5b36a!important;background:#fffdf5!important;box-shadow:0 0 0 2px #f0dbad36!important}
+.mpr-field-prompt{display:block!important;font-size:10px!important;font-weight:750!important;color:#a36b20!important;line-height:1.5;margin-top:5px!important}
+.mpr-field-prompt[hidden]{display:none!important}
+.mpr-remaining-live{display:block;font-weight:850!important;font-size:11px!important;line-height:1.5;margin-top:5px!important;color:#176a4a!important}
+#save-state{font-size:12px;font-weight:800;color:#1c7557}
+@media(max-width:620px){
+ #hm-setup>summary.qdc-setup-trigger{padding:12px!important;gap:9px!important}
+ #hm-setup .qdc-setup-symbol{width:46px;height:46px;flex-basis:46px}
+ #hm-setup .qdc-setup-copy{flex-basis:calc(100% - 63px)}
+ #hm-setup .qdc-setup-toggle{margin-left:auto;padding:8px 11px}
+ #hm-setup .qdc-setup-copy small{font-size:10px}
+ .mpr-field-reminders{font-size:11px}
+}
+@media(prefers-reduced-motion:reduce){#hm-setup>summary.qdc-setup-trigger,#hm-setup .qdc-setup-chevron{transition:none!important}}
