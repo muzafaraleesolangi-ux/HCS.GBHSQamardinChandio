@@ -250,3 +250,10 @@ main{max-width:1320px;padding:16px 12px 100px}h1{font-size:clamp(23px,4vw,32px)}
 #hm-setup .mpr-just-completed{transition:transform .35s ease}
 .subject-is-complete .subject-card-toggle{border-left:3px solid #16a06a!important}
 @media(max-width:620px){.mpr-class-save-actions{align-items:stretch;flex-direction:column}.mpr-class-save-actions button{width:100%}}
+
+#password-recovery{width:min(520px,calc(100% - 32px));max-height:85dvh;overflow:auto;border:1px solid #b9d1c4;border-radius:18px;padding:24px;box-sizing:border-box;color:#204b39;background:#fff}
+#password-recovery::backdrop{background:#092d25aa}
+#password-recovery p{line-height:1.6;font-size:14px}
+#password-recovery-status:not(:empty){padding:12px;border-radius:10px;background:#edf6ef}
+#password-recovery-status[role="alert"]{background:#fff0ec;color:#963b29}
+#forgot-password{margin:8px 0}

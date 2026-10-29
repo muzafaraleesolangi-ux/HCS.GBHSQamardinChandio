@@ -131,15 +131,7 @@
     return 'none';
   }
   function syncAuthAction() {
-    const signedIn = sessionType() !== 'none';
-    document.querySelectorAll('.qdc-emerald-header .qeh-sign').forEach(link => {
-      link.hidden = false;
-      link.removeAttribute('aria-hidden');
-      link.textContent = signedIn ? 'Sign Out →' : 'Sign In →';
-      link.setAttribute('aria-label', signedIn ? 'Sign out of your portal account' : 'Sign in to the portal');
-      link.href = signedIn ? '#portal-sign-out' : './index.html#screen-login';
-      link.dataset.authAction = signedIn ? 'logout' : 'login';
-    });
+    document.querySelectorAll('.qdc-emerald-header .qeh-sign').forEach(link => link.remove());
   }
   let authObserver = null;
   function onAuthActionClick(event) {
@@ -183,7 +175,7 @@
     header.className = 'qdc-emerald-header';
     header.innerHTML = `<div class="qeh-top"><span>GOVERNMENT OF SINDH · SCHOOL EDUCATION &amp; LITERACY DEPARTMENT</span><span>OFFICIAL EMPLOYEE PORTAL</span></div>
       <div class="qeh-main"><img class="qeh-school-logo" src="./assets/qamardin-selected-logo-3.svg" alt="Official GBHS Qamar Din Chandio school logo"><div class="qeh-identity"><span class="qeh-kicker">CLUSTER HUB SCHOOL</span><h1 class="qeh-title">GBHS QAMAR DIN<br>CHANDIO</h1><p class="qeh-place">UC Khairwah · Taluka Moro · District Naushahro Feroze</p><span class="qeh-trace" aria-hidden="true"></span></div><div class="qeh-gov"><img src="./assets/government-sindh-crest.png" alt="Government of Sindh emblem"><small>GOVERNMENT<br>OF SINDH</small></div></div>
-      <nav class="qeh-nav" aria-label="Portal navigation"><a href="./index.html" data-page="home">Home</a><a href="./index.html#screen-login" data-page="employee">Employee</a><a href="./monthly-progress.html" data-page="monthly" aria-label="Monthly Academic Progress Report - New"><span class="qeh-monthly-glint" aria-hidden="true"></span><span class="qeh-monthly-label">Monthly Report</span><span class="qeh-monthly-arrow" aria-hidden="true">↗</span><span class="qeh-new-flyer" aria-hidden="true">NEW</span></a><a class="qeh-sign" href="./index.html#screen-login">Sign In →</a></nav>
+      <nav class="qeh-nav" aria-label="Portal navigation"><a href="./index.html" data-page="home">Home</a><a href="./index.html#screen-login" data-page="employee">Employee</a><a href="./monthly-progress.html" data-page="monthly" aria-label="Monthly Academic Progress Report - New"><span class="qeh-monthly-glint" aria-hidden="true"></span><span class="qeh-monthly-label">Monthly Report</span><span class="qeh-monthly-arrow" aria-hidden="true">↗</span><span class="qeh-new-flyer" aria-hidden="true">NEW</span></a></nav>
       <div class="qeh-foot"><strong>CONNECTED SCHOOLS. BETTER LEARNING.</strong><span>Employee profile &amp; admin workspace</span></div>`;
     header.querySelector(`[data-page="${active}"]`)?.classList.add('qeh-current');
     document.body.prepend(header);

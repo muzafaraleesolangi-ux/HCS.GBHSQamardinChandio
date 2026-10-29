@@ -23,6 +23,20 @@ autoSaveTimer=setTimeout(()=>{if(!dirty||!data||!month)return;if(busy||syncing){
 }
 window.addEventListener('beforeunload',e=>{if(dirty){e.preventDefault();e.returnValue=''}});
 document.querySelectorAll('[data-mode]').forEach(b=>b.onclick=()=>{mode=b.dataset.mode;$('#confirm-wrap').hidden=mode!=='signup';$('#auth-form').elements.confirm_password.required=mode==='signup';$('#password-label').textContent=mode==='signup'?'Create Password':'Password';$('#auth-form').elements.password.autocomplete=mode==='signup'?'new-password':'current-password';document.querySelectorAll('[data-mode]').forEach(x=>x.classList.toggle('selected',x===b));$('#signup-fields').hidden=mode!=='signup';['school','hm'].forEach(n=>$('#auth-form').elements[n].required=mode==='signup');$('#auth-title').textContent=mode==='signup'?'Create your HM account':'Welcome back';$('#auth-submit').textContent=mode==='signup'?'Create Account':'Sign In'});
+// Requests change login recovery state only; school reports stay linked to their account.
+$('#forgot-password').onclick=()=>{
+ $('#password-recovery-form').elements.semis.value=$('#auth-form').elements.semis.value;
+ $('#password-recovery-status').textContent='';$('#password-recovery-status').setAttribute('role','status');
+ $('#send-recovery').disabled=false;
+ $('#password-recovery').showModal();
+};
+$('#close-recovery').onclick=()=>$('#password-recovery').close();
+$('#password-recovery-form').onsubmit=e=>{e.preventDefault();task(async()=>{
+ const button=$('#send-recovery');button.disabled=true;
+ try{const r=await api('request_password_reset',{semis:e.target.elements.semis.value},null);
+ $('#password-recovery-status').textContent=r.message;
+ }catch(e){button.disabled=false;$('#password-recovery-status').textContent=e.message;$('#password-recovery-status').setAttribute('role','alert');}
+});};
 $('#auth-form').onsubmit=e=>{e.preventDefault();task(async()=>{const f=e.target.elements;if(mode==='signup'&&f.password.value!==f.confirm_password.value)throw Error('Passwords do not match');const r=await api(mode,{semis:f.semis.value,password:f.password.value,confirm_password:f.confirm_password.value,profile:{school:f.school.value,hm:f.hm.value,gender:f.gender.value,office:f.gender.value==='Female'?'Head Mistress':'Head Master',bps:''}},null);token=r.token;localStorage.setItem('qdc-mpr-v2-token',token);f.password.value='';await enter();notice('Signed in')})};
 async function enter(){[workspace,catalog]=await Promise.all([api('workspace'),api('catalog')]);try{window.qdcUniversalLoader?.play();}catch(_e){}$('#auth').hidden=true;$('#workspace').hidden=false;$('#school-title').textContent=workspace.profile.school;$('#hm-title').textContent=workspace.profile.hm+' · SEMIS '+workspace.semis;$('#report-month').value=localStorage.getItem('qdc-mpr-last-month-'+workspace.semis)||workspace.reports?.[0]?.month||new Date().toLocaleDateString('en-CA').slice(0,7);history();await openMonth(false)}
 function history(){const root=$('#history');root.innerHTML=workspace.reports.length?workspace.reports.map(r=>'<div class="history-item '+(r.month===month?'current-month':'')+'"><b>'+esc(monthLabel(r.month))+'</b><small>'+(r.status==='Draft'?'Work in progress':'Saved report')+'</small><div><button type="button" data-open-month="'+r.month+'">Edit</button><button type="button" data-export-month="'+r.month+'">Export</button><button type="button" class="history-delete" data-delete-month="'+r.month+'">Delete</button></div></div>').join(''):'<div class="empty">Saved months will appear here.</div>';root.querySelectorAll('[data-open-month],[data-export-month]').forEach(b=>b.onclick=async()=>{let opened=false;const target=b.dataset.openMonth||b.dataset.exportMonth;await task(async()=>{if(dirty&&!confirm('Leave your unsaved edits and open this month? Save your teacher draft first to keep them online.'))return;$('#report-month').value=target;await openMonth(false);opened=true;});if(opened&&b.dataset.exportMonth){activeTeacher='__final__';assignments();$('#excel').click();}});root.querySelectorAll('[data-delete-month]').forEach(b=>b.onclick=()=>task(()=>startReportDelete(b.dataset.deleteMonth)));}

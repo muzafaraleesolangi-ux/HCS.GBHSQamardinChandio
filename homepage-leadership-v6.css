@@ -181,3 +181,9 @@
 /* Use a professional monogram until a real officer photo is uploaded. */
 #screen-login .qdc-v6-silhouette{font:950 35px/1 Manrope,system-ui,sans-serif!important;letter-spacing:.04em}
 #screen-dash .qdc-v6-preview-photo .qdc-v6-silhouette{font:950 38px/1 Manrope,system-ui,sans-serif!important}
+
+/* One notice at the top, replacing the four lower shortcut cards. */
+#screen-login #qdc-v6-links{grid-template-columns:minmax(0,1fr);margin:0 0 16px}
+#screen-login #qdc-v6-links a{text-decoration:none}
+#screen-login #qdc-v6-links strong{font-size:14px}
+#screen-login #qdc-v6-links small{font-size:12px}
