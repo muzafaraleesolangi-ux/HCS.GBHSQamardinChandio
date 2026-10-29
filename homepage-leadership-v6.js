@@ -96,32 +96,17 @@
   section.append(grid);
   cells.parentNode.insertBefore(section,cells);
   renderLeadership();
-  // The four lower quick-access cards use existing destinations rather than fake features.
+  // Notices appear first on the homepage; retired lower quick-access cards are removed.
   if(!$("#qdc-v6-links")){
-   const quick=el("div","qdc-v6-links");quick.id="qdc-v6-links";
-   const data=[
-    {title:"Latest Notices",sub:"Portal announcements and information",icon:"📣",target:"#ticker-text"},
-    {title:"Employee Guidelines",sub:"Sign in for profile fields and service records",icon:"📋",target:"#home-auth"},
-    {title:"Help & Support",sub:"Open the existing support panel",icon:"❔",target:"#support-launch"},
-    {title:"Contact Us",sub:"Contact the cluster's portal support",icon:"☎",target:"#support-launch"}
-   ];
-   data.forEach(item=>{
-    const button=el("button","qdc-v6-link");
-    button.type="button";button.append(el("span","qdc-v6-link-icon",item.icon));
-    const content=el("span","qdc-v6-link-content");
-    content.append(el("strong","",item.title),el("small","",item.sub));
-    button.append(content,el("span","qdc-v6-link-arrow","→"));
-    button.addEventListener("click",()=>{
-     const target=$(item.target);
-     if(!target)return;
-     if(item.target==="#support-launch"){target.click();return;}
-     target.scrollIntoView({behavior:"smooth",block:"center"});
-    });
-    quick.append(button);
-   });
-   const footer=$("#screen-login .footer");
-   if(footer)footer.insertAdjacentElement("beforebegin",quick);
-   else cells.insertAdjacentElement("afterend",quick);
+   const quick=el("section","qdc-v6-links");quick.id="qdc-v6-links";
+   quick.setAttribute("aria-label","Latest Notices");
+   const link=el("a","qdc-v6-link");
+   link.href="./monthly-progress.html";
+   link.append(el("span","qdc-v6-link-icon","📣"));
+   const content=el("span","qdc-v6-link-content");
+   content.append(el("strong","","Latest Notices"),el("small","","Monthly Academic Progress Report · Classes 1 to X · Open page"));
+   link.append(content,el("span","qdc-v6-link-arrow","↗"));quick.append(link);
+   $("#home-overview").prepend(quick);
   }
   const nav=$("#screen-login .nav");if(nav && !$("#qdc-v6-cells-link")){
    // Keep the portal's original navigation handlers; existing Cells button remains functional.
