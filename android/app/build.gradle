@@ -1,0 +1,39 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'pk.edu.qamardin.monthlyreport'
+    compileSdk 35
+
+    defaultConfig {
+        applicationId 'pk.edu.qamardin.monthlyreport'
+        minSdk 24
+        targetSdk 35
+        versionCode 1
+        versionName '1.0'
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    sourceSets {
+        main {
+            assets.srcDirs += ["$buildDir/generated/webAssets"]
+        }
+    }
+}
+
+dependencies {
+    implementation 'androidx.webkit:webkit:1.17.1'
+}
+
+def copyWebAssets = tasks.register('copyWebAssets', Copy) {
+    from(rootProject.projectDir.parentFile) {
+        include '*.html', '*.css', '*.js', 'assets/**'
+    }
+    into layout.buildDirectory.dir('generated/webAssets/www')
+}
+tasks.named('preBuild').configure { dependsOn(copyWebAssets) }
