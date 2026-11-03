@@ -74,6 +74,14 @@ body:has(#workspace:not([hidden])) main{max-width:1180px;padding:0 20px 52px}
 .mpr-workflow-nav{position:sticky;top:0;z-index:15;display:flex;gap:6px;justify-content:center;background:#f7faf7e8;backdrop-filter:blur(12px);border-bottom:1px solid #d9e5dc;padding:12px 0;margin:0 -20px 18px}
 #workspace .mpr-workflow-nav button{padding:9px 14px;min-height:44px;border-radius:10px;background:#fff;border:1px solid #dbe8df;color:#1b6349;box-shadow:none;font-size:12px}
 #workspace .mpr-workflow-nav button.active{background:#0c654b;color:#fff}
+@media(min-width:701px){
+  #workspace.md-overview-active{display:block}
+  #workspace:not(.md-overview-active)>#mpr-workflow-nav{grid-column:1/-1;grid-row:1;margin:0 0 4px}
+  #workspace:not(.md-overview-active)>.workspace-head{grid-column:1/-1;grid-row:2;margin-top:0}
+  #workspace:not(.md-overview-active)>.panel:not(.history){grid-column:2;grid-row:3}
+  #workspace:not(.md-overview-active)>.month-sidebar{grid-column:1;grid-row:3/span 2;top:86px;margin-top:0}
+  #workspace:not(.md-overview-active)>#editor{grid-column:2;grid-row:4}
+}
 @media(max-width:680px){
   body:has(#workspace:not([hidden])) main{padding:0 14px 95px}
   .mpr-dashboard{padding:9px 0 20px}
