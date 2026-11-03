@@ -96,6 +96,7 @@
 
   function open(stageName, teacherId) {
     if (!window.MPRApp?.snapshot()) return;
+    if (stageName === 'teacher' && !snapshot?.teachers.length) stageName = 'setup';
     stage = stageName;
     const overview = stageName === 'overview';
     workspace.classList.toggle('md-overview-active', overview);
